@@ -1,0 +1,627 @@
+id,geo_location,city,postal_code,text_test
+502970,"{""latitude"":""41.649415"",""longitude"":""-0.903916""}",Zaragoza,50010,Positivo fuerte
+502909,"{""latitude"":""37.35860967593699"",""longitude"":""-2.2993945829155042""}",Olula del Río,4860,Positivo
+500625,"{""latitude"":""36.3821256726379"",""longitude"":""-6.1615616722578865""}",Chiclana de la Frontera,11130,Positivo
+499047,"{""latitude"":""36.3821256726379"",""longitude"":""-6.1615616722578865""}",Chiclana de la Frontera,11130,Positivo fuerte
+498076,"{""latitude"":""37.26032723619983"",""longitude"":""-6.949449779036823""}",Huelva,21004,Positivo
+497239,"{""latitude"":""37.2620676"",""longitude"":""-6.9555877""}",Huelva,21002,Positivo
+497056,"{""latitude"":""36.734508952902466"",""longitude"":""-3.6927693770283336""}",Almuñécar,18690,Positivo
+495388,"{""latitude"":""43.35475087040772"",""longitude"":""-8.25440908441421""}",Sada,,Positivo
+495289,"{""latitude"":""37.2620676"",""longitude"":""-6.9555877""}",Huelva,21002,Positivo
+495210,"{""latitude"":""38.535325674873064"",""longitude"":""-8.891145641065467""}",Setúbal,2900-700,Positivo
+492474,"{""latitude"":""39.82617655070801"",""longitude"":""3.115764744026869""}",Alcúdia,7400,Positivo fuerte
+491704,"{""latitude"":""37.4668666"",""longitude"":""-5.6486538""}",Carmona,41410,Positivo
+491698,"{""latitude"":""37.4465988048394"",""longitude"":""-7.104240002758274""}",San Bartolomé de la Torre,21510,Positivo
+490648,"{""latitude"":""40.05048474670881"",""longitude"":""0.06751030093223613""}",Benicàssim / Benicasim,12560,Positivo
+490633,"{""latitude"":""41.377426"",""longitude"":""2.0862226""}",Esplugues de Llobregat,8950,Positivo
+489171,"{""latitude"":""36.38219817878872"",""longitude"":""-6.161630859503965""}",Chiclana de la Frontera,11130,Positivo fuerte
+486091,"{""latitude"":""37.2053733"",""longitude"":""-7.2186884""}",Lepe,21449,Positivo
+485600,"{""latitude"":""41.6494596"",""longitude"":""-0.9038445""}",Zaragoza,50010,Positivo
+485048,"{""latitude"":""42.28995"",""longitude"":""3.27527""}",Cadaqués,17488,Positivo
+485044,"{""latitude"":""42.28995"",""longitude"":""3.27527""}",Cadaqués,17488,Positivo
+484996,"{""latitude"":""36.48525514010655"",""longitude"":""-4.990726766131534""}",Marbella,29670,Positivo
+484380,"{""latitude"":""38.2439308"",""longitude"":""-0.8119229""}",Crevillent,3330,Positivo
+484376,"{""latitude"":""38.2439308"",""longitude"":""-0.8119229""}",Crevillent,3330,Positivo
+483848,"{""latitude"":""38.97913449016706"",""longitude"":""-8.808208813779443""}",Benavente,2130-016,Positivo
+482201,"{""latitude"":""37.2620676"",""longitude"":""-6.9555877""}",Huelva,21002,Positivo
+482197,"{""latitude"":""37.2620676"",""longitude"":""-6.9555877""}",Huelva,21002,Positivo
+482031,"{""latitude"":""41.377294"",""longitude"":""2.0862384""}",Esplugues de Llobregat,8950,Positivo
+481069,"{""latitude"":""37.4105401"",""longitude"":""-5.9181605""}",Sevilla,41019,Positivo
+478322,"{""latitude"":""36.38214569961364"",""longitude"":""-6.161562577479066""}",Chiclana de la Frontera,11130,Positivo fuerte
+478313,"{""latitude"":""38.257815"",""longitude"":""-0.7278901""}",Elx / Elche,3205,Positivo
+478040,"{""latitude"":""32.80582418259892"",""longitude"":""-16.881156630012878""}",Santana,9230-124,Positivo
+477844,"{""latitude"":""38.8935123"",""longitude"":""1.398194""}",Sant Jordi de ses Salines,7817,Positivo
+476476,"{""latitude"":""37.2053733"",""longitude"":""-7.2186884""}",Lepe,21449,Positivo
+475940,"{""latitude"":""37.33700939685507"",""longitude"":""-6.037693238393661""}",Mairena del Aljarafe,41927,Positivo
+473797,"{""latitude"":""27.991612127515065"",""longitude"":""-15.495409300109348""}",Valsequillo de Gran Canaria,35217,Positivo fuerte
+473169,"{""latitude"":""38.2439308"",""longitude"":""-0.8119229""}",Crevillent,3330,Positivo
+469071,"{""latitude"":""37.4465731796226"",""longitude"":""-7.104239966528728""}",San Bartolomé de la Torre,21510,Positivo
+467942,"{""latitude"":""37.166259"",""longitude"":""-5.9331388""}",Los Palacios y Villafranca,41720,Positivo
+467783,"{""latitude"":""41.5902577"",""longitude"":""-0.9288907""}",Cuarte de Huerva,50410,Positivo
+467485,"{""latitude"":""41.6498635"",""longitude"":""-0.9058459""}",Zaragoza,50017,Positivo
+467481,"{""latitude"":""41.6495791"",""longitude"":""-0.9037579""}",Zaragoza,50010,Positivo
+466730,"{""latitude"":""36.6888425"",""longitude"":""-6.1349243""}",Jerez de la Frontera,11402,Positivo
+466057,"{""latitude"":""39.9660642"",""longitude"":""-4.8268505""}",Talavera de la Reina,45600,Positivo
+465849,"{""latitude"":""37.2620796"",""longitude"":""-6.9557055""}",Huelva,21002,Positivo
+324287,"{""latitude"":36.382172491038766,""longitude"":-6.161572825518889}",Chiclana de la Frontera,11130,Positive
+323368,"{""latitude"":38.700670872201215,""longitude"":-8.959685136868812}",Montijo,2870-803,Positive
+322365,"{""latitude"":36.382168430581146,""longitude"":-6.16161983475382}",Chiclana de la Frontera,11130,Positive
+322143,"{""latitude"":41.5803628,""longitude"":-8.4542738}",Braga,4700,Positive
+321728,"{""latitude"":40.62335364485056,""longitude"":0.5900946173165014}",la Ràpita,43540,Positive
+321657,"{""latitude"":37.15727332116648,""longitude"":-7.889468040771837}",São Brás de Alportel,8150-101,Positive
+321655,"{""latitude"":37.157300555609716,""longitude"":-7.889434464077361}",São Brás de Alportel,8150-101,Positive
+320230,"{""latitude"":37.2697178,""longitude"":-7.0271553}",Aljaraque,21110,StrongPositive
+319795,"{""latitude"":38.91288379795302,""longitude"":-6.3338951704431405}",Mérida,6800,Positive
+318455,"{""latitude"":40.62336518040756,""longitude"":0.5901484454103304}",la Ràpita,43540,StrongPositive
+318314,"{""latitude"":36.1492913,""longitude"":-5.4612896}",Algeciras,11204,Positive
+317619,"{""latitude"":28.0457934,""longitude"":-16.6336401}",San Miguel de Abona,38639,Positive
+315268,"{""latitude"":28.4771879,""longitude"":-16.301035}",San Cristóbal de La Laguna,38205,Positive
+315195,"{""latitude"":38.893476384939895,""longitude"":1.3982645137315641}",Sant Jordi de ses Salines,7817,StrongPositive
+314573,"{""latitude"":38.92753734630592,""longitude"":-6.347918726155523}",Mérida,6800,StrongPositive
+314538,"{""latitude"":40.699635472918935,""longitude"":-3.935227037805264}",El Boalo,28412,Positive
+311875,"{""latitude"":37.12910272374133,""longitude"":-7.642882816067434}",Tavira,8800-671,Positive
+310937,"{""latitude"":28.480476872019445,""longitude"":-16.43288626300211}",El Sauzal,38360,StrongPositive
+306766,"{""latitude"":37.44655970123939,""longitude"":-7.104292193411608}",San Bartolomé de la Torre,21510,Positive
+305735,"{""latitude"":38.6375481,""longitude"":-0.8705362}",Villena,3400,Positive
+305434,"{""latitude"":36.38213619401339,""longitude"":-6.161640426043654}",Chiclana de la Frontera,11130,StrongPositive
+305302,"{""latitude"":41.6494932,""longitude"":-0.9038639}",Zaragoza,50010,Positive
+305274,"{""latitude"":36.138497,""longitude"":-5.4562882}",Algeciras,11204,Positive
+302352,"{""latitude"":37.1297908,""longitude"":-8.3478007}",Alcantarilha e Pêra,8365,Positive
+301843,"{""latitude"":41.7704272,""longitude"":-2.4770196}",Soria,42005,Positive
+300562,"{""latitude"":36.92151215490223,""longitude"":-6.071287864788295}",Lebrija,41740,Positive
+299890,"{""latitude"":38.64811079347221,""longitude"":-8.215872227111333}",Montemor-o-Novo,7050-163,Positive
+298008,"{""latitude"":39.4928638,""longitude"":-0.6815187}",Cheste,46380,Positive
+297988,"{""latitude"":36.7340272,""longitude"":-3.7041981}",Almuñécar,18690,Positive
+295724,"{""latitude"":37.58087333685869,""longitude"":-4.7483008375262745}",Montalbán de Córdoba,14548,Positive
+295314,"{""latitude"":38.75774598,""longitude"":-9.37288625}",Sintra,2710-297,Positive
+293134,"{""latitude"":37.1297836,""longitude"":-8.3479296}",Alcantarilha e Pêra,8365,StrongPositive
+292517,"{""latitude"":37.0633763,""longitude"":-7.7601257}",Moncarapacho e Fuseta,8700,Positive
+292296,"{""latitude"":37.0633767,""longitude"":-7.7601245}",Moncarapacho e Fuseta,8700,Positive
+291987,"{""latitude"":41.644868333333335,""longitude"":-0.8882216666666667}",Zaragoza,50006,Positive
+291610,"{""latitude"":38.912826306143145,""longitude"":-6.333960520413439}",Mérida,6800,Positive
+291570,"{""latitude"":39.826147530087376,""longitude"":3.1158352626688464}",Alcúdia,7400,Positive
+289275,"{""latitude"":40.6461758,""longitude"":-8.6352118}",Aveiro,3800-281,Positive
+288957,"{""latitude"":38.7068761,""longitude"":-8.9794234}",Montijo,2870-114,Positive
+288003,"{""latitude"":36.38213449003881,""longitude"":-6.161643330762349}",Chiclana de la Frontera,11130,StrongPositive
+287481,"{""latitude"":39.26670161076989,""longitude"":-9.1618993999298}",Bombarral,2540-041,Positive
+285527,"{""latitude"":37.1367773,""longitude"":-8.4591789}",Lagoa,8400-435,Positive
+284353,"{""latitude"":28.075967,""longitude"":-15.4752238}",Las Palmas de Gran Canaria,35018,Positive
+282936,"{""latitude"":40.5434549,""longitude"":-8.5320316}",Oliveira do Bairro,3770-059,Positive
+281169,"{""latitude"":39.9483215,""longitude"":-8.7840973}",Pombal,3105,Positive
+280646,"{""latitude"":38.90673290929053,""longitude"":-6.6103509077583515}",Montijo,6480,Positive
+280642,"{""latitude"":38.906733476348556,""longitude"":-6.610340614617927}",Montijo,6480,Positive
+278309,"{""latitude"":41.3772756,""longitude"":2.0862783}",Esplugues de Llobregat,8950,Positive
+278170,"{""latitude"":37.1367902,""longitude"":-8.4591592}",Lagoa,8400-435,StrongPositive
+277786,"{""latitude"":37.459796462509914,""longitude"":-3.923134665212082}",Alcalá la Real,23680,Positive
+277563,"{""latitude"":40.02720995056295,""longitude"":-3.60681715305878}",Aranjuez,28300,Positive
+276784,"{""latitude"":38.6375406,""longitude"":-0.8705065}",Villena,3400,Positive
+276369,"{""latitude"":38.1194036,""longitude"":-1.3067809}",Archena,30600,Positive
+275154,"{""latitude"":39.4019332,""longitude"":-9.1398876}",Caldas da Rainha,2500,Positive
+272912,"{""latitude"":36.19512201414592,""longitude"":-5.919008592886784}",Barbate,11160,Positive
+272825,"{""latitude"":41.3772785,""longitude"":2.0862537}",Esplugues de Llobregat,8950,Positive
+272112,"{""latitude"":42.4607582,""longitude"":-2.4600674}",Logroño,26005,StrongPositive
+271479,"{""latitude"":37.3129914,""longitude"":-6.1037745}",Almensilla,41111,Positive
+271465,"{""latitude"":38.906730794840186,""longitude"":-6.610307830930897}",Montijo,6480,StrongPositive
+270560,"{""latitude"":37.4038072,""longitude"":-5.9818448}",Sevilla,41009,Positive
+268081,"{""latitude"":42.4607734,""longitude"":-2.4600118}",Logroño,26005,Positive
+265676,"{""latitude"":37.4038471,""longitude"":-5.9818444}",Sevilla,41009,Positive
+265319,"{""latitude"":37.38563928319384,""longitude"":-2.1478146451653766}",Albox,4800,Positive
+264802,"{""latitude"":27.9270213,""longitude"":-15.4247099}",Ingenio,35259,Positive
+260527,"{""latitude"":36.382225592478505,""longitude"":-6.16164324526283}",Chiclana de la Frontera,11130,Positive
+259834,"{""latitude"":38.8427704,""longitude"":-7.587183}",Estremoz,7100-453,Positive
+259321,"{""latitude"":37.29818032817169,""longitude"":-3.1294568263659084}",Guadix,18500,StrongPositive
+257891,"{""latitude"":37.03395232028938,""longitude"":-7.960717481750312}",Faro,8005-256,Positive
+257172,"{""latitude"":38.10393345489776,""longitude"":-1.8658297149404166}",Caravaca de la Cruz,30400,Positive
+256213,"{""latitude"":37.27824831671715,""longitude"":-6.937708682546716}",Huelva,21005,Positive
+255411,"{""latitude"":38.9579526,""longitude"":-5.8713131}",Don Benito,6400,Positive
+254627,"{""latitude"":40.4488114,""longitude"":-3.739093}",Madrid,28040,Positive
+251326,"{""latitude"":36.38217546451571,""longitude"":-6.161612873541086}",Chiclana de la Frontera,11130,Positive
+250458,"{""latitude"":40.4275705,""longitude"":-3.6099148}",Madrid,28022,Positive
+250454,"{""latitude"":40.4275783,""longitude"":-3.6099122}",Madrid,28022,Positive
+249037,"{""latitude"":38.2706619,""longitude"":-0.7125897}",Elx / Elche,3205,Positive
+248910,"{""latitude"":39.4018978,""longitude"":-9.1399166}",Caldas da Rainha,2500,Positive
+248231,"{""latitude"":38.7068516,""longitude"":-8.9795227}",Montijo,2870-114,Positive
+246346,"{""latitude"":38.706843,""longitude"":-8.9795931}",Montijo,2870-114,StrongPositive
+245655,"{""latitude"":36.38217546451571,""longitude"":-6.161612873541086}",Chiclana de la Frontera,11130,Positive
+245631,"{""latitude"":36.5956348,""longitude"":-6.2434556}",El Puerto de Santa María,11500,StrongPositive
+243864,"{""latitude"":36.38217546451571,""longitude"":-6.161612873541086}",Chiclana de la Frontera,11130,Positive
+242677,"{""latitude"":38.53526603883744,""longitude"":-8.891206672432007}",Setúbal,2900-700,Positive
+240845,"{""latitude"":36.92148404662111,""longitude"":-6.071324848618522}",Lebrija,41740,Positive
+239347,"{""latitude"":37.2055593,""longitude"":-7.2188966}",Lepe,21449,Positive
+239332,"{""latitude"":38.6318521,""longitude"":-0.8668166}",Villena,3400,StrongPositive
+239278,"{""latitude"":37.575346,""longitude"":-6.7625223}",Valverde del Camino,21600,StrongPositive
+236190,"{""latitude"":42.2900175,""longitude"":3.2751888}",Cadaqués,17488,Positive
+236189,"{""latitude"":37.0634071,""longitude"":-7.7600874}",Moncarapacho e Fuseta,8700,Positive
+236147,"{""latitude"":41.377296,""longitude"":2.0862858}",Esplugues de Llobregat,8950,Positive
+235735,"{""latitude"":41.3773276,""longitude"":2.0862656}",Esplugues de Llobregat,8950,Positive
+234810,"{""latitude"":36.747864288815904,""longitude"":-3.6120542533585045}",Salobreña,18680,Positive
+234056,"{""latitude"":38.18371697267436,""longitude"":-3.3187163275529024}",Navas de San Juan,23240,StrongPositive
+232489,"{""latitude"":41.3911367,""longitude"":2.1840601}",Barcelona,8018,StrongPositive
+230030,"{""latitude"":40.4107724,""longitude"":-3.710445}",Madrid,28005,Positive
+229941,"{""latitude"":37.1367572,""longitude"":-8.4591671}",Lagoa,8400-435,Positive
+229229,"{""latitude"":36.38217984951402,""longitude"":-6.161605994668663}",Chiclana de la Frontera,11130,StrongPositive
+228441,"{""latitude"":37.1869291,""longitude"":-5.7881244}",Utrera,41710,Positive
+227963,"{""latitude"":36.4284013,""longitude"":-6.1431131}",Chiclana de la Frontera,11130,Positive
+227672,"{""latitude"":38.9579205,""longitude"":-5.871332}",Don Benito,6400,StrongPositive
+227264,"{""latitude"":37.2055449,""longitude"":-7.2188583}",Lepe,21449,StrongPositive
+227009,"{""latitude"":36.1287032,""longitude"":-5.4510368}",Algeciras,11203,Positive
+226920,"{""latitude"":37.2055486,""longitude"":-7.2188716}",Lepe,21449,Positive
+225213,"{""latitude"":40.1659287,""longitude"":-8.8516596}",Figueira da Foz,3080-510,StrongPositive
+225154,"{""latitude"":36.38222033184784,""longitude"":-6.16163664805895}",Chiclana de la Frontera,11130,Positive
+224496,"{""latitude"":38.962595852102396,""longitude"":-8.998544843098717}",Vila Franca de Xira,2600,Positive
+223732,"{""latitude"":41.62871,""longitude"":2.2951762}",les Franqueses del Vallès,8520,Positive
+223724,"{""latitude"":41.6287108,""longitude"":2.2951353}",les Franqueses del Vallès,8520,Positive
+223599,"{""latitude"":36.7144519,""longitude"":-4.4281091}",Málaga,29002,Positive
+221408,"{""latitude"":37.3032924,""longitude"":-3.1364048}",Guadix,18500,Positive
+218205,"{""latitude"":40.48495353920523,""longitude"":-3.7219200077581407}",Madrid,28035,Positive
+217778,"{""latitude"":40.6191622,""longitude"":0.5889227}",la Ràpita,43540,Positive
+217734,"{""latitude"":37.33480276910209,""longitude"":-6.541624925362761}",Bollullos Par del Condado,21710,Positive
+217525,"{""latitude"":27.9080478,""longitude"":-15.4072709}",Ingenio,35240,Positive
+216819,"{""latitude"":37.303283,""longitude"":-3.1364041}",Guadix,18500,StrongPositive
+216151,"{""latitude"":40.5589845,""longitude"":-8.7518489}",Vagos,3840-264,Positive
+216100,"{""latitude"":37.29820413675118,""longitude"":-3.1293753805199698}",Guadix,18500,StrongPositive
+215954,"{""latitude"":39.881457,""longitude"":-3.9709192}",Toledo,45008,Positive
+215239,"{""latitude"":39.9661103,""longitude"":-4.8267351}",Talavera de la Reina,45600,Positive
+215168,"{""latitude"":41.3066517,""longitude"":-0.7528905}",Belchite,50130,Positive
+214412,"{""latitude"":28.3847822,""longitude"":-16.5843453}",Los Realejos,38419,StrongPositive
+214096,"{""latitude"":40.5589829,""longitude"":-8.751857}",Vagos,3840-264,Positive
+214063,"{""latitude"":38.906783039080096,""longitude"":-6.6102879643447645}",Montijo,6480,Positive
+213760,"{""latitude"":40.5435283,""longitude"":-8.5320533}",Oliveira do Bairro,3770-059,Positive
+213454,"{""latitude"":40.1952779,""longitude"":-8.430995}",Coimbra,3040-092,Positive
+212449,"{""latitude"":37.29825054676602,""longitude"":-3.129355248635634}",Guadix,18500,StrongPositive
+209543,"{""latitude"":32.6622439,""longitude"":-16.9347269}",Funchal,9020-353,Positive
+209509,"{""latitude"":41.7033429,""longitude"":-8.8237276}",Viana do Castelo,4900,Positive
+207771,"{""latitude"":37.44654911362833,""longitude"":-7.104327735820646}",San Bartolomé de la Torre,21510,Positive
+207668,"{""latitude"":37.44654911362833,""longitude"":-7.104327735820646}",San Bartolomé de la Torre,21510,Positive
+207296,"{""latitude"":37.6688701,""longitude"":-1.7022333}",Lorca,30800,Positive
+206292,"{""latitude"":40.5589566,""longitude"":-8.7518531}",Vagos,3840-264,StrongPositive
+206033,"{""latitude"":37.46667097329818,""longitude"":-5.6488504257190115}",Carmona,41410,Positive
+205203,"{""latitude"":41.7033112,""longitude"":-8.8236745}",Viana do Castelo,4900,Positive
+205136,"{""latitude"":43.5375564,""longitude"":-5.6625623}",Gijón / Xixón,33205,Positive
+201988,"{""latitude"":37.6669316,""longitude"":-4.7245474}",Fernán-Núñez,14520,Positive
+201415,"{""latitude"":37.3801644,""longitude"":-6.0030772}",Sevilla,41010,StrongPositive
+201014,"{""latitude"":41.62750450504562,""longitude"":2.29498851980689}",les Franqueses del Vallès,8520,Positive
+200448,"{""latitude"":37.1985196,""longitude"":-3.6151471}",Granada,18014,Positive
+200286,"{""latitude"":40.6212966,""longitude"":-4.0096544}",Collado Villalba,28400,StrongPositive
+200194,"{""latitude"":40.46405666666667,""longitude"":-8.779093333333332}",Praia de Mira,3070,Positive
+199723,"{""latitude"":42.8214692,""longitude"":-1.5827782}",Valle de Egüés/Eguesibar,31620,Positive
+199565,"{""latitude"":38.8694991,""longitude"":-6.9863221}",Badajoz,6011,Positive
+198762,"{""latitude"":38.90669919913306,""longitude"":-6.610367672478904}",Montijo,6480,StrongPositive
+196915,"{""latitude"":41.6621491,""longitude"":-0.8745378}",Zaragoza,50015,Positive
+196588,"{""latitude"":37.3930135,""longitude"":-5.9977175}",Sevilla,41002,StrongPositive
+196253,"{""latitude"":36.4407257,""longitude"":-6.1426389}",Chiclana de la Frontera,11130,Positive
+196157,"{""latitude"":40.7921867,""longitude"":-3.6013794}",Venturada,28729,StrongPositive
+196057,"{""latitude"":43.3694424,""longitude"":-3.2183884}",Castro-Urdiales,39700,Positive
+195840,"{""latitude"":37.3993867,""longitude"":-5.9840288}",Sevilla,41003,StrongPositive
+194964,"{""latitude"":39.420466576016416,""longitude"":-0.4870768199632289}",Torrent,46901,Positive
+194842,"{""latitude"":41.62751049263654,""longitude"":2.2950190495892757}",les Franqueses del Vallès,8520,StrongPositive
+194110,"{""latitude"":40.052338,""longitude"":0.0596987}",Benicàssim / Benicasim,12560,Positive
+193748,"{""latitude"":37.6669338,""longitude"":-4.7245301}",Fernán-Núñez,14520,Positive
+192876,"{""latitude"":41.6459333,""longitude"":-0.9087826}",Zaragoza,50009,Positive
+192040,"{""latitude"":28.055425068581144,""longitude"":-16.62066202163341}",San Miguel de Abona,38639,Positive
+191324,"{""latitude"":28.4519072,""longitude"":-16.3665676}",El Rosario,38290,Positive
+191000,"{""latitude"":40.5400853,""longitude"":-3.6357444}",Alcobendas,28100,StrongPositive
+190590,"{""latitude"":37.4173915,""longitude"":-6.4039535}",Paterna del Campo,21880,Positive
+190358,"{""latitude"":39.88135844007123,""longitude"":-3.9710530266202717}",Toledo,45008,Positive
+190216,"{""latitude"":41.6276025,""longitude"":2.294898}",les Franqueses del Vallès,8520,Positive
+190058,"{""latitude"":43.318762,""longitude"":-8.2967465}",Sada,15168,Positive
+190048,"{""latitude"":41.627468912609594,""longitude"":2.2949933401008966}",les Franqueses del Vallès,8520,Positive
+189714,"{""latitude"":37.4173839,""longitude"":-6.4038973}",Paterna del Campo,21880,Positive
+189577,"{""latitude"":39.8945716,""longitude"":-0.1096331}",les Alqueries / Alquerías del Niño Perdido,12539,Positive
+189367,"{""latitude"":37.446470808495526,""longitude"":-7.104394846094709}",San Bartolomé de la Torre,21510,Positive
+188933,"{""latitude"":41.195078,""longitude"":1.6179919}",Cunit,43881,Positive
+188560,"{""latitude"":37.4309115,""longitude"":-5.9259995}",Sevilla,41020,StrongPositive
+188475,"{""latitude"":38.24077355423176,""longitude"":-1.425268194382935}",Cieza,30530,Positive
+188114,"{""latitude"":38.24093713631489,""longitude"":-6.018808155273724}",Llerena,6900,Positive
+187737,"{""latitude"":40.47001647949217,""longitude"":-3.616867065429686}",Madrid,,StrongPositive
+187694,"{""latitude"":38.016464,""longitude"":-4.3792459}",Montoro,14600,Positive
+187392,"{""latitude"":38.7369145,""longitude"":-3.0186353}",Villanueva de los Infantes,13320,Positive
+186770,"{""latitude"":37.1367676,""longitude"":-8.4591349}",Lagoa,8400-435,Positive
+186737,"{""latitude"":37.278285526652276,""longitude"":-6.937807883492202}",Huelva,21005,Positive
+186270,"{""latitude"":36.1385245,""longitude"":-5.4563194}",Algeciras,11204,Positive
+185013,"{""latitude"":38.0129335,""longitude"":-7.8709377}",Beja,7800-302,StrongPositive
+184774,"{""latitude"":36.9280561,""longitude"":-6.0857668}",Lebrija,41740,Positive
+183651,"{""latitude"":39.9932219,""longitude"":-0.0347493}",Castelló de la Plana,12004,Positive
+183119,"{""latitude"":36.38212665224008,""longitude"":-6.161620454025207}",Chiclana de la Frontera,11130,Positive
+182770,"{""latitude"":41.62753651528576,""longitude"":2.2950871275845555}",les Franqueses del Vallès,8520,Positive
+182664,"{""latitude"":40.4489688,""longitude"":-3.4710861}",Torrejón de Ardoz,28850,StrongPositive
+181953,"{""latitude"":36.7001242,""longitude"":-4.4449606}",Málaga,29003,StrongPositive
+181560,"{""latitude"":38.5413568,""longitude"":-8.8588478}",Setúbal,2910-328,Positive
+181536,"{""latitude"":38.93756040873652,""longitude"":-8.86999094712266}",Samora Correia,2135-297,Positive
+181057,"{""latitude"":39.9931961,""longitude"":-0.0347388}",Castelló de la Plana,12004,Positive
+179956,"{""latitude"":40.55147010181293,""longitude"":-3.895504597797525}",Las Rozas de Madrid,28290,Positive
+179429,"{""latitude"":41.6274545,""longitude"":2.2949996}",les Franqueses del Vallès,8520,Positive
+179404,"{""latitude"":39.89454639325639,""longitude"":-0.10975309146846869}",les Alqueries / Alquerías del Niño Perdido,12539,Positive
+179164,"{""latitude"":40.1601023,""longitude"":-8.4329083}",Coimbra,3040-650,Positive
+179077,"{""latitude"":36.764389243942595,""longitude"":-3.72000941075731}",Almuñécar,18690,Positive
+178970,"{""latitude"":38.5402601,""longitude"":-8.8647073}",Setúbal,2910-279,Positive
+178248,"{""latitude"":37.9376894886377,""longitude"":-7.6031274676098555}",Serpa,7830-320,StrongPositive
+177818,"{""latitude"":38.988940270735,""longitude"":-0.5296046581859704}",Xàtiva,46800,Positive
+177446,"{""latitude"":37.3940348,""longitude"":-5.9208736}",Sevilla,41020,StrongPositive
+177230,"{""latitude"":40.7440876,""longitude"":-3.5105937}",Talamanca de Jarama,28160,StrongPositive
+177115,"{""latitude"":39.40540291768816,""longitude"":-0.4060462434143529}",Catarroja,46470,Positive
+176442,"{""latitude"":40.4880041,""longitude"":-3.8750225}",Las Rozas de Madrid,28231,StrongPositive
+176335,"{""latitude"":41.283454478009894,""longitude"":1.722063024781457}",Canyelles,8811,Positive
+175051,"{""latitude"":41.6621204,""longitude"":-0.8745346}",Zaragoza,50015,Positive
+174862,"{""latitude"":40.39792,""longitude"":-3.6978722}",Madrid,28045,StrongPositive
+174191,"{""latitude"":37.2980084,""longitude"":-3.1298955}",Guadix,18500,StrongPositive
+174113,"{""latitude"":38.5390913,""longitude"":-8.8543673}",Setúbal,2910-298,Positive
+173980,"{""latitude"":41.62775952,""longitude"":2.29530357}",les Franqueses del Vallès,8520,Positive
+173888,"{""latitude"":37.4666591,""longitude"":-5.6487153}",Carmona,41410,StrongPositive
+173730,"{""latitude"":43.3682405,""longitude"":-5.8223254}",Oviedo,33010,StrongPositive
+173713,"{""latitude"":39.45010960422907,""longitude"":-0.39257317934694447}",València,46017,Positive
+173506,"{""latitude"":40.9971031,""longitude"":-3.6375203}",Buitrago del Lozoya,28730,Positive
+172961,"{""latitude"":41.62755688239282,""longitude"":2.2950881027645593}",les Franqueses del Vallès,8520,Positive
+172665,"{""latitude"":37.4207093,""longitude"":-6.1204606}",Salteras,41909,StrongPositive
+172379,"{""latitude"":38.90678852523873,""longitude"":-6.61029279497459}",Montijo,6480,StrongPositive
+171829,"{""latitude"":37.1371017,""longitude"":-8.017464}",Loulé,8100-500,Positive
+170012,"{""latitude"":41.6138467,""longitude"":-0.704147}",Alfajarín,50172,Positive
+169026,"{""latitude"":38.90677788815899,""longitude"":-6.610293177742869}",Montijo,6480,Positive
+168633,"{""latitude"":37.3285264,""longitude"":-5.8536166}",Alcalá de Guadaíra,41500,StrongPositive
+168252,"{""latitude"":37.1984233,""longitude"":-3.6151583}",Granada,18014,Positive
+167104,"{""latitude"":37.4173872,""longitude"":-6.4039054}",Paterna del Campo,21880,Positive
+167036,"{""latitude"":36.5171763,""longitude"":-4.8892275}",Marbella,29601,Positive
+166945,"{""latitude"":41.6120612,""longitude"":-0.7019034}",Alfajarín,50172,Positive
+166158,"{""latitude"":40.4338482,""longitude"":-3.7087674}",Madrid,28015,StrongPositive
+165987,"{""latitude"":41.627521022983736,""longitude"":2.295059736030423}",les Franqueses del Vallès,8520,Positive
+165457,"{""latitude"":40.6752089,""longitude"":-3.6223475}",San Agustín del Guadalix,28750,StrongPositive
+165254,"{""latitude"":41.62753106272096,""longitude"":2.295092564424557}",les Franqueses del Vallès,8520,Positive
+164457,"{""latitude"":37.4173822,""longitude"":-6.4038966}",Paterna del Campo,21880,Positive
+163091,"{""latitude"":36.5951227,""longitude"":-6.2412116}",El Puerto de Santa María,11500,Positive
+162568,"{""latitude"":36.638728,""longitude"":-4.4892794}",Torremolinos,29620,Positive
+162011,"{""latitude"":38.6376029,""longitude"":-0.8704419}",Villena,3400,StrongPositive
+161703,"{""latitude"":37.38310716728409,""longitude"":-5.949835650465193}",Sevilla,41006,StrongPositive
+161280,"{""latitude"":41.5221284,""longitude"":-5.3889996}",Toro,49800,Positive
+160263,"{""latitude"":37.1979814,""longitude"":-3.6199645}",Granada,18014,StrongPositive
+158380,"{""latitude"":41.345974,""longitude"":1.7023585}",Vilafranca del Penedès,8720,StrongPositive
+158169,"{""latitude"":38.906778960861935,""longitude"":-6.610283754705841}",Montijo,6480,Positive
+157863,"{""latitude"":37.44644209435329,""longitude"":-7.104483390767956}",San Bartolomé de la Torre,21510,Positive
+156866,"{""latitude"":37.9376102,""longitude"":-7.6031756}",Serpa,7830-320,StrongPositive
+156099,"{""latitude"":37.4173842,""longitude"":-6.4038998}",Paterna del Campo,21880,Positive
+156053,"{""latitude"":38.6376237,""longitude"":-0.8704292}",Villena,3400,StrongPositive
+153509,"{""latitude"":37.2980185,""longitude"":-3.1298898}",Guadix,18500,Positive
+153071,"{""latitude"":39.5382956,""longitude"":-0.3488399}",Foios,46134,Positive
+153018,"{""latitude"":37.2116799,""longitude"":-7.4044644}",Ayamonte,21400,StrongPositive
+152991,"{""latitude"":37.1367695,""longitude"":-8.4590954}",Lagoa,8400-435,Positive
+152881,"{""latitude"":36.74863816729321,""longitude"":-3.518788087684977}",Motril,18600,Positive
+152819,"{""latitude"":41.6276082,""longitude"":2.2948739}",les Franqueses del Vallès,8520,Positive
+152492,"{""latitude"":40.4588704,""longitude"":-3.7044563}",Madrid,28039,StrongPositive
+152285,"{""latitude"":41.62750131100718,""longitude"":2.295013627505397}",les Franqueses del Vallès,8520,Positive
+152133,"{""latitude"":38.9579071,""longitude"":-5.8713317}",Don Benito,6400,Positive
+151831,"{""latitude"":40.7356408,""longitude"":-3.9469874}",Mataelpino,28492,Positive
+151250,"{""latitude"":40.5434949,""longitude"":-8.5320553}",Oliveira do Bairro,3770-059,StrongPositive
+150683,"{""latitude"":37.41741056,""longitude"":-6.40389569}",Paterna del Campo,21880,Positive
+149173,"{""latitude"":41.62751995236607,""longitude"":2.29497007519265}",les Franqueses del Vallès,8520,Positive
+148913,"{""latitude"":39.40536388311367,""longitude"":-0.40603406555978105}",Catarroja,46470,Positive
+148155,"{""latitude"":37.5200113,""longitude"":-4.6567747}",Aguilar de la Frontera,14920,Positive
+148136,"{""latitude"":40.4547694,""longitude"":-3.4561233}",Torrejón de Ardoz,28850,StrongPositive
+147468,"{""latitude"":43.2082473,""longitude"":-8.6887532}",Carballo,15102,StrongPositive
+147441,"{""latitude"":40.3155246,""longitude"":-8.7525506}",Cantanhede,3060-586,Positive
+146883,"{""latitude"":37.8982201,""longitude"":-6.5687137}",Aracena,21200,StrongPositive
+146772,"{""latitude"":37.1985016,""longitude"":-3.6151315}",Granada,18014,Positive
+146219,"{""latitude"":36.6991627,""longitude"":-6.1237947}",Jerez de la Frontera,11407,StrongPositive
+145768,"{""latitude"":40.1659365,""longitude"":-8.851637}",Figueira da Foz,3080-510,Positive
+145424,"{""latitude"":38.1906494,""longitude"":-0.5499239}",Santa Pola,3130,Positive
+145119,"{""latitude"":40.325340157730636,""longitude"":-3.7653094667915803}",Leganés,28912,StrongPositive
+145028,"{""latitude"":37.8936235,""longitude"":-4.7970295}",Córdoba,14011,Positive
+145008,"{""latitude"":28.4519139,""longitude"":-16.3665719}",El Rosario,38290,Positive
+144375,"{""latitude"":36.5983358,""longitude"":-6.2363865}",El Puerto de Santa María,11500,StrongPositive
+143779,"{""latitude"":40.3992985,""longitude"":-3.7740633}",Madrid,28024,Positive
+143080,"{""latitude"":37.1297425,""longitude"":-8.3479618}",Alcantarilha e Pêra,8365,Positive
+141981,"{""latitude"":36.8822451,""longitude"":-4.8441217}",Ardales,29550,StrongPositive
+141321,"{""latitude"":36.7062639,""longitude"":-6.1241438}",Jerez de la Frontera,11407,StrongPositive
+141214,"{""latitude"":40.2739652,""longitude"":-3.9084355}",Arroyomolinos,28939,StrongPositive
+139761,"{""latitude"":42.126826218158634,""longitude"":-0.4048169259646619}",Huesca/Uesca,22005,StrongPositive
+137863,"{""latitude"":38.70202805153791,""longitude"":-8.959404397819158}",Montijo,2870-341,StrongPositive
+137300,"{""latitude"":40.4545446,""longitude"":-3.8755163}",Majadahonda,28222,Positive
+137079,"{""latitude"":38.98895318803743,""longitude"":-0.5295211045845937}",Xàtiva,46800,Positive
+136879,"{""latitude"":36.69401,""longitude"":-4.4430594}",Málaga,29004,Positive
+136509,"{""latitude"":36.921437641795805,""longitude"":-6.071250139550739}",Lebrija,41740,Positive
+136281,"{""latitude"":39.89449900058376,""longitude"":-0.10978432247887299}",les Alqueries / Alquerías del Niño Perdido,12539,Positive
+136024,"{""latitude"":43.3528984,""longitude"":-2.8397778}",Mungia,48100,Positive
+135926,"{""latitude"":28.4558438,""longitude"":-16.4515075}",La Matanza de Acentejo,38379,Positive
+135113,"{""latitude"":40.5674267,""longitude"":-3.5027027}",Cobeña,28863,Positive
+134469,"{""latitude"":38.927552852366595,""longitude"":-6.34792071880601}",Mérida,6800,Positive
+133383,"{""latitude"":38.9063276,""longitude"":1.4236385}",Eivissa,7800,Positive
+133219,"{""latitude"":38.105813,""longitude"":-1.8589705}",Caravaca de la Cruz,30400,Positive
+130299,"{""latitude"":41.627530466986784,""longitude"":2.2950179104651474}",les Franqueses del Vallès,8520,Positive
+129263,"{""latitude"":28.0553691443772,""longitude"":-16.620474839119698}",San Miguel de Abona,38639,Positive
+128739,"{""latitude"":36.80184538,""longitude"":-2.69518026}",Urbanización Félix,,Positive
+127356,"{""latitude"":43.3470265,""longitude"":-8.2479197}",Sada,15160,StrongPositive
+127078,"{""latitude"":37.4173818,""longitude"":-6.4039036}",Paterna del Campo,21880,Positive
+126550,"{""latitude"":39.5951995,""longitude"":-8.4192758}",Tomar,2300,Positive
+126406,"{""latitude"":37.8882212,""longitude"":-4.7626886}",Córdoba,14007,StrongPositive
+126386,"{""latitude"":36.4284094,""longitude"":-6.1431014}",Chiclana de la Frontera,11130,Positive
+125933,"{""latitude"":40.4624087,""longitude"":-3.4765866}",Torrejón de Ardoz,28850,StrongPositive
+125456,"{""latitude"":40.6191316,""longitude"":0.5889256}",la Ràpita,43540,Positive
+125440,"{""latitude"":38.9889666,""longitude"":-0.5295363}",Xàtiva,46800,Positive
+124973,"{""latitude"":41.6274424,""longitude"":2.2951023}",les Franqueses del Vallès,8520,Positive
+124643,"{""latitude"":36.44088695431916,""longitude"":-6.142650919038256}",Chiclana de la Frontera,11130,Positive
+124369,"{""latitude"":41.627532706419416,""longitude"":2.295046619343988}",les Franqueses del Vallès,8520,Positive
+124192,"{""latitude"":40.3838141,""longitude"":-3.6625662}",Madrid,28018,Positive
+122994,"{""latitude"":37.4309246,""longitude"":-5.9260166}",Sevilla,41020,StrongPositive
+122882,"{""latitude"":40.2053155,""longitude"":-8.6483819}",Carapinheira,3140-071,Positive
+122276,"{""latitude"":39.5658872,""longitude"":-0.5280925}",l'Eliana,46183,Positive
+122101,"{""latitude"":41.62775952,""longitude"":2.29530357}",les Franqueses del Vallès,8520,Positive
+122042,"{""latitude"":36.6001542,""longitude"":-6.2474224}",El Puerto de Santa María,11500,StrongPositive
+122027,"{""latitude"":37.9892558,""longitude"":-1.1270595}",Murcia,30001,Positive
+121956,"{""latitude"":36.44084164626469,""longitude"":-6.1425928302465085}",Chiclana de la Frontera,11130,Positive
+121571,"{""latitude"":37.33478907453809,""longitude"":-6.541589592364902}",Bollullos Par del Condado,21710,Positive
+121143,"{""latitude"":28.4519097,""longitude"":-16.366586}",El Rosario,38290,Positive
+120715,"{""latitude"":36.9214412802509,""longitude"":-6.071299813906576}",Lebrija,41740,StrongPositive
+120122,"{""latitude"":39.9932059,""longitude"":-0.0347658}",Castelló de la Plana,12004,Positive
+120109,"{""latitude"":37.2980492,""longitude"":-3.1297812}",Guadix,18500,StrongPositive
+119549,"{""latitude"":37.0948129,""longitude"":-8.2299797}",Albufeira,8200-260,Positive
+119331,"{""latitude"":40.5445129,""longitude"":-3.6429069}",Alcobendas,28100,StrongPositive
+119101,"{""latitude"":37.2782799,""longitude"":-6.9378412}",Huelva,21005,StrongPositive
+118378,"{""latitude"":40.4576312,""longitude"":-3.7022354}",Madrid,28039,StrongPositive
+117214,"{""latitude"":37.3030933,""longitude"":-6.3026535}",Pilas,41840,StrongPositive
+117208,"{""latitude"":37.580853382047756,""longitude"":-4.748235425986384}",Montalbán de Córdoba,14548,Positive
+115879,"{""latitude"":37.334816235968084,""longitude"":-6.541583311570953}",Bollullos Par del Condado,21710,StrongPositive
+115396,"{""latitude"":36.1385098,""longitude"":-5.4562874}",Algeciras,11204,Positive
+115190,"{""latitude"":37.2592221,""longitude"":-6.9460506}",Huelva,21004,StrongPositive
+114228,"{""latitude"":28.4625347,""longitude"":-16.2533181}",Santa Cruz de Tenerife,38003,StrongPositive
+113611,"{""latitude"":36.420762819834785,""longitude"":-6.139546330290701}",Chiclana de la Frontera,11130,Positive
+113494,"{""latitude"":39.9611690954186,""longitude"":-4.836821692390211}",Talavera de la Reina,45600,Positive
+112772,"{""latitude"":37.1297778,""longitude"":-8.3479013}",Alcantarilha e Pêra,8365,Positive
+112364,"{""latitude"":37.41740192,""longitude"":-6.40382457}",Paterna del Campo,21880,Positive
+111039,"{""latitude"":28.4519298,""longitude"":-16.3665733}",El Rosario,38290,Positive
+110980,"{""latitude"":40.5101989,""longitude"":-7.6278098}",Gouveia,6290,Positive
+110507,"{""latitude"":37.8933091,""longitude"":-6.5621898}",Aracena,21200,StrongPositive
+110420,"{""latitude"":43.2837321,""longitude"":-8.2079381}",,15319,StrongPositive
+110292,"{""latitude"":40.4701416,""longitude"":-3.6166781}",Madrid,28042,StrongPositive
+109970,"{""latitude"":37.2881452,""longitude"":-7.1434723}",Cartaya,21450,StrongPositive
+109573,"{""latitude"":39.8944086,""longitude"":-0.1098629}",les Alqueries / Alquerías del Niño Perdido,12539,StrongPositive
+109077,"{""latitude"":43.3629397,""longitude"":-5.8384078}",Oviedo,33010,StrongPositive
+108052,"{""latitude"":40.96723903955018,""longitude"":-5.652786975677848}",Salamanca,37003,Positive
+107860,"{""latitude"":41.62760125806753,""longitude"":2.2950363374689533}",les Franqueses del Vallès,8520,Positive
+107472,"{""latitude"":36.4284148,""longitude"":-6.1431019}",Chiclana de la Frontera,11130,StrongPositive
+107092,"{""latitude"":37.3788762,""longitude"":-6.0424906}",Tomares,41940,StrongPositive
+106600,"{""latitude"":40.179167,""longitude"":-8.6779067}",Montemor-o-Velho,3140-250,Positive
+106324,"{""latitude"":43.2800636,""longitude"":-8.2115196}",Betanzos,15300,StrongPositive
+106125,"{""latitude"":42.14742268435657,""longitude"":-0.40536610409617424}",Huesca/Uesca,22006,Positive
+105290,"{""latitude"":37.3565531,""longitude"":-5.9857121}",Sevilla,41012,StrongPositive
+104830,"{""latitude"":38.641824316094244,""longitude"":-0.868670701390503}",Villena,3400,Positive
+104575,"{""latitude"":37.383103990420686,""longitude"":-5.949870453697336}",Sevilla,41006,StrongPositive
+104406,"{""latitude"":37.417366,""longitude"":-6.40389147}",Paterna del Campo,21880,Positive
+103912,"{""latitude"":41.6171211,""longitude"":-0.8747148}",Zaragoza,50021,Positive
+102892,"{""latitude"":39.826124,""longitude"":3.1157974}",Alcúdia,7400,Positive
+102060,"{""latitude"":38.24077355423176,""longitude"":-1.425268194382935}",Cieza,30530,Positive
+101901,"{""latitude"":38.2705889,""longitude"":-0.6833565}",Elx / Elche,3202,Positive
+101485,"{""latitude"":37.12905955596257,""longitude"":-7.642854071717207}",Tavira,8800-671,Positive
+101352,"{""latitude"":40.4614519,""longitude"":-3.463665}",Torrejón de Ardoz,28850,StrongPositive
+101008,"{""latitude"":43.352904,""longitude"":-2.8397784}",Mungia,48100,Positive
+100917,"{""latitude"":37.6669332,""longitude"":-4.7245432}",Fernán-Núñez,14520,Positive
+100670,"{""latitude"":37.1371266,""longitude"":-8.0175096}",Loulé,8100-537,StrongPositive
+100393,"{""latitude"":37.9375913,""longitude"":-7.6032202}",Serpa,7830-320,Positive
+99914,"{""latitude"":36.5951351,""longitude"":-6.2412258}",El Puerto de Santa María,11500,Positive
+99829,"{""latitude"":40.50375,""longitude"":-3.8918191}",Las Rozas de Madrid,28232,Positive
+98606,"{""latitude"":37.4045608,""longitude"":-5.962169}",Sevilla,41008,StrongPositive
+98160,"{""latitude"":37.4173738,""longitude"":-6.4038962}",Paterna del Campo,21880,Positive
+98065,"{""latitude"":40.6684913,""longitude"":-3.1974939}",Marchamalo,19180,StrongPositive
+97262,"{""latitude"":38.7068814,""longitude"":-8.9794538}",Montijo,2870-114,Positive
+96915,"{""latitude"":37.4173765,""longitude"":-6.4039001}",Paterna del Campo,21880,Positive
+96508,"{""latitude"":40.7436573,""longitude"":-3.6055836}",Pedrezuela,28723,Positive
+96454,"{""latitude"":41.62754295177468,""longitude"":2.294974071723375}",les Franqueses del Vallès,8520,Positive
+95796,"{""latitude"":41.63030333333333,""longitude"":2.28971}",les Franqueses del Vallès,8520,Positive
+94761,"{""latitude"":40.4601676,""longitude"":-3.4396286}",Torrejón de Ardoz,28850,StrongPositive
+94661,"{""latitude"":41.627573241547005,""longitude"":2.295074362831228}",les Franqueses del Vallès,8520,Positive
+94513,"{""latitude"":38.714095,""longitude"":-8.9657468}",Montijo,2870,Positive
+94085,"{""latitude"":39.9932592,""longitude"":-0.034549}",Castelló de la Plana,12004,Positive
+93496,"{""latitude"":38.90677788815899,""longitude"":-6.610293177742869}",Montijo,6480,Positive
+92841,"{""latitude"":37.3822911,""longitude"":-5.9835416}",Sevilla,41018,StrongPositive
+92491,"{""latitude"":36.8822598,""longitude"":-4.8440675}",Ardales,29550,StrongPositive
+92170,"{""latitude"":37.6178756,""longitude"":-0.8766497}",La Unión,30360,Positive
+90840,"{""latitude"":28.4558538,""longitude"":-16.4515066}",La Matanza de Acentejo,38379,Positive
+90630,"{""latitude"":37.6753636,""longitude"":-5.9897834}",Castilblanco de los Arroyos,41230,Positive
+90456,"{""latitude"":43.3187581,""longitude"":-8.2967444}",Sada,15168,Positive
+89932,"{""latitude"":38.5390913,""longitude"":-8.8543673}",Setúbal,2910-298,Positive
+89731,"{""latitude"":42.4534095,""longitude"":-2.4631156}",Logroño,26008,Positive
+89710,"{""latitude"":37.2869177,""longitude"":-6.0511902}",Coria del Río,41100,Positive
+89483,"{""latitude"":41.61723505668126,""longitude"":-0.874554881115839}",Zaragoza,50021,Positive
+88731,"{""latitude"":37.2980269,""longitude"":-3.1297892}",Guadix,18500,StrongPositive
+88584,"{""latitude"":38.5387917,""longitude"":-8.8540226}",Setúbal,2910,Positive
+88342,"{""latitude"":39.5951848,""longitude"":-8.4192878}",Tomar,2300,StrongPositive
+88088,"{""latitude"":40.4535044,""longitude"":-3.7098754}",Madrid,28039,StrongPositive
+88019,"{""latitude"":43.364347,""longitude"":-5.8339389}",Oviedo,33010,StrongPositive
+87786,"{""latitude"":40.4577075,""longitude"":-3.446169}",Torrejón de Ardoz,28850,StrongPositive
+87219,"{""latitude"":41.6480878,""longitude"":-0.9180293}",Zaragoza,50012,Positive
+87159,"{""latitude"":39.574277,""longitude"":3.2125767}",Manacor,7500,StrongPositive
+87073,"{""latitude"":43.2746519,""longitude"":-5.6024036}",Samartín del Rei Aurelio,33950,StrongPositive
+86761,"{""latitude"":37.3826922,""longitude"":-5.7245086}",El Viso del Alcor,41520,StrongPositive
+86556,"{""latitude"":37.3832285,""longitude"":-6.0064518}",Sevilla,41010,StrongPositive
+85895,"{""latitude"":37.3826768,""longitude"":-6.1218433}",Espartinas,41807,StrongPositive
+85870,"{""latitude"":37.115954,""longitude"":-8.0212364}",Loulé,8100,StrongPositive
+85748,"{""latitude"":28.055347055152502,""longitude"":-16.620454509645676}",San Miguel de Abona,38639,Positive
+85446,"{""latitude"":37.2055812,""longitude"":-7.2187598}",Lepe,21449,StrongPositive
+85126,"{""latitude"":37.155074,""longitude"":-7.8880107}",São Brás de Alportel,8150-158,Positive
+84193,"{""latitude"":40.16010234680622,""longitude"":-8.432964998744023}",Coimbra,3040-650,Positive
+83928,"{""latitude"":37.4173865,""longitude"":-6.4039049}",Paterna del Campo,21880,Positive
+83837,"{""latitude"":37.1984803,""longitude"":-3.6151118}",Granada,18014,Positive
+83736,"{""latitude"":40.5106412,""longitude"":-7.6275818}",Gouveia,6290,Positive
+83438,"{""latitude"":41.62749443631065,""longitude"":2.2948555929878647}",les Franqueses del Vallès,8520,Positive
+83292,"{""latitude"":28.055434478214583,""longitude"":-16.62050634716212}",San Miguel de Abona,38639,Positive
+83134,"{""latitude"":33.051786238870676,""longitude"":-16.3492318710103}",Vila Baleira,9400-140,StrongPositive
+82826,"{""latitude"":38.916484446839355,""longitude"":-0.5549905210244651}",l'Olleria,46850,Positive
+82051,"{""latitude"":37.9376057,""longitude"":-7.6031886}",Serpa,7830-320,Positive
+81476,"{""latitude"":28.4519337,""longitude"":-16.3665779}",El Rosario,38290,Positive
+81333,"{""latitude"":41.627494705639826,""longitude"":2.294944694117472}",les Franqueses del Vallès,8520,Positive
+80635,"{""latitude"":37.2553778,""longitude"":-8.2859968}",São Bartolomeu de Messines,8375-105,Positive
+80259,"{""latitude"":39.4611173,""longitude"":-8.4633247}",Entroncamento,2330,Positive
+77904,"{""latitude"":37.9889264,""longitude"":-1.1273159}",Murcia,30001,Positive
+77407,"{""latitude"":40.5105897,""longitude"":-7.6275189}",Gouveia,6290,Positive
+77233,"{""latitude"":37.4173968,""longitude"":-6.4038818}",Paterna del Campo,21880,Positive
+76756,"{""latitude"":43.3682618,""longitude"":-5.8223152}",Oviedo,33010,StrongPositive
+75904,"{""latitude"":41.62775952,""longitude"":2.29530357}",les Franqueses del Vallès,8520,Positive
+74513,"{""latitude"":38.68671307116705,""longitude"":-9.353021900785565}",Cascais,2775-250,Positive
+73199,"{""latitude"":38.7051772,""longitude"":-9.1992988}",Lisboa,1300-011,Positive
+72417,"{""latitude"":40.2053156,""longitude"":-8.6483776}",Carapinheira,3140-071,Positive
+72249,"{""latitude"":37.989252,""longitude"":-1.1270535}",Murcia,30001,Positive
+71482,"{""latitude"":36.7476683,""longitude"":-5.1599779}",Ronda,29400,StrongPositive
+71312,"{""latitude"":40.1659351,""longitude"":-8.8515978}",Figueira da Foz,3080-510,Positive
+71060,"{""latitude"":43.2424219,""longitude"":-8.9005646}",Ponteceso,15110,StrongPositive
+70520,"{""latitude"":36.38212133424984,""longitude"":-6.161622279330007}",Chiclana de la Frontera,11130,Positive
+69790,"{""latitude"":43.5375253,""longitude"":-5.6637076}",Gijón / Xixón,33205,StrongPositive
+69734,"{""latitude"":36.5790126,""longitude"":-6.223931}",El Puerto de Santa María,11500,StrongPositive
+69472,"{""latitude"":37.29805,""longitude"":-3.1297876}",Guadix,18500,StrongPositive
+68374,"{""latitude"":36.382250470078525,""longitude"":-6.161640804911024}",Chiclana de la Frontera,11130,Positive
+67807,"{""latitude"":39.5951892,""longitude"":-8.4192882}",Tomar,2300,Positive
+66896,"{""latitude"":40.076468,""longitude"":-3.8553791}",Numancia de la Sagra,45230,StrongPositive
+66753,"{""latitude"":37.278154720036405,""longitude"":-6.937756174056006}",Huelva,21005,Positive
+66539,"{""latitude"":40.1791162,""longitude"":-8.6779105}",Montemor-o-Velho,3140-250,Positive
+65355,"{""latitude"":37.2867875,""longitude"":-6.0513308}",Coria del Río,41100,Positive
+65079,"{""latitude"":37.2881346,""longitude"":-7.1434995}",Cartaya,21450,StrongPositive
+64540,"{""latitude"":41.62752603652928,""longitude"":2.2951074340955686}",les Franqueses del Vallès,8520,Positive
+64307,"{""latitude"":37.446460509709276,""longitude"":-7.104423062751606}",San Bartolomé de la Torre,21510,Positive
+63240,"{""latitude"":38.3778292,""longitude"":-4.8460401}",Pozoblanco,14400,Positive
+63100,"{""latitude"":37.4666652,""longitude"":-5.6487052}",Carmona,41410,StrongPositive
+62296,"{""latitude"":37.3497633,""longitude"":-5.9856369}",Sevilla,41012,StrongPositive
+62201,"{""latitude"":38.2706065,""longitude"":-0.6833649}",Elx / Elche,3202,Positive
+61552,"{""latitude"":36.13864887215691,""longitude"":-5.45616385775003}",Algeciras,11204,StrongPositive
+61508,"{""latitude"":41.627526982867224,""longitude"":2.295011919827912}",les Franqueses del Vallès,8520,Positive
+60873,"{""latitude"":38.5389081,""longitude"":-8.8567798}",Setúbal,2910-296,Positive
+60811,"{""latitude"":38.240920137986926,""longitude"":-6.018734952984442}",Llerena,6900,Positive
+59559,"{""latitude"":41.4659261,""longitude"":1.823275}",Sant Llorenç d'Hortons,8791,Positive
+59216,"{""latitude"":38.0164685,""longitude"":-4.3792574}",Montoro,14600,Positive
+56308,"{""latitude"":37.56355471016319,""longitude"":-1.261399044922148}",Mazarrón,30860,Positive
+56002,"{""latitude"":43.389837976324394,""longitude"":-4.027577655579947}",Requejada,39312,Positive
+55836,"{""latitude"":36.1647211,""longitude"":-5.3475235}",La Línea de la Concepción,11300,StrongPositive
+55824,"{""latitude"":37.185643,""longitude"":-3.6024524}",Granada,18012,StrongPositive
+55493,"{""latitude"":40.4913693,""longitude"":-3.8648273}",Las Rozas de Madrid,28231,StrongPositive
+54911,"{""latitude"":41.62754117429997,""longitude"":2.295003892305449}",les Franqueses del Vallès,8520,Positive
+54476,"{""latitude"":43.2696195,""longitude"":-2.9502578}",Bilbao,48014,Positive
+54342,"{""latitude"":37.44646466599116,""longitude"":-7.1044559470008}",San Bartolomé de la Torre,21510,Positive
+54320,"{""latitude"":33.05177475181278,""longitude"":-16.34919682776878}",Vila Baleira,9400-140,StrongPositive
+53620,"{""latitude"":36.1286982,""longitude"":-5.4510424}",Algeciras,11203,StrongPositive
+52617,"{""latitude"":37.3566394,""longitude"":-6.0280541}",San Juan de Aznalfarache,41920,Positive
+52468,"{""latitude"":36.5955661,""longitude"":-6.2434603}",El Puerto de Santa María,11500,StrongPositive
+52421,"{""latitude"":36.8623939,""longitude"":-5.646811}",Villamartín,11650,StrongPositive
+52014,"{""latitude"":37.3734646,""longitude"":-5.952797}",Sevilla,41006,StrongPositive
+51392,"{""latitude"":37.3778618,""longitude"":-5.974157}",Sevilla,41005,StrongPositive
+50523,"{""latitude"":37.675363,""longitude"":-5.9897868}",Castilblanco de los Arroyos,41230,Positive
+50216,"{""latitude"":28.4519198,""longitude"":-16.366592}",El Rosario,38290,Positive
+50131,"{""latitude"":38.870847172004446,""longitude"":-6.969155150285175}",Badajoz,6003,StrongPositive
+50115,"{""latitude"":40.4312429,""longitude"":-3.7011539}",Madrid,28010,StrongPositive
+49965,"{""latitude"":41.62755950313626,""longitude"":2.2950288660854876}",les Franqueses del Vallès,8520,Positive
+49497,"{""latitude"":38.5388703,""longitude"":-8.8568643}",Setúbal,2910-296,Positive
+49275,"{""latitude"":41.50459214882231,""longitude"":-2.5663371502187435}",Almazán,42211,Positive
+49001,"{""latitude"":38.92750967989206,""longitude"":-6.347863720849056}",Mérida,6800,Positive
+48562,"{""latitude"":40.7356629,""longitude"":-3.9469852}",Mataelpino,28492,Positive
+48210,"{""latitude"":41.62751713574207,""longitude"":2.294919773422362}",les Franqueses del Vallès,8520,Positive
+48197,"{""latitude"":37.3819066,""longitude"":-5.9333117}",Sevilla,41016,StrongPositive
+47905,"{""latitude"":36.75093665343454,""longitude"":-3.8729805874705505}",Nerja,29780,Positive
+47703,"{""latitude"":41.62758331219694,""longitude"":2.2950363185949847}",les Franqueses del Vallès,8520,Positive
+47343,"{""latitude"":41.6275308075047,""longitude"":2.295002304287325}",les Franqueses del Vallès,8520,Positive
+47331,"{""latitude"":36.4407084,""longitude"":-6.142632}",Chiclana de la Frontera,11130,Positive
+46999,"{""latitude"":40.2034482,""longitude"":-8.4099213}",Coimbra,3000,Positive
+46927,"{""latitude"":43.38984760857034,""longitude"":-4.027569449731928}",Requejada,39312,Positive
+46864,"{""latitude"":37.3541951,""longitude"":-6.0536982}",Mairena del Aljarafe,41927,StrongPositive
+46456,"{""latitude"":36.42850127389005,""longitude"":-6.14337337226164}",Chiclana de la Frontera,11130,Positive
+46215,"{""latitude"":40.6222302,""longitude"":0.5936759}",la Ràpita,43540,Positive
+46213,"{""latitude"":39.99090934291222,""longitude"":-0.06101600880008181}",Castelló de la Plana,12006,Positive
+46176,"{""latitude"":43.354676942964645,""longitude"":-8.254266988963682}",Sada,,StrongPositive
+46081,"{""latitude"":42.12679506025829,""longitude"":-0.40481106401095845}",Huesca/Uesca,22005,StrongPositive
+45401,"{""latitude"":37.0683869,""longitude"":-5.0964768}",El Saucejo,41650,StrongPositive
+44853,"{""latitude"":36.440774556271656,""longitude"":-6.1425730585756835}",Chiclana de la Frontera,11130,Positive
+44368,"{""latitude"":41.6621356,""longitude"":-0.8745579}",Zaragoza,50015,Positive
+43345,"{""latitude"":40.7849622,""longitude"":-3.7015868}",Guadalix de la Sierra,28794,StrongPositive
+43324,"{""latitude"":40.2924,""longitude"":-4.0119495}",Navalcarnero,28600,StrongPositive
+43031,"{""latitude"":36.4489466,""longitude"":-6.2116505}",San Fernando,11100,StrongPositive
+42858,"{""latitude"":38.1058168,""longitude"":-1.8589858}",Caravaca de la Cruz,30400,Positive
+42806,"{""latitude"":40.6101162,""longitude"":-3.5829647}",San Sebastián de los Reyes,28706,StrongPositive
+42554,"{""latitude"":41.62749729202996,""longitude"":2.2948204357496222}",les Franqueses del Vallès,8520,Positive
+42012,"{""latitude"":36.6387995,""longitude"":-4.4892859}",Torremolinos,29620,StrongPositive
+41876,"{""latitude"":40.4237495,""longitude"":-3.7014548}",Madrid,28004,StrongPositive
+41319,"{""latitude"":40.4850004,""longitude"":-3.7219479}",Madrid,28035,StrongPositive
+39809,"{""latitude"":36.517152,""longitude"":-4.8892363}",Marbella,29601,Positive
+39440,"{""latitude"":37.4173695,""longitude"":-6.4039267}",Paterna del Campo,21880,Positive
+39025,"{""latitude"":37.1297782,""longitude"":-8.3477968}",Alcantarilha e Pêra,8365,Positive
+38839,"{""latitude"":40.6221874,""longitude"":0.5937181}",la Ràpita,43540,Positive
+37750,"{""latitude"":37.3781474,""longitude"":-5.9993386}",Sevilla,41011,StrongPositive
+37329,"{""latitude"":37.4173904,""longitude"":-6.4038937}",Paterna del Campo,21880,Positive
+37246,"{""latitude"":41.62754191966379,""longitude"":2.2949665420879426}",les Franqueses del Vallès,8520,Positive
+37222,"{""latitude"":40.1659322,""longitude"":-8.8516006}",Figueira da Foz,3080-510,Positive
+37070,"{""latitude"":38.2706074,""longitude"":-0.6833483}",Elx / Elche,3202,Positive
+36908,"{""latitude"":36.1385234,""longitude"":-5.4562591}",Algeciras,11204,Positive
+36874,"{""latitude"":37.3129596,""longitude"":-6.103738}",Almensilla,41111,Positive
+35957,"{""latitude"":36.5222169,""longitude"":-6.2272823}",Puerto Real,11519,StrongPositive
+35847,"{""latitude"":36.6677553,""longitude"":-6.1392758}",Jerez de la Frontera,11408,Positive
+35077,"{""latitude"":37.3463125,""longitude"":-6.0606627}",Mairena del Aljarafe,41927,StrongPositive
+34796,"{""latitude"":37.1159622,""longitude"":-8.021248}",Loulé,8100,StrongPositive
+34589,"{""latitude"":38.682017,""longitude"":-6.4064315}",Almendralejo,6200,StrongPositive
+32922,"{""latitude"":37.2979994,""longitude"":-3.1297883}",Guadix,18500,Positive
+32501,"{""latitude"":38.92766877555857,""longitude"":-6.347885241332148}",Mérida,6800,Positive
+32204,"{""latitude"":38.68671307116705,""longitude"":-9.353021900785565}",Cascais,2775-250,Positive
+31332,"{""latitude"":41.6275535944403,""longitude"":2.2950022732737723}",les Franqueses del Vallès,8520,Positive
+30912,"{""latitude"":38.2705936,""longitude"":-0.6833633}",Elx / Elche,3202,Positive
+30242,"{""latitude"":36.694031,""longitude"":-4.4430433}",Málaga,29004,Positive
+29792,"{""latitude"":37.2881406,""longitude"":-7.1434836}",Cartaya,21450,Positive
+29217,"{""latitude"":37.3858945,""longitude"":-5.9797214}",Sevilla,41018,StrongPositive
+28979,"{""latitude"":36.5991072,""longitude"":-6.2444245}",El Puerto de Santa María,11500,StrongPositive
+28732,"{""latitude"":37.3805116,""longitude"":-5.9783293}",Sevilla,41018,StrongPositive
+28557,"{""latitude"":40.4286571,""longitude"":-3.7026845}",Madrid,28004,StrongPositive
+28435,"{""latitude"":43.3529097,""longitude"":-2.8397993}",Mungia,48100,Positive
+28397,"{""latitude"":38.906784285279905,""longitude"":-6.6102832637396425}",Montijo,6480,Positive
+28275,"{""latitude"":40.035508039518916,""longitude"":-3.595236799860157}",Aranjuez,28300,Positive
+28082,"{""latitude"":37.401456,""longitude"":-5.9374102}",Sevilla,41020,StrongPositive
+27060,"{""latitude"":36.6939567,""longitude"":-4.4431252}",Málaga,29004,Positive
+27051,"{""latitude"":41.6480251,""longitude"":-0.9181749}",Zaragoza,50012,Positive
+25902,"{""latitude"":38.9889725,""longitude"":-0.529546}",Xàtiva,46800,Positive
+25824,"{""latitude"":41.62753455367513,""longitude"":2.2949836431451267}",les Franqueses del Vallès,8520,Positive
+25653,"{""latitude"":40.0712871,""longitude"":-8.8045265}",Figueira da Foz,3090-495,Positive
+25559,"{""latitude"":36.440760469676206,""longitude"":-6.142554421359752}",Chiclana de la Frontera,11130,Positive
+25535,"{""latitude"":41.62757684716863,""longitude"":2.2950760058965884}",les Franqueses del Vallès,8520,Positive
+24931,"{""latitude"":39.9932375,""longitude"":-0.0347861}",Castelló de la Plana,12004,StrongPositive
+24783,"{""latitude"":37.1984205,""longitude"":-3.6151673}",Granada,18014,Positive
+24526,"{""latitude"":37.1868985,""longitude"":-5.7881644}",Utrera,41710,Positive
+23714,"{""latitude"":38.6416829,""longitude"":-0.8687971}",Villena,3400,StrongPositive
+23493,"{""latitude"":37.275282,""longitude"":-6.9914042}",Aljaraque,21120,StrongPositive
+22742,"{""latitude"":37.9892245,""longitude"":-1.1271158}",Murcia,30001,Positive
+22250,"{""latitude"":36.659205510134576,""longitude"":-4.506030666145222}",Málaga,29140,Positive
+22017,"{""latitude"":37.41736431,""longitude"":-6.40382846}",Paterna del Campo,21880,Positive
+21750,"{""latitude"":38.686690314757115,""longitude"":-9.353262576568376}",Parede,2775-250,Positive
+21705,"{""latitude"":43.2746511,""longitude"":-5.6023971}",Samartín del Rei Aurelio,33950,Positive
+20861,"{""latitude"":40.6222457,""longitude"":0.5936936}",la Ràpita,43540,Positive
+19790,"{""latitude"":37.2980307,""longitude"":-3.1298607}",Guadix,18500,StrongPositive
+19767,"{""latitude"":38.906774203463726,""longitude"":-6.610291931151391}",Montijo,6480,StrongPositive
+18433,"{""latitude"":36.5305066,""longitude"":-4.8723188}",Marbella,29602,StrongPositive
+18243,"{""latitude"":43.3062312,""longitude"":-8.2326741}",Carrio,15165,StrongPositive
+17436,"{""latitude"":41.6276264,""longitude"":2.2947037}",les Franqueses del Vallès,8520,Positive
+15646,"{""latitude"":40.0712885,""longitude"":-8.8045039}",Figueira da Foz,3090-495,Positive
+14974,"{""latitude"":37.0239873,""longitude"":-4.5738909}",Antequera,29200,StrongPositive
+14915,"{""latitude"":37.54851536363147,""longitude"":-4.766767965634135}",Santaella,14548,StrongPositive
+14270,"{""latitude"":36.4284004,""longitude"":-6.1431017}",Chiclana de la Frontera,11130,Positive
+13433,"{""latitude"":38.39703063394438,""longitude"":-6.40200012543916}",Puebla de Sancho Pérez,,Positive
+13151,"{""latitude"":37.3855599,""longitude"":-5.9076737}",Sevilla,41016,StrongPositive
+13081,"{""latitude"":28.3303558,""longitude"":-16.3678111}",Arafo,38509,StrongPositive
+13059,"{""latitude"":39.57919011857771,""longitude"":-0.5333065731719456}",la Pobla de Vallbona,46185,Positive
+12614,"{""latitude"":28.055370864330396,""longitude"":-16.620481902314214}",San Miguel de Abona,38639,Positive
+12359,"{""latitude"":40.5642697,""longitude"":-3.6118408}",San Sebastián de los Reyes,28702,StrongPositive
+12347,"{""latitude"":39.7188066,""longitude"":2.9060853}",Inca,7300,StrongPositive
+12275,"{""latitude"":40.1658401,""longitude"":-8.8514513}",Figueira da Foz,3080-510,Positive
+11789,"{""latitude"":38.906776937216655,""longitude"":-6.610265571275343}",Montijo,6480,Positive
+11580,"{""latitude"":38.6376056,""longitude"":-0.8704663}",Villena,3400,Positive
+9898,"{""latitude"":36.4284141,""longitude"":-6.1431267}",Chiclana de la Frontera,11130,Positive
+9736,"{""latitude"":37.3026588,""longitude"":-6.2987027}",Pilas,41840,StrongPositive
+9593,"{""latitude"":37.44644164999998,""longitude"":-7.104422559999997}",San Bartolomé de la Torre,21510,StrongPositive
+9495,"{""latitude"":36.38211408596768,""longitude"":-6.161617440922742}",Chiclana de la Frontera,11130,Positive
+9087,"{""latitude"":40.5041453,""longitude"":-3.5067487}",Paracuellos de Jarama,28860,StrongPositive
+8589,"{""latitude"":37.4023171,""longitude"":-5.92386}",Sevilla,41020,Positive
+8383,"{""latitude"":36.9774862,""longitude"":-4.8951981}",Teba,29327,Positive
+7740,"{""latitude"":41.627529,""longitude"":2.2949984}",les Franqueses del Vallès,8520,Positive
+6764,"{""latitude"":37.417387,""longitude"":-6.4038782}",Paterna del Campo,21880,Positive
+6200,"{""latitude"":37.32884611777265,""longitude"":-6.542115407858223}",Bollullos Par del Condado,21710,StrongPositive
+5726,"{""latitude"":37.4380142,""longitude"":-4.1932893}",Priego de Córdoba,14800,StrongPositive
+5649,"{""latitude"":41.6275275,""longitude"":2.2950904}",les Franqueses del Vallès,8520,StrongPositive
+5300,"{""latitude"":36.38212665224008,""longitude"":-6.161620454025207}",Chiclana de la Frontera,11130,StrongPositive
+5058,"{""latitude"":37.1984637,""longitude"":-3.6151332}",Granada,18014,Positive
+4123,"{""latitude"":37.2553885,""longitude"":-8.2860091}",São Bartolomeu de Messines,8375-105,StrongPositive
+3737,"{""latitude"":40.1658343,""longitude"":-8.8514482}",Figueira da Foz,3080-510,Positive
+3261,"{""latitude"":37.1371122,""longitude"":-8.0174949}",Loulé,8100-500,Positive
+2819,"{""latitude"":41.3458375,""longitude"":1.7024098}",Vilafranca del Penedès,8720,Positive
+2684,"{""latitude"":41.6120601,""longitude"":-0.7019099}",Alfajarín,50172,StrongPositive
+1630,"{""latitude"":41.6494949,""longitude"":-0.9037619}",Zaragoza,50010,StrongPositive
+1094,"{""latitude"":36.38215413727266,""longitude"":-6.161667866234316}",Chiclana de la Frontera,11130,StrongPositive
+1030,"{""latitude"":37.4019327,""longitude"":-5.9219773}",Sevilla,41020,StrongPositive
+376,"{""latitude"":38.9063641,""longitude"":1.4236084}",Eivissa,7800,StrongPositive
+57,"{""latitude"":40.0712771,""longitude"":-8.804548}",Figueira da Foz,3090-495,Positive
