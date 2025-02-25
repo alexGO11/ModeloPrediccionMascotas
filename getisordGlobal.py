@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
-df = pd.read_csv("data/new_data.csv", dtype={'Postal code': str})
+df = pd.read_csv("data/processed/process_data.csv", dtype={'Postal code': str})
 
 # fitler to get two columns
 df = df[['Value test', 'Postal code']]
