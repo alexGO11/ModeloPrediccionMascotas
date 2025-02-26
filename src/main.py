@@ -17,17 +17,11 @@ def correct_pc(value):
 
 
 def prueba():
-    # Configuración de la base de datos
-    host = "127.0.0.1"
-    user = "root"
-    password = "1234"
-    database = "pet-database"
-
     # Crear una instancia del servicio de base de datos
-    db_service = DatabaseService(host, user, password, database)
+    db_service = DatabaseService()
 
     # Insertar un código postal
-    new_post_code = PostCode(post_code=28001, n_cases=10, estimation_pets=150.5)
+    new_post_code = PostCode(post_code=28002, n_cases=15, estimation_pets=200)
     db_service.insert_post_code(new_post_code)
 
     # Obtener todos los códigos postales

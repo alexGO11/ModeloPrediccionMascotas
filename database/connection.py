@@ -1,13 +1,17 @@
 # database/connection.py
+import json
 import mysql.connector
 from mysql.connector import Error
 
+with open("database/config.json", "r") as config_file:
+    config = json.load(config_file)
+
 class DatabaseConnection:
-    def __init__(self, host, user, password, database):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+    def __init__(self):
+        self.host = config["database"]["host"]
+        self.user = config["database"]["user"]
+        self.password = config["database"]["password"]
+        self.database = config["database"]["name"]
         self.connection = None
 
     def __enter__(self):
