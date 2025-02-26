@@ -1,6 +1,6 @@
---DROP TABLE post_code;
---DROP TABLE adjacent_postcode;
 --DROP TABLE test;
+--DROP TABLE adjacent_postcode;
+--DROP TABLE post_code;
 
 CREATE TABLE post_code (
     post_code INT PRIMARY KEY,

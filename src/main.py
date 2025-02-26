@@ -16,18 +16,9 @@ def correct_pc(value):
     return value
 
 
-def prueba():
-    # Crear una instancia del servicio de base de datos
+def update_database():
     db_service = DatabaseService()
 
-    # Insertar un código postal
-    new_post_code = PostCode(post_code=28002, n_cases=15, estimation_pets=200)
-    db_service.insert_post_code(new_post_code)
-
-    # Obtener todos los códigos postales
-    post_codes = db_service.get_all_post_codes()
-    for pc in post_codes:
-        print(pc)
 
 def main():
     parser = argparse.ArgumentParser(prog="GetisOrd script", description="GetisOrd python script to execute different pet cases")
@@ -45,6 +36,11 @@ def main():
         "--postal-code",
         type=correct_pc,
         help="Specify a postal code"
+    )
+    parser.add_argument(
+        "-u",
+        "--update-database",
+        help="Forces the app to update sql database from processed_data.csv"
     )
 
     # Parsear argumentos
@@ -69,7 +65,11 @@ def main():
 
     # Procesar --postal-code
     if args.postal_code:
-        prueba()
+        subprocess.run(["python", "getisordPerPC.py"])
+
+    # Procesar --postal-code
+    if args.update_database:
+        update_database()
 
 if __name__ == "__main__":
     main()

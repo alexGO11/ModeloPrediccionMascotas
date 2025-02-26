@@ -6,7 +6,6 @@ from ..models.adjacent_postcode import AdjacentPostcode
 from ..models.test import Test
 
 class DatabaseService:
-
     def insert_post_code(self, post_code):
         with DatabaseConnection() as conn:
             cursor = conn.cursor()
