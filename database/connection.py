@@ -3,7 +3,7 @@ import json
 import mysql.connector
 from mysql.connector import Error
 
-with open("database/config.json", "r") as config_file:
+with open("config/config.json", "r") as config_file:
     config = json.load(config_file)
 
 class DatabaseConnection:
@@ -22,7 +22,7 @@ class DatabaseConnection:
                 password=self.password,
                 database=self.database
             )
-            print("Conexión a la base de datos establecida.")
+            #print("Conexión a la base de datos establecida.")
             return self.connection
         except Error as e:
             print(f"Error al conectar a la base de datos: {e}")
@@ -31,4 +31,4 @@ class DatabaseConnection:
     def __exit__(self, exc_type, exc_val, exc_tb):
         if self.connection:
             self.connection.close()
-            print("Conexión a la base de datos cerrada.")
+            #print("Conexión a la base de datos cerrada.")

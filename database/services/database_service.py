@@ -22,4 +22,31 @@ class DatabaseService:
             cursor.execute(PostCodeQueries.SELECT_ALL)
             return [PostCode(*row) for row in cursor.fetchall()]
 
-    # Métodos similares para las otras tablas...
+    def insert_adjacent_post_code(self, adjacent_post_code):
+        with DatabaseConnection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(AdjacentPostcodeQueries.INSERT, (
+                adjacent_post_code.post_code_origin,
+                adjacent_post_code.post_code_adjacent
+            ))
+            conn.commit()
+        
+    def insert_test(self, test):
+        with DatabaseConnection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(TestQueries.INSERT, (
+                test.post_code,
+                test.date_done,
+                test.disease,
+                test.result,
+                test.city,
+                test.age,
+                test.sex
+            ))
+            conn.commit()
+
+    def get_all_test(self):
+        with DatabaseConnection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(TestQueries.SELECT_ALL)
+            return [PostCode(*row) for row in cursor.fetchall()]

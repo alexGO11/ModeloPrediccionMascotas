@@ -3,12 +3,14 @@ from datetime import datetime, timedelta
 import subprocess
 import sys
 import os
+import pandas as pd
+from tqdm import tqdm
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(project_root)
 
 from database.services.database_service import DatabaseService
-from database.models.post_code import PostCode
+from database.models import PostCode, AdjacentPostcode, Test
 
 def correct_pc(value):
     if not isinstance(value, str) and len(value) == 5:
@@ -19,6 +21,30 @@ def correct_pc(value):
 def update_database():
     db_service = DatabaseService()
 
+    df_insertion = pd.read_csv("data/processed/process_data.csv", na_values=[""])
+    df_insertion_grouped = pd.read_csv("data/processed/grouped_pc.csv")
+
+    print("Inserting tests in database...")
+    for index, row in tqdm(df_insertion.iterrows(), total=len(df_insertion), desc="Insertando tests"):
+        date_done = row['Date']
+        desease = row['Name test']
+        value_test = row['Value test']
+        pet_sex = row['Pet sex'] if not pd.isna(row["Pet sex"]) else None
+        pet_age = int(row['Pet age']) if not pd.isna(row["Pet age"]) else None
+        city = row['City'] if not pd.isna(row["City"]) else None
+        post_code = row['Postal code']
+
+        tqdm.write(f"Valores: {index}, {post_code}, {date_done}, {desease}, {value_test}, {pet_age}, {city}, {pet_sex}")
+        test = Test(index, post_code, date_done,desease, value_test, city, pet_age, pet_sex)
+        db_service.insert_test(test)
+    
+    print("Inserting post codes in database...")
+    for index, row in tqdm(df_insertion_grouped.iterrows(), total=len(df_insertion_grouped), desc="Insertando códigos postales"):
+        post_code_n = row["Postal code"]
+        n_positives = row["n_positives"]
+
+        pc = PostCode(post_code_n, n_positives)
+        db_service.insert_post_code(pc)
 
 def main():
     parser = argparse.ArgumentParser(prog="GetisOrd script", description="GetisOrd python script to execute different pet cases")
@@ -40,8 +66,8 @@ def main():
     parser.add_argument(
         "-u",
         "--update-database",
-        help="Forces the app to update sql database from processed_data.csv"
-    )
+        action="store_true",
+        help="Forces the app to update sql database from processed_data.csv")
 
     # Parsear argumentos
     args = parser.parse_args()
