@@ -1,0 +1,16 @@
+from sqlalchemy import Table, Column
+from sqlalchemy.sql.sqltypes import Integer, String, Date, Boolean
+from config.db import engine, meta_data
+
+
+tests = Table("test", meta_data, 
+             Column("id_test", Integer, primary_key=True),
+             Column("post_code", Integer, nullable=False),
+             Column("date_done", Date,  nullable=False),
+             Column("desease", String(50),  nullable=False),
+             Column("result", Integer,  nullable=False),
+             Column("city", String(50)),
+             Column("age", Integer),
+             Column("sex", String(50)))
+
+meta_data.create_all(engine)
