@@ -22,12 +22,15 @@ def get_tests(
     limit: int = Query(10, ge=1, le=100),  # Número máximo de registros por página (por defecto 10, máximo 100)
     offset: int = Query(0, ge=0)           # Desde qué registro empezar la consulta
 ):
-    with engine.connect() as conn:
-        stmt = select(tests).limit(limit).offset(offset)
-        result = conn.execute(stmt).fetchall()
-
-        
-        return [dict(row) for row in result]
+    try:
+        with engine.connect() as conn:
+            stmt = select(tests).limit(limit).offset(offset)
+            result = conn.execute(stmt).fetchall()
+            conn.commit()
+            print("conectado a la base de datos", result)
+            return result
+    except Exception as e:
+        print("Error al conectar:", e)
 
 #obtiene los tests filtrando por fecha y tipo de enfermedad
 @test.get("/api/test/{date}/{desease}", response_model=List[TestSchema])
@@ -62,6 +65,7 @@ def create_user(data_test: TestSchema):
     with engine.connect() as conn:
         new_test = data_test.dict()
         conn.execute(tests.insert().values(new_test))
+        conn.commit()
         return Response(status_code=HTTP_201_CREATED)
     
 
@@ -86,6 +90,7 @@ async def upload_csv(file: UploadFile = File(...)):
 
         with engine.connect() as conn:
             conn.execute(tests.insert().values(data_to_insert))
+            conn.commit()
 
         return {"message": "Datos insertados correctamente", "total": len(data_to_insert)}
 

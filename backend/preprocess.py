@@ -1,5 +1,4 @@
 import pandas as pd
-from opencage.geocoder import OpenCageGeocode
 import json
 import os
 
@@ -76,9 +75,5 @@ def clean_csv(data):
         "sex": "Desconocido",  # Si falta, poner un texto por defecto
         "desease": "Desconocido", # Si falta, poner un texto por defecto
     })
-    
-    # Guardar los archivos procesados
-    data.to_csv("data/processed/processed_data.csv", index=False)
-    grouped_data.to_csv("data/processed/grouped_data.csv", index=False)
 
     return data
