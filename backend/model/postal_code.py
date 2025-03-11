@@ -1,11 +1,11 @@
-from sqlalchemy import Table, Column
-from sqlalchemy.sql.sqltypes import Integer, Float
+from sqlalchemy import Table, Column, Float, String
 from config.db import engine, meta_data
 
-
-pc = Table("postal_codes", meta_data, 
-             Column("post_code", Integer, primary_key=True),
-             Column("censo", Float, nullable=False)
-            )
+pc = Table(
+    "post_codes",
+    meta_data,
+    Column("post_code", String(5), primary_key=True),
+    Column("census", Float, nullable=False)
+)
 
 meta_data.create_all(engine)

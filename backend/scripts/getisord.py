@@ -5,7 +5,7 @@ from esda.getisord import G_Local
 from shapely.geometry import mapping
 
 
-def aply_getisord(df):
+def aply_getisord(df, census):
     # Cargar el shapefile con los códigos postales
     shapefile_path = "data/codigos_postales.shp"
     gdf = gpd.read_file(shapefile_path)
@@ -22,19 +22,17 @@ def aply_getisord(df):
 
     resultado["post_code"] = resultado["post_code"].astype(str)
 
-    # Verificar si hay coincidencias en la unión
-    print("🔥 GDF Sample (antes del merge):", gdf.head())
-    print("🔥 Resultado Sample (antes del merge):", resultado.head())
-
     # Unir los datos espaciales con los tests
     gdf = gdf.merge(resultado, on="post_code", how="inner")
-
+    
+    gdf = gdf.merge(census, on="post_code", how="inner")
+    
     # Verificar si `gdf` tiene datos después del merge
     if gdf.empty:
         raise ValueError("Error: No hay datos después del merge entre `gdf` y `resultado`.")
 
     # Calcular la tasa de positividad
-    gdf["tasa_positividad"] = gdf["Tests_Positivos"] / gdf["Total_Tests"]
+    gdf["tasa_positividad"] = gdf["Tests_Positivos"] / gdf["census"]
 
     # Construir la matriz de pesos espaciales
     try:

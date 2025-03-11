@@ -14,9 +14,9 @@ from typing import List
 from scripts.preprocess import clean_csv
 from scripts.getisord import aply_getisord
 from model.postal_code import pc
+from model.getisord_t import getis_ord
 
 test = APIRouter()
-
 
 @test.get("/")
 def root():
@@ -154,9 +154,15 @@ async def get_tests_filtered(request: Request):
     desease = params["desease"]
 
     results = []
-
+    
     with engine.connect() as conn:
         current_date = start_date
+        
+        query = select(pc)
+
+        census_db = conn.execute(query)
+        census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
+        
         while current_date <= end_date:
             next_date = current_date + timedelta(days=interval)
             print("Start date:", start_date)
@@ -176,7 +182,7 @@ async def get_tests_filtered(request: Request):
             df = pd.DataFrame(result.fetchall(), columns=result.keys())
 
             if not df.empty:
-                df_resultado = aply_getisord(df)  # Genera GeoJSON
+                df_resultado = aply_getisord(df, census)  # Genera GeoJSON
                 
                 results.append({
                     "date": current_date.strftime("%Y-%m-%d"),  
@@ -206,7 +212,6 @@ async def upload_csv(file: UploadFile = File(...)):
     try:
         file.file.seek(0)
 
-        
         df = pd.read_csv(file.file)
 
         if df.empty:
@@ -293,17 +298,20 @@ async def upload_csv(file: UploadFile = File(...)):
         # Filtrar y renombrar columnas
         column_mapping = {
             "COD_POSTAL": "post_code",
-            "Censo_mascota_CP": "censo"
+            "Censo_mascota_CP": "census"
         }
 
         df = df[list(column_mapping.keys())].rename(columns=column_mapping)
 
         # Verificar valores NaN antes de conversión
-        print("Valores NaN en 'censo':", df["censo"].isna().sum())
+        print("Valores NaN en 'census':", df["census"].isna().sum())
 
-        # Rellenar NaN con 0.0 y asegurarse de que censo sea float
-        df["censo"] = df["censo"].fillna(0.0).astype(float)
+        # Rellenar NaN con 0.0 y asegurarse de que census sea float
+        df["census"] = df["census"].fillna(0.0).astype(float)
 
+        # Filtrar por los censuss que sean mayores o iguales a 1
+        df["census"] = df["census"].replace(0, 1)
+        
         # Convertir `post_code` a string si es necesario
         df["post_code"] = df["post_code"].astype(str)
 
@@ -328,3 +336,8 @@ async def upload_csv(file: UploadFile = File(...)):
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)
+    
+
+@getis_ord.post("/api/getis_ord", status_code=201)
+async def getis_ord(interval : int):
+    pass
