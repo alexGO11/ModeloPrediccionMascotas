@@ -3,7 +3,7 @@
 #activar entorno virtual: 1. Set-ExecutionPolicy Unrestricted -Scope CurrentUser 2. .\backend\.venv\Scripts\activate
 
 #abrir base de datos en docker
-docker exec -it db_tfg_mascotas mysql -u root -p
+docker exec -it db mysql -u root -p
 
 #crear network en docker 1. docker network <name> 2. docker network connect <net name> <container name>
 
@@ -16,3 +16,9 @@ guardar el contenedor)
 
 #ejecutar contenedor del backend
 uvicorn main:app --reload --host 0.0.0.0
+
+#inicializar front end (desde carpeta frontend)
+npm start
+
+#inicializar backend
+docker exec -it backend /bin/bash

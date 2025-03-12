@@ -5,7 +5,7 @@ from config.db import engine, meta_data
 
 tests = Table("test", meta_data, 
              Column("id_test", Integer, primary_key=True),
-             Column("post_code", Integer, nullable=False),
+             Column("post_code", String(5), nullable=False),
              Column("date_done", Date,  nullable=False),
              Column("desease", String(50),  nullable=False),
              Column("result", Integer,  nullable=False),

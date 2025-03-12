@@ -4,7 +4,7 @@ import datetime
 
 class TestSchema(BaseModel):
     id_test: Optional[int] = None  
-    post_code: int
+    post_code: str
     date_done: datetime.datetime
     desease: str
     result: int
