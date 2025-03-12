@@ -6,13 +6,17 @@ from shapely.geometry import mapping
 
 
 def aply_getisord(df, census):
-    # Cargar el shapefile con los códigos postales
+    print("Tests encontrados en el intervalo de tiempo: ", len(df))
+    print(df.head())
+    
     shapefile_path = "data/codigos_postales.shp"
     gdf = gpd.read_file(shapefile_path)
 
-    # Limpiar columnas no necesarias
+    # Renombrar columnas
     gdf = gdf.rename(columns={"COD_POSTAL": "post_code"})
-    gdf["post_code"] = gdf["post_code"].astype(str)
+    
+    print("Shapes cargados: ", len(gdf))
+    print(gdf.head())
 
     # Agrupar los datos de tests positivos
     resultado = df.groupby("post_code").agg(
@@ -20,25 +24,46 @@ def aply_getisord(df, census):
         Total_Tests=("result", "count")
     ).reset_index()
 
-    resultado["post_code"] = resultado["post_code"].astype(str)
-
     # Unir los datos espaciales con los tests
     gdf = gdf.merge(resultado, on="post_code", how="inner")
     
-    gdf = gdf.merge(census, on="post_code", how="inner")
-    
-    # Verificar si `gdf` tiene datos después del merge
+    print("Datos mergeados: ", len(gdf))
     if gdf.empty:
-        raise ValueError("Error: No hay datos después del merge entre `gdf` y `resultado`.")
+        print("No hay datos después del merge con resultados, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
+
+    gdf = gdf.merge(census, on="post_code", how="left")
+    
+    # Si sigue sin datos después del merge con census, devolver vacío
+    if gdf.empty:
+        print("No hay datos después del merge con census, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
+
+    # Rellenar posibles valores NaN en census
+    gdf["census"] = gdf["census"].fillna(1)
 
     # Calcular la tasa de positividad
     gdf["tasa_positividad"] = gdf["Tests_Positivos"] / gdf["census"]
+    
+    # Filtrar geometrías válidas
+    gdf = gdf[gdf.geometry.is_valid]  
+    gdf = gdf[gdf.geometry.area > 0]  
+    gdf = gdf[gdf.geometry.is_empty == False]  
+
+    # Verificar si quedan suficientes datos
+    if len(gdf) < 4:
+        print("Demasiados pocos datos para análisis espacial, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
 
     # Construir la matriz de pesos espaciales
     try:
         w = Queen.from_dataframe(gdf)
     except StopIteration:
-        raise ValueError("Error: No hay suficientes polígonos válidos para construir la matriz de pesos espaciales.")
+        print("No hay suficientes polígonos válidos para construir la matriz de pesos espaciales.")
+        return {"type": "FeatureCollection", "features": []}
+
+    print("Tasas de positividad:")
+    print(gdf["tasa_positividad"].shape)
 
     # Aplicar el estadístico de Getis-Ord G*
     g = G_Local(gdf["tasa_positividad"], w)
@@ -49,20 +74,16 @@ def aply_getisord(df, census):
 
     # Reemplazar NaN en valores de z_score
     gdf["z_value"] = gdf["z_value"].fillna(0)
-
-    # Asignar etiquetas de hotspot/coldspot
-    gdf['hotspot'] = np.where((gdf['z_value'] > 0) & (gdf['p_value'] < 0.05), 'Hotspot',
-                               np.where((gdf['z_value'] < 0) & (gdf['p_value'] < 0.05), 'Coldspot', 'Not Significant'))
-
+    
     geojson = {
         "type": "FeatureCollection",
         "features": []
     }
-    print(gdf.columns)
+
     for _, row in gdf.iterrows():
         feature = {
             "type": "Feature",
-            "geometry": mapping(row["geometry"]),  # Convertir a GeoJSON
+            "geometry": mapping(row["geometry"]),  
             "properties": {
                 "post_code": row["post_code"],
                 "z_value": row["z_value"],
@@ -71,4 +92,3 @@ def aply_getisord(df, census):
         geojson["features"].append(feature)
 
     return geojson
-

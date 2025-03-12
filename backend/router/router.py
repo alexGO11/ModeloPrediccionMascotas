@@ -176,14 +176,15 @@ async def get_tests_filtered(request: Request):
                     tests.c.date_done < next_date,
                     tests.c.desease == desease
                 )
-            ).limit(500)
+            )
 
             result = conn.execute(query)
             df = pd.DataFrame(result.fetchall(), columns=result.keys())
-
+            df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
+            
             if not df.empty:
                 df_resultado = aply_getisord(df, census)  # Genera GeoJSON
-                
+
                 results.append({
                     "date": current_date.strftime("%Y-%m-%d"),  
                     "geojson": df_resultado
@@ -222,6 +223,7 @@ async def upload_csv(file: UploadFile = File(...)):
         print(df.head())
         
         
+        df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
         data_to_insert = df.to_dict(orient="records")
 
@@ -312,8 +314,8 @@ async def upload_csv(file: UploadFile = File(...)):
         # Filtrar por los censuss que sean mayores o iguales a 1
         df["census"] = df["census"].replace(0, 1)
         
-        # Convertir `post_code` a string si es necesario
-        df["post_code"] = df["post_code"].astype(str)
+        # Asegurar que 'post_code' sea string de 5 dígitos
+        df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
         print("Estructura final del DataFrame antes de la inserción:")
         print(df.head())
@@ -336,8 +338,13 @@ async def upload_csv(file: UploadFile = File(...)):
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)
-    
 
-@getis_ord.post("/api/getis_ord", status_code=201)
+
+"""@test.post("/api/getis_ord", status_code=201)
 async def getis_ord(interval : int):
-    pass
+    
+    with engine.connect() as conn:
+        
+        
+    
+        return {"message": "Datos insertados correctamente", "total": len()}"""

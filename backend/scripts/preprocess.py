@@ -55,6 +55,9 @@ def clean_csv(data):
     # Asegurar que 'id_test' no tenga valores NaN y sea string
     if "id_test" in data.columns:
         data["id_test"] = data["id_test"].astype(str).fillna("")
+        
+    # Asegurar que 'post_code' sea string de 5 dígitos
+    data["post_code"] = data["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
     # Asegurar que 'post_code' y 'age' sean enteros (si hay valores NaN, poner 0)
     data["post_code"] = data["post_code"].fillna(0).astype(int)
@@ -63,11 +66,6 @@ def clean_csv(data):
     required_columns = ["post_code", "date_done", "desease", "result"]
     data = data.dropna(subset=required_columns)
 
-    # Agrupar los datos por código postal
-    grouped_data = data.groupby('post_code').agg(
-        casos_positivos=pd.NamedAgg(column='result', aggfunc='sum'),
-        total_casos=pd.NamedAgg(column='result', aggfunc='count')
-    ).reset_index()
     
     data = data.fillna({
         "post_code": 0,       # Si falta, poner 0
