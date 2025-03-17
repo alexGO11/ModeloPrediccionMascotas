@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_DATABASE=pets
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/home/app
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=12345
+      - DB_NAME=pets
+  app:
+    build:
+      context: ./frontend 
+    ports:
+      - "3000:3000" 
+    volumes:
+      - ./frontend:/home/app
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
