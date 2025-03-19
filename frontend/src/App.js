@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     setLoading(true); // Comienza la carga
 
-    fetch("http://localhost:8000/api/test/filtered", {
+    fetch("http://backend:5000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
