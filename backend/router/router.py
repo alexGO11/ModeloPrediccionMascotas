@@ -148,6 +148,19 @@ async def get_tests_filtered(request: Request):
 @test.post("/api/test/filtered")
 async def get_tests_filtered(request: Request):
     params = await request.json()
+
+    print("Datos recibidos:", params)  # Debugging
+
+    # Verificar si la clave "start_date" existe
+    if "start_date" not in params:
+        return {"error": "Falta el parámetro start_date en el JSON"}
+
+    try:
+        start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
+        return {"message": "Fecha procesada correctamente", "start_date": str(start_date)}
+    except Exception as e:
+        return {"error": f"Error al procesar start_date: {str(e)}"}
+
     start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
     end_date = datetime.strptime(params["end_date"], "%Y-%m-%d")
     interval = params["interval"]

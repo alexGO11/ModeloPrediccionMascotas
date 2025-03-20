@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     setLoading(true); // Comienza la carga
 
-    fetch("http://backend:5000/api/test/filtered", {
+    fetch("http://modeloprediccionmascotas-backend-1:5000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -36,6 +36,13 @@ function App() {
       });
   }, [startDate, interval, desease]);
 
+  console.log("Enviando JSON a la API:", {
+    start_date: startDate,
+    end_date: "2025-12-31",
+    interval: interval,
+    desease: desease,
+  });
+  
   return (
     <div>
       <TimeIntervalSelector interval={interval} setInterval={setInterval} />

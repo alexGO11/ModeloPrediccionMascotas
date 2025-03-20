@@ -1,13 +1,18 @@
 version: '3.9'
 services:
   db:
-    image: mysql
+    image: mysql:9.0
     environment:
-      - MYSQL_ROOT_PASSWORD=12345
-      - MYSQL_DATABASE=pets
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - mysql-data:/var/lib/mysql
     restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
   backend:
     build:
       context: ./backend
@@ -15,13 +20,15 @@ services:
       - "5000:5000"
     volumes:
       - ./backend:/home/app
+      - /home/app/.venv
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=12345
-      - DB_NAME=pets
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
   app:
     build:
       context: ./frontend 
@@ -29,6 +36,7 @@ services:
       - "3000:3000" 
     volumes:
       - ./frontend:/home/app
+      - /home/app/node_modules
     depends_on:
       - backend
 
