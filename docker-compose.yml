@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   db:
+    container_name: db
     image: mysql:9.0
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -13,11 +14,14 @@ services:
       interval: 10s
       retries: 5
       start_period: 10s
+    networks:
+      - webnet
   backend:
+    container_name: backend
     build:
       context: ./backend
     ports:
-      - "5000:5000"
+      - "8000:8000"
     volumes:
       - ./backend:/home/app
       - /home/app/.venv
@@ -29,16 +33,24 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+    networks:
+      - webnet
   app:
+    container_name: app
     build:
       context: ./frontend 
     ports:
-      - "80:80" 
+      - "8080:8080" 
     volumes:
       - ./frontend:/home/app
       - /home/app/node_modules
     depends_on:
       - backend
+    networks:
+      - webnet
+
+networks:
+  webnet:
 
 volumes:
   mysql-data:

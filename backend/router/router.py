@@ -147,8 +147,9 @@ async def get_tests_filtered(request: Request):
 # obtiene un intervalo de tiempo para buscar en la base de datos, aplica getisord a cada intervalo y devuelve una lista de geoJSONS
 @test.post("/api/test/filtered")
 async def get_tests_filtered(request: Request):
-    params = await request.json()
-
+    raw_body = await request.body()
+    params = raw_body.decode("utf-8")  # Decodifica el JSON en UTF-8
+    
     print("Datos recibidos:", params)  # Debugging
 
     # Verificar si la clave "start_date" existe
@@ -209,16 +210,6 @@ async def get_tests_filtered(request: Request):
 
 
 
-#crea un test individual
-@test.post("/api/test", status_code=HTTP_201_CREATED)
-def create_user(data_test: TestSchema):
-    with engine.connect() as conn:
-        new_test = data_test.dict()
-        conn.execute(tests.insert().values(new_test))
-        conn.commit()
-        return Response(status_code=HTTP_201_CREATED)
-    
-
 #añade tests a la base de datos subiendo un csv
 @test.post("/api/test/upload_csv", status_code=201)
 async def upload_csv(file: UploadFile = File(...)):
@@ -255,48 +246,6 @@ async def upload_csv(file: UploadFile = File(...)):
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)
-
-
-@test.get("/api/postal_codes", response_model=List[PostalCodeSchema])
-def get_postal_codes(
-    limit: int = Query(100, ge=1, le=500), 
-    offset: int = Query(0, ge=0) 
-    ):
-    
-    with engine.connect() as conn:
-        query = (
-                select(pc)
-
-            )
-        result = conn.execute(query).fetchall()
-        conn.commit()
-        return result
-    """with engine.connect() as conn:
-        all_results = []
-
-        while True:
-                # Construir la consulta paginada
-            query = (
-                select(pc)
-                .limit(limit)
-                .offset(offset)
-            )
-
-            result = conn.execute(query)
-            rows = result.fetchall()
-            conn.commit()
-            if not rows:
-                break  # Salir del bucle si no hay más datos
-                
-            all_results.extend(rows)  # Agregar resultados a la lista
-            offset += limit  # Incrementar el offset para la siguiente consulta
-
-        # Convertir los resultados a DataFrame
-        if not all_results:
-            return {"message": "No hay datos para los parámetros proporcionados"}
-        
-        
-        return all_results"""
     
 
 #añade tests a la base de datos subiendo un csv
@@ -351,13 +300,3 @@ async def upload_csv(file: UploadFile = File(...)):
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)
-
-
-"""@test.post("/api/getis_ord", status_code=201)
-async def getis_ord(interval : int):
-    
-    with engine.connect() as conn:
-        
-        
-    
-        return {"message": "Datos insertados correctamente", "total": len()}"""

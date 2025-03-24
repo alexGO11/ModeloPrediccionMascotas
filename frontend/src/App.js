@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     setLoading(true); // Comienza la carga
 
-    fetch("http://modeloprediccionmascotas-backend-1:5000/api/test/filtered", {
+    fetch("http://backend:8000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
