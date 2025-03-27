@@ -148,19 +148,17 @@ async def get_tests_filtered(request: Request):
 @test.post("/api/test/filtered")
 async def get_tests_filtered(request: Request):
     raw_body = await request.body()
-    params = raw_body.decode("utf-8")  # Decodifica el JSON en UTF-8
-    
+
+    try:
+        params = json.loads(raw_body.decode("utf-8"))  # Decodifica y convierte a diccionario
+    except json.JSONDecodeError:
+        return JSONResponse(content={"error": "El cuerpo de la solicitud no es un JSON válido"}, status_code=400)
+
     print("Datos recibidos:", params)  # Debugging
 
     # Verificar si la clave "start_date" existe
     if "start_date" not in params:
-        return {"error": "Falta el parámetro start_date en el JSON"}
-
-    try:
-        start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
-        return {"message": "Fecha procesada correctamente", "start_date": str(start_date)}
-    except Exception as e:
-        return {"error": f"Error al procesar start_date: {str(e)}"}
+        return {"Error": "Falta el parámetro start_date en el JSON"}
 
     start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
     end_date = datetime.strptime(params["end_date"], "%Y-%m-%d")

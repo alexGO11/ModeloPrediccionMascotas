@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     setLoading(true); // Comienza la carga
 
-    fetch("http://backend:8000/api/test/filtered", {
+    fetch("http://localhost:8000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -26,6 +26,7 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("Datos recibidos:", data);
         setGeojsonList(data);
         setSelectedDate(data[0]?.date);
         setLoading(false); // Finaliza la carga cuando llegan los datos
