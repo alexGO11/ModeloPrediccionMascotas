@@ -1,4 +1,4 @@
-FROM node:23 as build
+FROM node:23-alpine as build
 
 WORKDIR /app
 
@@ -9,6 +9,8 @@ RUN npm install
 COPY . .
 
 ENV PORT=8080
+
+RUN npm run build
 
 EXPOSE 8080
 
