@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 const Heatmap = ({ geojsonData }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const popupRef = useRef(new maplibregl.Popup({ closeButton: false, closeOnClick: false }));
 
   useEffect(() => {
     if (!map.current) {
@@ -17,11 +18,13 @@ const Heatmap = ({ geojsonData }) => {
       });
 
       map.current.on("load", () => {
+        // Fuente de datos
         map.current.addSource("heatmap-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
         });
 
+        // Capa de heatmap
         map.current.addLayer({
           id: "heatmap-layer",
           type: "heatmap",
@@ -50,12 +53,42 @@ const Heatmap = ({ geojsonData }) => {
             "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
           },
         });
+
+        // Capa invisible para detectar eventos (hover)
+        map.current.addLayer({
+          id: "hover-layer",
+          type: "fill",
+          source: "heatmap-source",
+          layout: {},
+          paint: {
+            "fill-color": "transparent",
+            "fill-opacity": 0,
+          },
+        });
+
+        // Mostrar popup al pasar el ratón
+        map.current.on("mousemove", "hover-layer", (e) => {
+          const feature = e.features[0];
+          const { post_code, z_value, n_positives } = feature.properties;
+
+          popupRef.current
+            .setLngLat(e.lngLat)
+            .setHTML(`<strong>Código postal:</strong> ${post_code}<br/><strong>Z:</strong> ${z_value}<br/><strong>Num. Positives:</strong> ${n_positives}`)
+            .addTo(map.current);
+        });
+
+        // Ocultar popup al salir del área
+        map.current.on("mouseleave", "hover-layer", () => {
+          popupRef.current.remove();
+        });
+        
       });
+
     }
-  }, []);
+  });
 
   useEffect(() => {
-    if (geojsonData && map.current.getSource("heatmap-source")) {
+    if (geojsonData && map.current && map.current.getSource("heatmap-source")) {
       map.current.getSource("heatmap-source").setData(geojsonData);
     }
   }, [geojsonData]);

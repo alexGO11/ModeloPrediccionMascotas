@@ -161,7 +161,7 @@ async def get_tests_filtered(request: Request):
         return {"Error": "Falta el parámetro start_date en el JSON"}
 
     start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
-    end_date = datetime.strptime(params["end_date"], "%Y-%m-%d")
+    end_date = datetime.strptime("2020-01-01", "%Y-%m-%d")
     interval = params["interval"]
     desease = params["desease"]
 
@@ -175,8 +175,8 @@ async def get_tests_filtered(request: Request):
         census_db = conn.execute(query)
         census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
         
-        while current_date <= end_date:
-            next_date = current_date + timedelta(days=interval)
+        while current_date >= end_date:
+            next_date = current_date - timedelta(days=interval)
             print("Start date:", start_date)
             print("Next date:", next_date)
             print("Interval:", interval)
@@ -184,8 +184,8 @@ async def get_tests_filtered(request: Request):
             # Consulta filtrando por el intervalo de tiempo actual
             query = select(tests).where(
                 and_(
-                    tests.c.date_done >= current_date,
-                    tests.c.date_done < next_date,
+                    tests.c.date_done <= current_date,
+                    tests.c.date_done > next_date,
                     tests.c.desease == desease
                 )
             )
