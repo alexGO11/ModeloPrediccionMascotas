@@ -7,8 +7,9 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://app:8080",  # Para el frontend dentro de Docker
-        "http://localhost:8080" # Para cuando accedas desde el navegador
+        "http://app:80",  # Para el frontend dentro de Docker
+        "http://localhost:80", # Para cuando accedas desde el navegador
+        "http://localhost"
     ],
     allow_credentials=True,
     allow_methods=['*'],
