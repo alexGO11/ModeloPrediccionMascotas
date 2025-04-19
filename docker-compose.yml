@@ -51,12 +51,14 @@ services:
         context: ./nginx
       ports:
         - "80:80"
+        - "443:443"
       depends_on:
         - app
         - backend
       networks:
         - frontnet
       volumes:
+        - ./certbot/conf:/etc/ssl/certs 
         - react_build:/usr/share/nginx/html
   
 networks:
