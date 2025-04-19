@@ -31,15 +31,19 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
 ## Estructura del proyecto
 ```sh
 ModeloPrediccionMascotas/
-│── backend/           # Código del backend
+│── backend/           
 │   ├── src/
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── Dockerfile
-│── frontend/          # Código del frontend
+│── frontend/          
 │   ├── app/
 │   ├── package.json
 │   ├── Dockerfile
+│── nginx/          # Nginx configuration
+│   ├── default.connf
+│   ├── Dockerfile
 │── docker-compose.yml 
-│── .env.example       
+│── .env.example
+│── README.md
 
