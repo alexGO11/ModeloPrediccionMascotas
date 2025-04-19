@@ -26,7 +26,7 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
     docker compose up --build
 
 4. La aplicación estará disponible en:
-    - http://localhost:8080
+    - http://localhost
 
 ## Estructura del proyecto
 ```sh
