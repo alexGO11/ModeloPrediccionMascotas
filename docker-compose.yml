@@ -41,7 +41,7 @@ services:
     ports:
       - "3000:3000" 
     volumes:
-      - ./frontend:/app/client
+      - react_build:/app/build
       - /app/client/node_modules
     networks:
       - frontnet
@@ -56,6 +56,8 @@ services:
         - backend
       networks:
         - frontnet
+      volumes:
+        - react_build:/usr/share/nginx/html
   
 networks:
   frontnet:
@@ -64,3 +66,4 @@ networks:
 
 volumes:
   mysql-data:
+  react_build:
