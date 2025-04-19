@@ -6,7 +6,7 @@ Este proyecto es una aplicación que permite visualizar en un mapa de la peníns
 ## Tecnologías utilizadas
 - **Frontend**: React
 - **Backend**: FastAPI (Python)
-- **Base de datos**: PostgreSQL
+- **Base de datos**: MySQL
 - **Orquestación**: Docker Compose
 
 ## Prerrequisitos
@@ -16,8 +16,8 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
 ## Instalación y ejecución
 1. Clona este repositorio:
    ```sh
-   git clone https://github.com/usuario/repo.git
-   cd repo
+   git clone https://github.com/usuario/ModeloPrediccionMascotas.git
+   cd ModeloPrediccionMascotas
 
 2. Crea un archivo [.env] en la raíz del proyecto y configura las variables de entorno necesarias (puedes usar .env.example como referencia).
 
@@ -26,20 +26,24 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
     docker compose up --build
 
 4. La aplicación estará disponible en:
-    - http://localhost:8080
+    - http://localhost
 
 ## Estructura del proyecto
 ```sh
 ModeloPrediccionMascotas/
-│── backend/           # Código del backend
+│── backend/           
 │   ├── src/
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── Dockerfile
-│── frontend/          # Código del frontend
+│── frontend/          
 │   ├── app/
 │   ├── package.json
 │   ├── Dockerfile
+│── nginx/          # Nginx configuration
+│   ├── default.connf
+│   ├── Dockerfile
 │── docker-compose.yml 
-│── .env.example       
+│── .env.example
+│── README.md
 

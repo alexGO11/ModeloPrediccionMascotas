@@ -14,42 +14,56 @@ services:
       retries: 5
       start_period: 10s
     networks:
-      - webnet
+      - backnet
   backend:
     container_name: backend
     build:
       context: ./backend
-    ports:
-      - "8000:8000"
     volumes:
-      - ./backend:/home/app
-      - /home/app/.venv
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
+    ports:
+      - "8000:8000"
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
     networks:
-      - webnet
+      - frontnet
+      - backnet
   app:
     container_name: app
     build:
-      context: ./frontend 
+      context: ./frontend
     ports:
-      - "8080:8080" 
+      - "3000:3000" 
     volumes:
-      - ./frontend:/home/app
-      - /home/app/node_modules
-    depends_on:
-      - backend
+      - react_build:/app/build
+      - /app/client/node_modules
     networks:
-      - webnet
-
+      - frontnet
+  nginx:
+      container_name: nginx
+      build: 
+        context: ./nginx
+      ports:
+        - "80:80"
+      depends_on:
+        - app
+        - backend
+      networks:
+        - frontnet
+      volumes:
+        - react_build:/usr/share/nginx/html
+  
 networks:
-  webnet:
+  frontnet:
+    driver: bridge
+  backnet:
 
 volumes:
   mysql-data:
+  react_build:

@@ -1,4 +1,5 @@
-FROM node:23-alpine as build
+# Frontend part
+FROM node:23-alpine
 
 WORKDIR /app
 
@@ -8,10 +9,8 @@ RUN npm install
 
 COPY . .
 
-ENV PORT=8080
+EXPOSE 3000
 
 RUN npm run build
 
-EXPOSE 8080
-
-CMD ["npm", "start"]
+#CMD ["npm", "run", "start"]
