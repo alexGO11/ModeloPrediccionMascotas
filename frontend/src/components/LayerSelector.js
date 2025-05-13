@@ -9,7 +9,7 @@ const LayerSelector = ({ selectedLayer, setSelectedLayer }) => {
         >
           <option value="z_value">Heatmap</option>
           <option value="temperatura">Temperatura</option>
-          {/* Agrega más capas aquí si las tienes */}
+          <option value="all">Ambos</option>
         </select>
       </div>
     );
