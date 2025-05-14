@@ -12,7 +12,7 @@ const TimeIntervalSelector = ({ interval, setInterval }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <label style={{ marginBottom: "5px" }}>Intervalo de tiempo (días):</label>
+      <label style={{ marginBottom: "5px" }}>Time interval (days):</label>
       <input
         type="number"
         min="30"

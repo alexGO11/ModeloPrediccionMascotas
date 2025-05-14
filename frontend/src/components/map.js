@@ -2,7 +2,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import React, { useEffect, useRef } from "react";
 
-const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
+const Heatmap = ({ deseaseData, aemetData, selectedLayers }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const popupRef = useRef(new maplibregl.Popup({ closeButton: false, closeOnClick: false }));
@@ -63,7 +63,6 @@ const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
               9, 25
             ],
         
-            // Opcional: reduce opacidad al alejar para no saturar
             'heatmap-opacity': [
               'interpolate',
               ['linear'],
@@ -117,21 +116,6 @@ const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
             "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
           },
         });
-
-        map.current.addLayer({
-            id: 'etiquetas-temperatura',
-            type: 'symbol',
-            source: 'temperaturas',
-            layout: {
-              'text-field': ['concat', ['to-string', ['get', 'temp']], '°C'],
-              'text-size': 10,
-              'text-offset': [0, 0.5],
-              'text-anchor': 'top'
-            },
-            paint: {
-              'text-color': '#ffffff'
-            }
-        });
         
 
         map.current.addLayer({
@@ -145,7 +129,6 @@ const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
           },
         });
 
-        // Mostrar popup al pasar el ratón (solo enfermedades)
         map.current.on("mousemove", "disseases-hover-layer", (e) => {
           const feature = e.features[0];
           const { post_code, z_value, n_positives } = feature.properties;
@@ -158,7 +141,7 @@ const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
             .addTo(map.current);
         });
 
-        map.current.on("mouseleave", "hover-layer", () => {
+        map.current.on("mouseleave", "disseases-hover-layer", () => {
           popupRef.current.remove();
         });
       });
@@ -182,17 +165,15 @@ const Heatmap = ({ deseaseData, aemetData, selectedLayer }) => {
 
   useEffect(() => {
     if (!map.current) return;
+    
+    //comprueba que capas estan en el array de capas seleccionadas
+    const showTemp = selectedLayers.includes("temperature");
+    const showHuman = selectedLayers.includes("human");
   
-    const showDesease = selectedLayer === "z_value" || selectedLayer === "all";
-    const showTemp = selectedLayer === "temperatura" || selectedLayer === "all";
-  
-    if (map.current.getLayer("heatmap-layer")) {
-      map.current.setLayoutProperty("heatmap-layer", "visibility", showDesease ? "visible" : "none");
-    }
     if (map.current.getLayer("aemet-heatmap")) {
       map.current.setLayoutProperty("aemet-heatmap", "visibility", showTemp ? "visible" : "none");
     }
-  }, [selectedLayer]);
+  }, [selectedLayers]);
 
   return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />;
 };

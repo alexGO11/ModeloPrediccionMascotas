@@ -1,7 +1,7 @@
 const TimeSlider = ({ dates, selectedDate, setSelectedDate }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <label style={{ marginBottom: "5px" }}>Fecha seleccionada:</label>
+      <label style={{ marginBottom: "5px" }}>Selected date:</label>
       <input
         type="range"
         min={0}

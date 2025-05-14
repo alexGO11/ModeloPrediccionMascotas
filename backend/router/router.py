@@ -172,16 +172,21 @@ async def get_tests_filtered(request: Request):
     if "start_date" not in params:
         return {"Error": "Falta el parámetro start_date en el JSON"}
 
-    start_date = datetime.strptime(params["start_date"], "%Y-%m-%d")
-    end_date = datetime.strptime("2020-01-01", "%Y-%m-%d")
+    start_date = datetime.strptime("2025-01-01", "%Y-%m-%d")
+    print("Start date:", start_date)
+    end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
+    print("End date:", end_date)
     interval = params["interval"]
+    print("Intervalo:", interval)
     desease = params["desease"]
+    print("Enfermedad:", desease)
 
     results = []
     
     #return JSONResponse(content=results)
     
     with engine.connect() as conn:
+        print("Conectado a la base de datos")
         current_date = start_date
         
         query = select(pc)
@@ -190,6 +195,7 @@ async def get_tests_filtered(request: Request):
         census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
         
         while current_date >= end_date:
+            print("Current date:", current_date)
             next_date = current_date - timedelta(days=interval)
             print("Start date:", start_date)
             print("Next date:", next_date)
@@ -203,7 +209,7 @@ async def get_tests_filtered(request: Request):
                     tests.c.desease == desease
                 )
             )
-
+            print("Query:", query)
             result = conn.execute(query)
             df = pd.DataFrame(result.fetchall(), columns=result.keys())
             df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
