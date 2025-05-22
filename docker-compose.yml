@@ -38,8 +38,6 @@ services:
     container_name: app
     build:
       context: ./frontend
-    ports:
-      - "3000:3000" 
     volumes:
       - react_build:/app/build
       - /app/client/node_modules
@@ -50,14 +48,17 @@ services:
       build: 
         context: ./nginx
       ports:
-        - "80:80"
+        #- "80:80"
+        - "443:443"
       depends_on:
         - app
         - backend
       networks:
         - frontnet
       volumes:
+        - ./certbot/conf:/etc/ssl/certs 
         - react_build:/usr/share/nginx/html
+        - ./nginx/htpasswd:/etc/nginx/.htpasswd
   
 networks:
   frontnet:
