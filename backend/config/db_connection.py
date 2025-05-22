@@ -1,7 +1,5 @@
 from sqlalchemy import create_engine, MetaData
-from .settings import Settings
-
-settings = Settings()
+from .settings_env import settings
 
 DB_DIALECT = settings.db_dialect
 DB_USER = settings.db_user

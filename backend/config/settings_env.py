@@ -1,5 +1,8 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class Settings(BaseSettings):
     db_name: str = Field(validation_alias='DB_NAME')
@@ -11,3 +14,5 @@ class Settings(BaseSettings):
     secret_key: str = Field(validation_alias='SECRET_KEY')
     algorithm: str = Field(validation_alias='ALGORITHM')
     token_expire: int = Field(validation_alias='ACCESS_TOKEN_EXPIRE_MINUTES')
+
+settings = Settings()

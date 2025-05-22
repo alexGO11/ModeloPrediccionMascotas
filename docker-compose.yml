@@ -21,6 +21,7 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app/backend
+      #- .:/app
     depends_on:
       db:
         condition: service_healthy
@@ -48,7 +49,6 @@ services:
       build: 
         context: ./nginx
       ports:
-        #- "80:80"
         - "443:443"
       depends_on:
         - app

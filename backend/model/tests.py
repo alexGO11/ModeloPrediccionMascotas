@@ -2,7 +2,6 @@ from sqlalchemy import Table, Column
 from sqlalchemy.sql.sqltypes import Integer, String, Date, Boolean
 from config.db_connection import engine, meta_data
 
-
 tests = Table("test", meta_data, 
              Column("id_test", Integer, primary_key=True),
              Column("post_code", String(5), nullable=False),
