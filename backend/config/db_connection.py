@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker
 from .settings_env import settings
 
 DB_DIALECT = settings.db_dialect
@@ -12,5 +13,7 @@ URL_CONECTION = '{}://{}:{}@{}/{}'.format(DB_DIALECT, DB_USER, DB_PASSWORD, DB_H
 print("URL de conexión:", URL_CONECTION)
 
 engine = create_engine(URL_CONECTION)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 meta_data = MetaData()
