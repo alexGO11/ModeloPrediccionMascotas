@@ -2,9 +2,10 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import React, { useEffect, useRef } from "react";
 
-const Heatmap = ({ geojsonData }) => {
+const Heatmap = ({ deseaseData, aemetData, selectedLayers }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const popupRef = useRef(new maplibregl.Popup({ closeButton: false, closeOnClick: false }));
 
   useEffect(() => {
     if (!map.current) {
@@ -17,10 +18,75 @@ const Heatmap = ({ geojsonData }) => {
       });
 
       map.current.on("load", () => {
+        // Enfermedades
         map.current.addSource("heatmap-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
         });
+
+        map.current.addSource("aemet-source", {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [] },
+        });
+
+
+        map.current.addLayer({
+          id: 'aemet-heatmap',
+          type: 'heatmap',
+          source: 'aemet-source',
+          paint: {
+            // Peso de cada punto según su temperatura
+            'heatmap-weight': [
+              'interpolate',
+              ['linear'],
+              ['get', 'temp'],
+              0, 0,
+              40, 1
+            ],
+        
+            // Ajusta la intensidad según el zoom (más intensidad al acercar)
+            'heatmap-intensity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              0, 0.5,
+              9, 1.5
+            ],
+        
+            // Cambia el radio según el zoom
+            'heatmap-radius': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              0, 2,
+              5, 10,
+              9, 25
+            ],
+        
+            'heatmap-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              0, 0.3,
+              7, 0.5,
+              10, 0.4
+            ],
+        
+           'heatmap-color': [
+              'interpolate',
+              ['linear'],
+              ['heatmap-density'],
+              0, 'rgba(0, 0, 255, 0)',
+              0.1, 'blue',
+              0.2, 'cyan',
+              0.4, 'lime',
+              0.6, 'yellow',
+              0.8, 'orange',
+              1, 'red'
+            ],
+          }
+        });
+        
 
         map.current.addLayer({
           id: "heatmap-layer",
@@ -50,15 +116,64 @@ const Heatmap = ({ geojsonData }) => {
             "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
           },
         });
+        
+
+        map.current.addLayer({
+          id: "disseases-hover-layer",
+          type: "fill",
+          source: "heatmap-source",
+          layout: {},
+          paint: {
+            "fill-color": "rgb(103,169,207)",
+            "fill-opacity": 0,
+          },
+        });
+
+        map.current.on("mousemove", "disseases-hover-layer", (e) => {
+          const feature = e.features[0];
+          const { post_code, z_value, n_positives } = feature.properties;
+
+          popupRef.current
+            .setLngLat(e.lngLat)
+            .setHTML(
+              `<strong>Código postal:</strong> ${post_code}<br/><strong>Z:</strong> ${z_value}<br/><strong>Num. Positives:</strong> ${n_positives}`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "disseases-hover-layer", () => {
+          popupRef.current.remove();
+        });
       });
     }
   }, []);
 
+  // Actualizar datos de enfermedades
   useEffect(() => {
-    if (geojsonData && map.current.getSource("heatmap-source")) {
-      map.current.getSource("heatmap-source").setData(geojsonData);
+    if (map.current && map.current.getSource("heatmap-source") && deseaseData) {
+      map.current.getSource("heatmap-source").setData(deseaseData);
     }
-  }, [geojsonData]);
+  }, [deseaseData]);
+  
+  useEffect(() => {
+    if (map.current && map.current.getSource("aemet-source") && aemetData) {
+      map.current.getSource("aemet-source").setData(aemetData);
+    }
+  }, [aemetData]);
+  
+
+
+  useEffect(() => {
+    if (!map.current) return;
+    
+    //comprueba que capas estan en el array de capas seleccionadas
+    const showTemp = selectedLayers.includes("temperature");
+    const showHuman = selectedLayers.includes("human");
+  
+    if (map.current.getLayer("aemet-heatmap")) {
+      map.current.setLayoutProperty("aemet-heatmap", "visibility", showTemp ? "visible" : "none");
+    }
+  }, [selectedLayers]);
 
   return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />;
 };

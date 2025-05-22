@@ -87,6 +87,7 @@ def aply_getisord(df, census):
             "properties": {
                 "post_code": row["post_code"],
                 "z_value": row["z_value"],
+                "n_positives": row["Tests_Positivos"]
             }
         }
         geojson["features"].append(feature)

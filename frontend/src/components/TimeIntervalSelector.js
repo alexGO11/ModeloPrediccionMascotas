@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 
+
 const TimeIntervalSelector = ({ interval, setInterval }) => {
-  const [tempInterval, setTempInterval] = useState(interval); // Estado temporal para el input
+  const [inputValue, setInputValue] = useState(interval);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      setInterval(tempInterval); // Solo actualiza cuando se presiona Enter
+      setInterval(Number(inputValue));
     }
   };
 
   return (
-    <div>
-      <label>Intervalo de tiempo (días):</label>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <label style={{ marginBottom: "5px" }}>Time interval (days):</label>
       <input
         type="number"
         min="30"
         max="365"
-        value={tempInterval}
-        onChange={(e) => setTempInterval(Number(e.target.value))}
-        onKeyDown={handleKeyDown} // Ejecuta solo cuando se presiona Enter
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        style={{ padding: "5px", borderRadius: "6px", border: "1px solid #ccc" }}
       />
     </div>
   );

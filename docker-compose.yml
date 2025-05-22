@@ -41,6 +41,10 @@ services:
     volumes:
       - react_build:/app/build
       - /app/client/node_modules
+    depends_on:
+      - backend
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Importante para que Webpack observe cambios dentro de contenedor
     networks:
       - frontnet
   nginx:
