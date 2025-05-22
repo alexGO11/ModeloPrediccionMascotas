@@ -1,14 +1,13 @@
 from sqlalchemy import create_engine, MetaData
-from dotenv import load_dotenv
-import os
+from .settings import Settings
 
-load_dotenv()
+settings = Settings()
 
-DB_NAME = os.getenv('DB_NAME')
-DB_HOST = os.getenv('DB_HOST')
-DB_DIALECT = os.getenv('DB_DIALECT')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_USER = os.getenv('DB_USER')
+DB_DIALECT = settings.db_dialect
+DB_USER = settings.db_user
+DB_PASSWORD = settings.db_pass
+DB_HOST = settings.db_host
+DB_NAME = settings.db_name
 
 URL_CONECTION = '{}://{}:{}@{}/{}'.format(DB_DIALECT, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 
