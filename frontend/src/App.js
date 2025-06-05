@@ -2,8 +2,20 @@ import React, { useEffect, useState } from "react";
 import Heatmap from "./components/map";
 import TimeIntervalSelector from "./components/TimeIntervalSelector";
 import TimeSlider from "./components/TimeSlider";
+import AuthPage from './pages/AuthPage';
+
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  if (!loggedIn) return <AuthPage onLogin={() => setLoggedIn(true)} />;
+
+  Map();
+
+}
+
+function Map(){
   const [startDate, setStartDate] = useState("2020-07-20");
   const [interval, setInterval] = useState(365);
   const [desease, setDesease] = useState("Leishmania");
