@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from router.router import test
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 app.add_middleware(
@@ -12,6 +13,7 @@ app.add_middleware(
     #    "http://app:80",          # Para frontend dentro de Docker
     #    "http://app:3000"         # Para frontend dentro de Docker
     #],
+    
     allow_origins=["http://localhost",
                    "https://localhost"],
     allow_credentials=True,

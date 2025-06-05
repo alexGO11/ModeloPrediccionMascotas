@@ -52,10 +52,10 @@ def get_tests(
         print("Error al conectar:", e)
 
 #obtiene los tests filtrando por fecha y tipo de enfermedad
-"""@test.get("/api/test/{date}/{desease}", response_model=List[TestSchema])
+"""@test.get("/api/test/{date}/{disease}", response_model=List[TestSchema])
 def get_tests(
     date: datetime, 
-    desease: str,
+    disease: str,
     limit: int = Query(10, ge=1, le=100),
     offset: int = Query(0, ge=0)           
     ):
@@ -68,7 +68,7 @@ def get_tests(
             .where(
                 and_(
                     tests.c.date_done.between(date, today),
-                    tests.c.desease == desease
+                    tests.c.disease == disease
                 )
             )
             .limit(limit)
@@ -78,10 +78,10 @@ def get_tests(
         return [dict(row) for row in result]"""
 
      
-@test.get("/api/test/{date}/{desease}")
+@test.get("/api/test/{date}/{disease}")
 def get_tests(
     date: datetime, 
-    desease: str,
+    disease: str,
     limit: int = Query(100, ge=1, le=500), 
     offset: int = Query(0, ge=0)  
     ):
@@ -96,7 +96,7 @@ def get_tests(
                 .where(
                     and_(
                         tests.c.date_done >= date,
-                        tests.c.desease == desease
+                        tests.c.disease == disease
                     )
                 )
                 .limit(limit)
@@ -132,13 +132,13 @@ def get_tests(
 async def get_tests_filtered(request: Request):
     params = await request.json()
     date = params["date"]
-    desease = params["desease"]
+    disease = params["disease"]
 
     with engine.connect() as conn:
         query = select(tests).where(
             and_(
                 tests.c.date_done >= date,
-                tests.c.desease == desease
+                tests.c.disease == disease
             )
         ).limit(500)  # Limita la cantidad de datos devueltos
 
@@ -178,13 +178,11 @@ async def get_tests_filtered(request: Request):
     print("End date:", end_date)
     interval = params["interval"]
     print("Intervalo:", interval)
-    desease = params["desease"]
-    print("Enfermedad:", desease)
+    disease = params["disease"]
+    print("Enfermedad:", disease)
 
     results = []
-    
-    #return JSONResponse(content=results)
-    
+        
     with engine.connect() as conn:
         print("Conectado a la base de datos")
         current_date = start_date
@@ -206,7 +204,7 @@ async def get_tests_filtered(request: Request):
                 and_(
                     tests.c.date_done <= current_date,
                     tests.c.date_done > next_date,
-                    tests.c.desease == desease
+                    tests.c.desease == disease
                 )
             )
             print("Query:", query)
@@ -468,10 +466,18 @@ async def get_aemet_data(request: Request):
         print("Shape de España cargado y preparado")
 
         with engine.connect() as conn:
+
+            stmt = stmt = select(func.max(aemet.c.temp))
+            max_temp = conn.execute(stmt).scalar()
+            print("Max temp:", max_temp)
+            stmt = stmt = select(func.min(aemet.c.temp))
+            min_temp = conn.execute(stmt).scalar()
+            print("Min temp:", min_temp)
+
             while current_date >= end_date:
                 next_date = current_date - timedelta(days=interval)
                 print(f"Intervalo: {next_date} → {current_date}")
-
+                
                 stmt = (
                     select(
                         func.avg(aemet.c.temp).label("avg_temp"),
@@ -488,6 +494,7 @@ async def get_aemet_data(request: Request):
                 )
 
                 result = conn.execute(stmt).mappings().fetchall()
+
                 print(f"Registros encontrados: {len(result)}")
 
                 if not result:
@@ -501,7 +508,7 @@ async def get_aemet_data(request: Request):
 
                 lon_min, lon_max = -10, 5
                 lat_min, lat_max = 35, 44
-                grid_x, grid_y = np.mgrid[lon_min:lon_max:200j, lat_min:lat_max:200j]
+                grid_x, grid_y = np.mgrid[lon_min:lon_max:300j, lat_min:lat_max:300j]
 
                 grid_z = griddata(points, values, (grid_x, grid_y), method='cubic')
 
@@ -520,6 +527,9 @@ async def get_aemet_data(request: Request):
 
                         punto = Point(lon, lat)
                         if shape_prepared.contains(punto):  
+                            
+                            temp_norm = (temp - min_temp) / (max_temp - min_temp) if max_temp != min_temp else 0
+
                             interpolated_features.append({
                                 "type": "Feature",
                                 "geometry": {
@@ -527,7 +537,8 @@ async def get_aemet_data(request: Request):
                                     "coordinates": [lon, lat]
                                 },
                                 "properties": {
-                                    "temp": round(temp, 2)
+                                    "temp": round(temp, 2),
+                                    "temp_norm": round(temp_norm, 1)
                                 }
                             })
 
