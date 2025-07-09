@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from router.router import test
 from fastapi.middleware.cors import CORSMiddleware
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+import asyncio
 
 
 app = FastAPI()
+scheduler = AsyncIOScheduler()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,5 +25,7 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*']
 )
+
+
 
 app.include_router(test)
