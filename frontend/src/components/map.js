@@ -18,18 +18,19 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
       });
 
       map.current.on("load", () => {
-        // Enfermedades
+        // Cargar datos de enfermedades
         map.current.addSource("disease-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
         });
 
+        // Cargar datos de AEMET
         map.current.addSource("aemet-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
         });
 
-
+        // Capa de mapa de temperatura
         map.current.addLayer({
           id: 'aemet-heatmap',
           type: 'circle',
