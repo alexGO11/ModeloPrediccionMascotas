@@ -1,8 +1,14 @@
 from fastapi import FastAPI
 from router.router import test
 from fastapi.middleware.cors import CORSMiddleware
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+import asyncio
+
 
 app = FastAPI()
+scheduler = AsyncIOScheduler()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -12,11 +18,14 @@ app.add_middleware(
     #    "http://app:80",          # Para frontend dentro de Docker
     #    "http://app:3000"         # Para frontend dentro de Docker
     #],
+    
     allow_origins=["http://localhost",
                    "https://localhost"],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*']
 )
+
+
 
 app.include_router(test)

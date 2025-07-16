@@ -4,6 +4,8 @@ import requests
 from starlette.status import HTTP_201_CREATED
 from schema.test_schema import TestSchema
 from schema.pc_schema import PostalCodeSchema
+from schema.precalculated_schema import PrecalculatedSchema
+from model.precalculated import precalculated
 import pandas as pd
 import numpy as np
 import json
@@ -24,201 +26,101 @@ from scipy.interpolate import griddata
 from shapely.geometry import mapping, Point
 from shapely.geometry import shape
 from shapely.prepared import prep
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
+from scripts.serialize_geojson import serialize_geojson_rows
+import time
 
 
 
 test = APIRouter()
 url = "/api/valores/climatologicos/diarios/datos/fechaini/{fechaIniStr}/fechafin/{fechaFinStr}/todasestaciones"
+scheduler = AsyncIOScheduler()
+
+intervals = [15, 30, 60, 90, 120]
+diseases = ["Leishmania", "Giardia"]
 
 @test.get("/")
 def root():
     return {"message": "hi im fastAPI with a router"}
 
-#obtiene todos los tests en la base de datos
-@test.get("/api/test", response_model=List[TestSchema])
-def get_tests(
-    #parametros de paginacion para no saturar la api
-    limit: int = Query(10, ge=1, le=100),  # Número máximo de registros por página (por defecto 10, máximo 100)
-    offset: int = Query(0, ge=0)           # Desde qué registro empezar la consulta
-):
-    try:
-        with engine.connect() as conn:
-            stmt = select(tests).limit(limit).offset(offset)
-            result = conn.execute(stmt).fetchall()
-            conn.commit()
-            print("conectado a la base de datos", result)
-            return result
-    except Exception as e:
-        print("Error al conectar:", e)
-
-#obtiene los tests filtrando por fecha y tipo de enfermedad
-"""@test.get("/api/test/{date}/{desease}", response_model=List[TestSchema])
-def get_tests(
-    date: datetime, 
-    desease: str,
-    limit: int = Query(10, ge=1, le=100),
-    offset: int = Query(0, ge=0)           
-    ):
-    
-    with engine.connect() as conn:
-        today = datetime.today().date()
-        # Filtrar por fecha y enfermedad con paginación
-        stmt = (
-            select(tests)
-            .where(
-                and_(
-                    tests.c.date_done.between(date, today),
-                    tests.c.desease == desease
-                )
-            )
-            .limit(limit)
-            .offset(offset)
-        )
-        result = conn.execute(stmt).fetchall()
-        return [dict(row) for row in result]"""
-
-     
-@test.get("/api/test/{date}/{desease}")
-def get_tests(
-    date: datetime, 
-    desease: str,
-    limit: int = Query(100, ge=1, le=500), 
-    offset: int = Query(0, ge=0)  
-    ):
-
-    with engine.connect() as conn:
-        all_results = []
-
-        while True:
-            # Construir la consulta paginada
-            query = (
-                select(tests)
-                .where(
-                    and_(
-                        tests.c.date_done >= date,
-                        tests.c.desease == desease
-                    )
-                )
-                .limit(limit)
-                .offset(offset)
-            )
-
-            result = conn.execute(query)
-            rows = result.fetchall()
-            if not rows:
-                break  # Salir del bucle si no hay más datos
-            
-            all_results.extend(rows)  # Agregar resultados a la lista
-            offset += limit  # Incrementar el offset para la siguiente consulta
-
-        # Convertir los resultados a DataFrame
-        if not all_results:
-            return {"message": "No hay datos para los parámetros proporcionados"}
-
-        df = pd.DataFrame(all_results, columns=result.keys())
-
-        # Aplicar la función de análisis espacial
-        df_resultado = aply_getisord(df)
         
-        
-        geojson_result = df_resultado.to_json()
-
-        print(df_resultado.head())
-        
-        # calcular centroides y devolver geoJSON
-        return geojson_result
-    
-"""@test.post("/api/test/filtered")
-async def get_tests_filtered(request: Request):
-    params = await request.json()
-    date = params["date"]
-    desease = params["desease"]
-
-    with engine.connect() as conn:
-        query = select(tests).where(
-            and_(
-                tests.c.date_done >= date,
-                tests.c.desease == desease
-            )
-        ).limit(500)  # Limita la cantidad de datos devueltos
-
-        result = conn.execute(query)
-        df = pd.DataFrame(result.fetchall(), columns=result.keys())
-
-        # Aplica análisis espacial
-        df_resultado = aply_getisord(df)
-        # Convertir todos los datos de numpy a tipos nativos de Python
-        df_resultado = df_resultado.applymap(lambda x: x.item() if isinstance(x, (np.integer, np.floating)) else x)
-
-        # Convertir a GeoJSON
-        geojson_result = df_resultado.to_json()
-
-        # Enviar respuesta JSON
-        return JSONResponse(content=json.loads(geojson_result))"""
-        
-# obtiene un intervalo de tiempo para buscar en la base de datos, aplica getisord a cada intervalo y devuelve una lista de geoJSONS
+# Recibe un intervalo de timpo introducido por el usuario y devuelve los datos de todos los tests realizados separados por intervalos de tiempo
 @test.post("/api/test/filtered")
 async def get_tests_filtered(request: Request):
     raw_body = await request.body()
-    
+
     try:
-        params = json.loads(raw_body.decode("utf-8"))  # Decodifica y convierte a diccionario
+        params = json.loads(raw_body.decode("utf-8"))
     except json.JSONDecodeError:
-        return JSONResponse(content={"error": "El cuerpo de la solicitud no es un JSON válido"}, status_code=400)
+        return JSONResponse(content={"error": "El cuerpo no es JSON válido"}, status_code=400)
 
-    print("Datos recibidos:", params)  # Debugging
+    print("Datos recibidos:", params)
 
-    # Verificar si la clave "start_date" existe
     if "start_date" not in params:
-        return {"Error": "Falta el parámetro start_date en el JSON"}
+        return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
 
-    start_date = datetime.strptime("2025-01-01", "%Y-%m-%d")
-    print("Start date:", start_date)
+    # Inicializa variables
+    start_date = datetime.utcnow()
     end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
-    print("End date:", end_date)
     interval = params["interval"]
-    print("Intervalo:", interval)
-    desease = params["desease"]
-    print("Enfermedad:", desease)
+    disease = params["disease"]
 
+    # Si el intervalo coincide con los precalculados, devolverlos
+    if interval in [15, 30, 60, 90, 120]:
+        with engine.connect() as conn:
+            query = select(precalculated).where(
+                and_(
+                    precalculated.c.days_interval == f"{interval}D",
+                    precalculated.c.disease == disease
+                )
+            ).order_by(precalculated.c.end_date.desc())
+
+            result = conn.execute(query)
+            rows = result.fetchall()
+
+            print("Datos precalculados encontrados:", len(rows))
+            
+            geojson = serialize_geojson_rows(rows)
+
+            
+
+            return JSONResponse(content=geojson)
+
+    # Si no hay datos precalculados, calcularlos manualmente
     results = []
-    
-    #return JSONResponse(content=results)
-    
+
     with engine.connect() as conn:
         print("Conectado a la base de datos")
         current_date = start_date
-        
-        query = select(pc)
 
-        census_db = conn.execute(query)
+        census_db = conn.execute(select(pc))
         census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
-        
-        while current_date >= end_date:
-            print("Current date:", current_date)
-            next_date = current_date - timedelta(days=interval)
-            print("Start date:", start_date)
-            print("Next date:", next_date)
-            print("Interval:", interval)
 
-            # Consulta filtrando por el intervalo de tiempo actual
+        # Recorre todas las fechas con saltos temporales = al intervalo
+        while current_date >= end_date:
+            next_date = current_date - timedelta(days=interval)
+
             query = select(tests).where(
                 and_(
                     tests.c.date_done <= current_date,
                     tests.c.date_done > next_date,
-                    tests.c.desease == desease
+                    tests.c.desease == disease
                 )
             )
-            print("Query:", query)
+
             result = conn.execute(query)
             df = pd.DataFrame(result.fetchall(), columns=result.keys())
             df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
-            
+
+            # Si hay datos, aplicar el algoritmo de Getis-Ord y los resultados se añaden a la lista
             if not df.empty:
-                df_resultado = aply_getisord(df, census)  # Genera GeoJSON
+                df_resultado = aply_getisord(df, census)
+
 
                 results.append({
-                    "date": current_date.strftime("%Y-%m-%d"),  
+                    "date": current_date.strftime("%Y-%m-%d"),
                     "geojson": df_resultado
                 })
 
@@ -226,6 +128,88 @@ async def get_tests_filtered(request: Request):
 
     return JSONResponse(content=results)
 
+
+
+# Genera datos precalculados para todos los intervalos de tiempo y enfermedades
+@test.post("/api/test/precalculated", status_code=HTTP_201_CREATED)
+async def create_precalculated_data():
+    try:
+        # Limpiar la tabla antes de insertar nuevos datos y obtiener el censo
+        with engine.connect() as conn:
+            conn.execute(precalculated.delete())  
+            query = select(pc)
+            census_db = conn.execute(query)
+            census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
+            conn.commit()
+
+        start_date = datetime.utcnow()
+        end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
+        print("End date:", end_date)
+
+        current_date = start_date
+
+        # Para cada intervalo de tiempo y enfermedad, se obtiene los datos y aplicamos getis-ord para luego almacenar los resultados en la base de datos
+        for interval in intervals:
+            current_date = start_date
+            while current_date >= end_date:
+                for disease in diseases:
+
+                        
+                        with engine.connect() as conn:
+                            print("Conectado a la base de datos")
+                            
+
+                            print("Current date:", current_date)
+                            next_date = current_date - timedelta(days=interval)
+                            print("Start date:", start_date)
+                            print("Next date:", next_date)
+                            print("Interval:", interval)
+
+                            # Consulta filtrando por el intervalo de tiempo actual
+                            query = select(tests).where(
+                                    and_(
+                                        tests.c.date_done <= current_date,
+                                        tests.c.date_done > next_date,
+                                        tests.c.desease == disease
+                                    )
+                                )
+                            print("Query:", query)
+                            result = conn.execute(query)
+                            df = pd.DataFrame(result.fetchall(), columns=result.keys())
+                            df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
+                                
+                            try:
+                                df_resultado = aply_getisord(df, census)
+                                # Si el resultado es vacío se rellena con JSON vacio
+                                if not df_resultado or not df_resultado.get("features"):  # Vacío o sin features
+                                    print("GeoJSON vacío, insertando estructura mínima")
+                                    df_resultado = {"type": "FeatureCollection", "features": []}
+
+                                # Eliminar geometria para facilitar el almacenado en la base de datos
+                                for feature in df_resultado["features"]:
+                                    feature.pop("geometry", None)
+
+                                conn.execute(
+                                    precalculated.insert().values(
+                                        disease=disease,
+                                        days_interval=f"{interval}D",
+                                        end_date=current_date,
+                                        result_data=json.dumps(df_resultado)
+                                    )
+                                )
+                            except Exception as e:
+                                print("Fallo al insertar:", e)
+                            conn.commit()
+                            
+                            current_date = next_date
+                
+        return {"message": "Datos precalculados insertados correctamente"}
+    except Exception as e:
+        print("Error al insertar datos precalculados:", e)
+        return JSONResponse(
+            content={"error": f"Error al procesar la solicitud: {str(e)}"},
+            status_code=500,
+        )
 
 
 #añade tests a la base de datos subiendo un csv
@@ -252,6 +236,9 @@ async def upload_csv(file: UploadFile = File(...)):
         with engine.connect() as conn:
             conn.execute(tests.insert().values(data_to_insert))
             conn.commit()
+            
+        # Generamos nuevos datos precalculados
+        create_precalculated_data()
 
         return {"message": "Datos insertados correctamente", "total": len(data_to_insert)}
 
@@ -342,14 +329,26 @@ def parse_coords(coord):
         print(f"Error en la conversión de coordenadas: {e}")
         return None
 
-
 @test.post("/api/aemet/fill_db")
 async def fill_db_aemet():
     try:
         print("Iniciando proceso para llenar la base de datos con datos de AEMET")
 
+        # Obtener la última fecha añadida en la tabla aemet
+        with engine.connect() as conn:
+            last_date = conn.execute(select(func.max(aemet.c.date))).scalar()
+            conn.commit()
+            print("Última fecha añadida en aemet:", last_date)
+
+
+
         API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsb2plYkB1Y20uZXMiLCJqdGkiOiI1N2UzNGU4MS00MjY2LTRjYTItOWYwMS1mZGQ4YjQ3OWY5NzYiLCJpc3MiOiJBRU1FVCIsImlhdCI6MTc0NTE3ODY0NiwidXNlcklkIjoiNTdlMzRlODEtNDI2Ni00Y2EyLTlmMDEtZmRkOGI0NzlmOTc2Iiwicm9sZSI6IiJ9.Optbg-10mKcY_DqzoGLqF5cLR-X4oB7LqZsA2_21pJY"
-        current_date = datetime(2022, 1, 1)
+        if not last_date:
+            current_date = datetime(2022, 1, 1)
+        else:
+            current_date = datetime.strptime(last_date, "%Y-%m-%d")
+
+
         end_date = datetime.utcnow()
         total_insertados = 0
 
@@ -367,6 +366,8 @@ async def fill_db_aemet():
         print("Coordenadas convertidas:")
         print(df_coords[["lat", "lon"]].head())
         while current_date <= end_date:
+            time.sleep(1)
+            
             next_date = current_date + timedelta(days=15)
             fechaIniStr = current_date.strftime("%Y-%m-%dT%H:%M:%SUTC")
             fechaFinStr = next_date.strftime("%Y-%m-%dT%H:%M:%SUTC")
@@ -374,7 +375,7 @@ async def fill_db_aemet():
             print(f"Solicitando metadatos: {fechaIniStr} - {fechaFinStr}")
 
             meta_url = f"https://opendata.aemet.es/opendata/api/valores/climatologicos/diarios/datos/fechaini/{fechaIniStr}/fechafin/{fechaFinStr}/todasestaciones"
-            meta_response = requests.get(meta_url, params={"api_key": API_KEY})
+            meta_response = safe_get(meta_url, params={"api_key": API_KEY})
             print("Respuesta de metadatos:", meta_response.json())
             if meta_response.status_code != 200:
                 print(f"Error en la solicitud a AEMET: {meta_response.status_code}")
@@ -428,20 +429,40 @@ async def fill_db_aemet():
 
             print(f"Intervalo {fechaIniStr} - {fechaFinStr} insertado con {len(df_merged)} registros")
             current_date = next_date
+        
+        
 
         return {"message": "Datos cargados correctamente", "total_insertados": total_insertados}
 
     except Exception as e:
+        import traceback
+        print("Traceback completo:")
+        traceback.print_exc()
         return JSONResponse(
             content={"error": f"Error al procesar la solicitud: {str(e)}"},
             status_code=500,
-        )
+    )
+        
+def safe_get(url, params=None, retries=5, delay=5):
+    for attempt in range(retries):
+        try:
+            response = requests.get(url, params=params, timeout=10)
+            if response.status_code == 429:
+                print("Límite de peticiones alcanzado. Esperando...")
+                time.sleep(60)
+                continue
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as e:
+            print(f"[Intento {attempt + 1}/{retries}] Error al solicitar {url}: {e}")
+            time.sleep(delay)
+    raise Exception(f"No se pudo obtener respuesta tras {retries} intentos.")
 
 @test.post("/api/aemet/get_data")
 async def get_aemet_data(request: Request):
     raw_body = await request.body()
     results = []
-
+   
     try:
         params = json.loads(raw_body.decode("utf-8"))
     except json.JSONDecodeError:
@@ -468,10 +489,18 @@ async def get_aemet_data(request: Request):
         print("Shape de España cargado y preparado")
 
         with engine.connect() as conn:
+
+            stmt = stmt = select(func.max(aemet.c.temp))
+            max_temp = conn.execute(stmt).scalar()
+            print("Max temp:", max_temp)
+            stmt = stmt = select(func.min(aemet.c.temp))
+            min_temp = conn.execute(stmt).scalar()
+            print("Min temp:", min_temp)
+
             while current_date >= end_date:
                 next_date = current_date - timedelta(days=interval)
                 print(f"Intervalo: {next_date} → {current_date}")
-
+                
                 stmt = (
                     select(
                         func.avg(aemet.c.temp).label("avg_temp"),
@@ -488,6 +517,7 @@ async def get_aemet_data(request: Request):
                 )
 
                 result = conn.execute(stmt).mappings().fetchall()
+
                 print(f"Registros encontrados: {len(result)}")
 
                 if not result:
@@ -520,6 +550,9 @@ async def get_aemet_data(request: Request):
 
                         punto = Point(lon, lat)
                         if shape_prepared.contains(punto):  
+                            
+                            temp_norm = (temp - min_temp) / (max_temp - min_temp) if max_temp != min_temp else 0
+
                             interpolated_features.append({
                                 "type": "Feature",
                                 "geometry": {
@@ -527,7 +560,8 @@ async def get_aemet_data(request: Request):
                                     "coordinates": [lon, lat]
                                 },
                                 "properties": {
-                                    "temp": round(temp, 2)
+                                    "temp": round(temp, 2),
+                                    "temp_norm": round(temp_norm, 1)
                                 }
                             })
 
@@ -549,3 +583,15 @@ async def get_aemet_data(request: Request):
         print("Error interno:", e)
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
+
+scheduler.add_job(
+    fill_db_aemet,
+    IntervalTrigger(days=15),
+    #IntervalTrigger(minutes=1),
+    id="fill_db_aemet_job",
+    replace_existing=True,
+    max_instances=1
+)
+
+scheduler.start()

@@ -9,10 +9,11 @@ const LayerSelector = ({ selectedLayers, setSelectedLayers, offsetHuman, setOffs
       setSelectedLayers([...selectedLayers, layer]);
     }
   };
-  const [inputValue, setInputValue] = useState(offsetHuman);
+  const [inputValue, setInputValue] = useState(offsetHuman, offsetTemperature);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       setOffsetHuman(Number(offsetHuman));
+      setOffsetTemperature(Number(offsetTemperature));
     }
   };
 
@@ -20,6 +21,7 @@ const LayerSelector = ({ selectedLayers, setSelectedLayers, offsetHuman, setOffs
     <div style={{ display: "flex", flexDirection: "column" }}>
       <label><input
         type="checkbox"
+        defaultChecked
         checked={selectedLayers.includes("human")}
         onChange={() => handleCheckboxChange("human")}
       /> Human
@@ -42,9 +44,24 @@ const LayerSelector = ({ selectedLayers, setSelectedLayers, offsetHuman, setOffs
 
       <label><input
         type="checkbox"
+        defaultChecked
         checked={selectedLayers.includes("temperature")}
         onChange={() => handleCheckboxChange("temperature")}
-      /> Temperature</label>
+      /> Temperature
+        <div style={{ display: "flex", flexDirection: "column" }}>
+            <label style={{ marginBottom: "5px" }}>Offset Temperature (days): 
+              <input
+                type="number"
+                min="-30"
+                max="365"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                style={{ padding: "5px", borderRadius: "6px", border: "1px solid #ccc" }}
+              />
+              </label>
+        </div>
+      </label>
     </div>
   );
 };

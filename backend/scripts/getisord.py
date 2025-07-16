@@ -3,6 +3,7 @@ import numpy as np
 from libpysal.weights import Queen
 from esda.getisord import G_Local
 from shapely.geometry import mapping
+from sklearn.preprocessing import MinMaxScaler
 
 
 def aply_getisord(df, census):
@@ -74,6 +75,12 @@ def aply_getisord(df, census):
 
     # Reemplazar NaN en valores de z_score
     gdf["z_value"] = gdf["z_value"].fillna(0)
+
+    scaler = MinMaxScaler()
+
+    z_values_reshaped = gdf["z_value"].values.reshape(-1, 1)
+
+    gdf["z_value_normalized"] = scaler.fit_transform(z_values_reshaped)
     
     geojson = {
         "type": "FeatureCollection",
@@ -83,10 +90,12 @@ def aply_getisord(df, census):
     for _, row in gdf.iterrows():
         feature = {
             "type": "Feature",
-            "geometry": mapping(row["geometry"]),  
+            "geometry": mapping(row["geometry"]),
             "properties": {
                 "post_code": row["post_code"],
                 "z_value": row["z_value"],
+                "z_value_normalized": row["z_value_normalized"], # Añadir el valor normalizado
+                "p_value": row["p_value"],                       # Añadir el p_value
                 "n_positives": row["Tests_Positivos"]
             }
         }
