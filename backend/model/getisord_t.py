@@ -1,6 +1,6 @@
 from sqlalchemy import Table, Column
 from sqlalchemy.sql.sqltypes import Integer, String, Date, Boolean
-from config.db import engine, meta_data
+from config.db_connection import engine, meta_data
 
 
 getis_ord = Table("getisord_t", meta_data, 
