@@ -1,5 +1,5 @@
 from sqlalchemy import Table, Column, Float, String
-from config.db import engine, meta_data
+from config.db_connection import engine, meta_data
 
 aemet = Table(
     "aemet",

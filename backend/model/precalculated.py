@@ -2,7 +2,7 @@ from sqlalchemy import Table, Column
 from sqlalchemy.sql.sqltypes import  String, JSON, Integer, DateTime, Text
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
-from config.db import engine, meta_data
+from config.db_connection import engine, meta_data
 
 
 precalculated = Table(

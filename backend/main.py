@@ -1,17 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.cron import CronTrigger
-import asyncio
-
 
 from router.test_routes import test_routes
 from router.post_codes_routes import post_codes_routes
 from router.auth_routes import auth_routes
+from router.aemet_routes import aemet_routes
 
 app = FastAPI()
 scheduler = AsyncIOScheduler()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,6 +26,7 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-app.include_router(test_routes)
-app.include_router(post_codes_routes)
-app.include_router(auth_routes)
+app.include_router(test_routes, prefix="/test", tags=["test"])
+app.include_router(post_codes_routes, prefix="/post_codes", tags=["post_codes"])
+app.include_router(auth_routes, prefix="/auth", tags=["auth"])
+app.include_router(aemet_routes, prefix="/aemet", tags=["aemet"])
