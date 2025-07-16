@@ -25,3 +25,7 @@ class UserOut(BaseModel):
     username: str
     email: EmailStr
     full_name: str | None = None
+
+    model_config = {
+        'from_attributes': True
+    }
