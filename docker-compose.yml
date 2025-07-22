@@ -28,11 +28,20 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DB_DIALECT=${DB_DIALECT}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
+      #- DB_DIALECT=${DB_DIALECT}
+      #- DB_USER=${DB_USER}
+      #- DB_PASSWORD=${DB_PASSWORD}
+      #- DB_HOST=${DB_HOST}
+      #- DB_NAME=${DB_NAME}
+
+      - DB_NAME=pets
+      - DB_USER=root
+      - DB_PASSWORD=12345
+      - DB_HOST=db
+      - DB_DIALECT=mysql+pymysql
+      - SECRET_KEY=mi_clave
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
     networks:
       - frontnet
       - backnet
