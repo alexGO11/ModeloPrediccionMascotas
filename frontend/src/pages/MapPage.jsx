@@ -24,7 +24,7 @@ export default function MapPage() {
   const fetchData = () => {
     setCurrInterval(Number(interval));
     // Configuración de las solicitudes
-    const filteredRequest = fetch("http://localhost:8000/api/test/filtered", {
+    const filteredRequest = fetch("http://localhost:8000/test/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -39,7 +39,7 @@ export default function MapPage() {
     startDateObj.setDate(startDateObj.getDate() + offsetTemperature);
     const offsetStartDate = startDateObj.toISOString().slice(0, 10);
 
-    const aemetRequest = fetch("http://localhost:8000/api/aemet/get_data", {
+    const aemetRequest = fetch("http://localhost:8000/aemet/api/aemet/get_data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

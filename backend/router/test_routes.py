@@ -42,7 +42,7 @@ async def get_tests_filtered(request: Request):
         return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
 
     # Inicializa variables
-    start_date = datetime.now(datetime.timezone.utc)
+    start_date = datetime.utcnow()
     end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
     interval = params["interval"]
     disease = params["disease"]
@@ -64,7 +64,7 @@ async def get_tests_filtered(request: Request):
             
             geojson = serialize_geojson_rows(rows)
 
-            
+            print("GeoJSON generado:", geojson)
 
             return JSONResponse(content=geojson)
 

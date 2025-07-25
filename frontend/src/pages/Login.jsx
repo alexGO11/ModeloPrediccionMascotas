@@ -22,7 +22,6 @@ export default function Login() {
   return (
     <div className="d-flex align-items-center justify-content-center vh-100 bg-light">
       <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
-        {/* Imagen/logo */}
         <div className="text-center mb-4">
           <img
             src="../img/logo.png"
