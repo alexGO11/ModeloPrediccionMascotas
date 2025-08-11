@@ -68,7 +68,7 @@ async def get_tests_filtered(request: Request):
             
             geojson = serialize_geojson_rows(rows)
 
-            
+            print("GeoJSON generado:", geojson)
 
             return JSONResponse(content=geojson)
 

@@ -5,7 +5,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+# Instala dependencias y react-router-dom directamente
+RUN npm install && npm install react-router-dom && npm install axios && npm install bootstrap
 
 COPY . .
 

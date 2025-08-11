@@ -1,0 +1,27 @@
+.register-background {
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e"); /* Cambia a la imagen que quieras */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.9);
+  position: relative;
+  min-height: 100vh;
+}
+
+.register-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background-color: white;
+  border-radius: 15px;
+}
