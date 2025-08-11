@@ -26,7 +26,7 @@ app.add_middleware(
     allow_headers=['*']
 )
 
-app.include_router(test_routes, prefix="/test", tags=["test"])
-app.include_router(post_codes_routes, prefix="/post_codes", tags=["post_codes"])
-app.include_router(auth_routes, prefix="/auth", tags=["auth"])
-app.include_router(aemet_routes, prefix="/aemet", tags=["aemet"])
+app.include_router(test_routes, prefix="/api/test", tags=["test"])
+app.include_router(post_codes_routes, prefix="/api/post_codes", tags=["post_codes"])
+app.include_router(auth_routes, prefix="/api/auth", tags=["auth"])
+app.include_router(aemet_routes, prefix="/api/aemet", tags=["aemet"])

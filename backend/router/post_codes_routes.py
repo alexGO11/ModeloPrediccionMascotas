@@ -6,7 +6,7 @@ from model.postal_code import pc
 post_codes_routes = APIRouter()
 
 #añade tests a la base de datos subiendo un csv
-@post_codes_routes.post("/api/postal_codes/upload_csv", status_code=201)
+@post_codes_routes.post("/upload_csv", status_code=201)
 async def upload_csv(file: UploadFile = File(...)):
     df = None
     try:

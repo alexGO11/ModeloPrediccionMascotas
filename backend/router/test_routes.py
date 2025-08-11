@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse, RedirectResponse
 import pandas as pd
 import json
 from sqlalchemy import select, and_
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from model.precalculated import precalculated
 
@@ -26,8 +26,12 @@ diseases = ["Leishmania", "Giardia"]
 async def root_redirect():
     return RedirectResponse(url="/docs")
 
+@test_routes.get("/try", include_in_schema=False)
+async def get_tests():
+    return JSONResponse(content={"message": "API de tests funcionando correctamente"})
+
 # Recibe un intervalo de tiempo introducido por el usuario y devuelve los datos de todos los tests realizados separados por intervalos de tiempo
-@test_routes.post("/api/test/filtered")
+@test_routes.post("/filtered")
 async def get_tests_filtered(request: Request):
     raw_body = await request.body()
 
@@ -42,8 +46,8 @@ async def get_tests_filtered(request: Request):
         return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
 
     # Inicializa variables
-    start_date = datetime.now(datetime.timezone.utc)
-    end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
+    start_date = datetime.now(timezone.utc)
+    end_date = datetime.strptime("2022-01-01", "%Y-%m-%d").replace(tzinfo=timezone.utc)
     interval = params["interval"]
     disease = params["disease"]
 
@@ -109,7 +113,7 @@ async def get_tests_filtered(request: Request):
     return JSONResponse(content=results)
 
 # Genera datos precalculados para todos los intervalos de tiempo y enfermedades
-@test_routes.post("/api/test/precalculated", status_code=status.HTTP_201_CREATED)
+@test_routes.post("/precalculated", status_code=status.HTTP_201_CREATED)
 async def create_precalculated_data():
     try:
         # Limpiar la tabla antes de insertar nuevos datos y obtiener el censo
@@ -188,7 +192,7 @@ async def create_precalculated_data():
         )
 
 #añade tests a la base de datos subiendo un csv
-@test_routes.post("/api/test/upload_csv", status_code=201)
+@test_routes.post("/upload_csv", status_code=201)
 async def upload_csv(file: UploadFile = File(...)):
     df = None
     try:

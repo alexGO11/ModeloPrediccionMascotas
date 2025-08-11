@@ -43,7 +43,7 @@ def parse_coords(coord):
         print(f"Error en la conversión de coordenadas: {e}")
         return None
 
-@aemet_routes.post("/api/aemet/fill_db")
+@aemet_routes.post("/fill_db")
 async def fill_db_aemet():
     try:
         print("Iniciando proceso para llenar la base de datos con datos de AEMET")
@@ -170,7 +170,7 @@ def safe_get(url, params=None, retries=5, delay=5):
             time.sleep(delay)
     raise Exception(f"No se pudo obtener respuesta tras {retries} intentos.")
 
-@aemet_routes.post("/api/aemet/get_data")
+@aemet_routes.post("/get_data")
 async def get_aemet_data(request: Request):
     raw_body = await request.body()
     results = []

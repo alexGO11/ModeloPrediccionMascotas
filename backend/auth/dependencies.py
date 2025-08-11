@@ -9,7 +9,7 @@ from model.user import users
 from config.db_connection import engine
 from sqlalchemy import select
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
 
 # This function retrieves the current user from the token.
 # It decodes the token and checks if the user exists in the database.
