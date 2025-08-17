@@ -1,6 +1,4 @@
 import pandas as pd
-import json
-import os
 
 # Definir el diccionario de mapeo
 value_test_mapping = {

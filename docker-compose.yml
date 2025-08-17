@@ -27,12 +27,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      #- DB_DIALECT=${DB_DIALECT}
-      #- DB_USER=${DB_USER}
-      #- DB_PASSWORD=${DB_PASSWORD}
-      #- DB_HOST=${DB_HOST}
-      #- DB_NAME=${DB_NAME}
-
       - DB_NAME=pets
       - DB_USER=root
       - DB_PASSWORD=12345
@@ -53,7 +47,7 @@ services:
     depends_on:
       - backend
     environment:
-      - CHOKIDAR_USEPOLLING=true # Importante para que Webpack observe cambios dentro de contenedor
+      - CHOKIDAR_USEPOLLING=true
   nginx:
       container_name: nginx
       build: 
