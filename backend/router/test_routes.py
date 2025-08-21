@@ -1,17 +1,17 @@
 from fastapi import APIRouter, Request, UploadFile, File, HTTPException, status
 from fastapi.responses import JSONResponse, RedirectResponse
+
 import pandas as pd
 import json
 from sqlalchemy import select, and_
 from datetime import datetime, timedelta, timezone
 
 from model.precalculated import precalculated
-
 from config.db_connection import engine
 from model.tests import tests
-from scripts.preprocess import clean_csv
+from scripts.preprocess import prepare_test_data
 from scripts.getisord import aply_getisord
-from model.postal_code import pc
+from model.post_code import pc
 
 from scripts.serialize_geojson import serialize_geojson_rows
 
@@ -26,13 +26,10 @@ diseases = ["Leishmania", "Giardia"]
 async def root_redirect():
     return RedirectResponse(url="/docs")
 
-@test_routes.get("/try", include_in_schema=False)
-async def get_tests():
-    return JSONResponse(content={"message": "API de tests funcionando correctamente"})
-
 # Recibe un intervalo de tiempo introducido por el usuario y devuelve los datos de todos los tests realizados separados por intervalos de tiempo
 @test_routes.post("/filtered")
 async def get_tests_filtered(request: Request):
+    
     raw_body = await request.body()
 
     try:
@@ -40,7 +37,7 @@ async def get_tests_filtered(request: Request):
     except json.JSONDecodeError:
         return JSONResponse(content={"error": "El cuerpo no es JSON válido"}, status_code=400)
 
-    print("Datos recibidos:", params)
+    print("TEST_ROUTES| Datos recibidos:", params)
 
     if "start_date" not in params:
         return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
@@ -53,6 +50,9 @@ async def get_tests_filtered(request: Request):
 
     # Si el intervalo coincide con los precalculados, devolverlos
     if interval in intervals:
+
+        print("TEST_ROUTES| Intervalo de tiempo precalculado encontrado:", interval)
+
         with engine.connect() as conn:
             query = select(precalculated).where(
                 and_(
@@ -64,11 +64,11 @@ async def get_tests_filtered(request: Request):
             result = conn.execute(query)
             rows = result.fetchall()
 
-            print("Datos precalculados encontrados:", len(rows))
-            
+            print("TEST_ROUTES| Datos precalculados encontrados:", len(rows))
+
             geojson = serialize_geojson_rows(rows)
 
-            print("GeoJSON generado:", geojson)
+            print("TEST_ROUTES| GeoJSON generado")
 
             return JSONResponse(content=geojson)
 
@@ -76,7 +76,7 @@ async def get_tests_filtered(request: Request):
     results = []
 
     with engine.connect() as conn:
-        print("Conectado a la base de datos")
+        print("TEST_ROUTES| Conexion a la base de datos realizada")
         current_date = start_date
 
         census_db = conn.execute(select(pc))
@@ -90,7 +90,7 @@ async def get_tests_filtered(request: Request):
                 and_(
                     tests.c.date_done <= current_date,
                     tests.c.date_done > next_date,
-                    tests.c.desease == disease
+                    tests.c.disease == disease
                 )
             )
 
@@ -101,7 +101,6 @@ async def get_tests_filtered(request: Request):
             # Si hay datos, aplicar el algoritmo de Getis-Ord y los resultados se añaden a la lista
             if not df.empty:
                 df_resultado = aply_getisord(df, census)
-
 
                 results.append({
                     "date": current_date.strftime("%Y-%m-%d"),
@@ -126,7 +125,8 @@ async def create_precalculated_data():
 
         start_date = datetime.utcnow()
         end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
-        print("End date:", end_date)
+        
+        print("TEST_ROUTES| Datos recibidos")
 
         current_date = start_date
 
@@ -135,25 +135,19 @@ async def create_precalculated_data():
             current_date = start_date
             while current_date >= end_date:
                 for disease in diseases:
-                    print(f"Procesando enfermedad: {disease} con intervalo: {interval} días")
+                    print(f"TEST_ROUTES| Procesando enfermedad: {disease} con intervalo: {interval} días")
                     with engine.connect() as conn:
-                        print("Conectado a la base de datos")
                         
-                        print("Current date:", current_date)
                         next_date = current_date - timedelta(days=interval)
-                        print("Start date:", start_date)
-                        print("Next date:", next_date)
-                        print("Interval:", interval)
 
                         # Consulta filtrando por el intervalo de tiempo actual
                         query = select(tests).where(
                                 and_(
                                     tests.c.date_done <= current_date,
                                     tests.c.date_done > next_date,
-                                    tests.c.desease == disease
+                                    tests.c.disease == disease
                                 )
                             )
-                        print("Query:", query)
                         result = conn.execute(query)
                         df = pd.DataFrame(result.fetchall(), columns=result.keys())
                         df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
@@ -162,7 +156,7 @@ async def create_precalculated_data():
                             df_resultado = aply_getisord(df, census)
                             # Si el resultado es vacío se rellena con JSON vacio
                             if not df_resultado or not df_resultado.get("features"):  # Vacío o sin features
-                                print("GeoJSON vacío, insertando estructura mínima")
+                                print("TEST_ROUTES| GeoJSON vacío, insertando estructura mínima")
                                 df_resultado = {"type": "FeatureCollection", "features": []}
 
                             # Eliminar geometria para facilitar el almacenado en la base de datos
@@ -178,16 +172,16 @@ async def create_precalculated_data():
                                 )
                             )
                         except Exception as e:
-                            print("Fallo al insertar:", e)
+                            print("TEST_ROUTES| Fallo al insertar:", e)
                         conn.commit()
                         
                         current_date = next_date
                 
         return {"message": "Datos precalculados insertados correctamente"}
     except Exception as e:
-        print("Error al insertar datos precalculados:", e)
+        print("TEST_ROUTES| Error al insertar datos precalculados:", e)
         return JSONResponse(
-            content={"error": f"Error al procesar la solicitud: {str(e)}"},
+            content={"error": f"TEST_ROUTES| Error al procesar la solicitud: {str(e)}"},
             status_code=500,
         )
 
@@ -201,13 +195,11 @@ async def upload_csv(file: UploadFile = File(...)):
         df = pd.read_csv(file.file)
 
         if df.empty:
-            raise ValueError("El archivo CSV está vacío")
+            raise ValueError("TEST_ROUTES| El archivo CSV está vacío")
 
-        print(df.head())
-        df = clean_csv(df)
-        print(df.head())
-        
-        
+        print("TEST_ROUTES| Preparando datos...")
+
+        df = prepare_test_data(df)
         df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
         data_to_insert = df.to_dict(orient="records")
@@ -226,7 +218,7 @@ async def upload_csv(file: UploadFile = File(...)):
     except pd.errors.ParserError:
         raise HTTPException(status_code=400, detail="Error al analizar el CSV, verifica el formato del archivo")
     except Exception as e:
-        error_detail = f"Error procesando el archivo CSV: {str(e)}"
+        error_detail = f"TEST_ROUTES| Error procesando el archivo CSV: {str(e)}"
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)

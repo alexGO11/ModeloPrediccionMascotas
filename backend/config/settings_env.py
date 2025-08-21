@@ -15,4 +15,6 @@ class Settings(BaseSettings):
     algorithm: str = Field(validation_alias='ALGORITHM')
     token_expire: int = Field(validation_alias='ACCESS_TOKEN_EXPIRE_MINUTES')
 
+    api_key: str = Field(validation_alias='API_KEY')
+    
 settings = Settings()

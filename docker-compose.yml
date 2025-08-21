@@ -62,7 +62,8 @@ services:
       volumes:
         - ./certbot/conf:/etc/ssl/certs 
         - react_build:/usr/share/nginx/html
-  
+        - ./nginx/htpasswd:/etc/nginx/.htpasswd
+
 networks:
   frontnet:
     driver: bridge

@@ -1,7 +1,9 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
+
 import pandas as pd
 from config.db_connection import engine
-from model.postal_code import pc
+from model.post_code import pc
+from scripts.preprocess import prepare_post_code_data
 
 post_codes_routes = APIRouter()
 
@@ -14,34 +16,15 @@ async def upload_csv(file: UploadFile = File(...)):
         df = pd.read_csv(file.file)
 
         if df.empty:
-            raise ValueError("El archivo CSV está vacío")
+            raise ValueError("POST_CODES_ROUTES| El archivo CSV está vacío")
 
-        # Filtrar y renombrar columnas
-        column_mapping = {
-            "COD_POSTAL": "post_code",
-            "Censo_mascota_CP": "census"
-        }
+        print("POST_CODES_ROUTES| Preparando datos...")
 
-        df = df[list(column_mapping.keys())].rename(columns=column_mapping)
+        df_filtered = prepare_post_code_data(df)
 
-        # Verificar valores NaN antes de conversión
-        print("Valores NaN en 'census':", df["census"].isna().sum())
+        data_to_insert = df_filtered.to_dict(orient="records")
 
-        # Rellenar NaN con 0.0 y asegurarse de que census sea float
-        df["census"] = df["census"].fillna(0.0).astype(float)
-
-        # Filtrar por los censuss que sean mayores o iguales a 1
-        df["census"] = df["census"].replace(0, 1)
-        
-        # Asegurar que 'post_code' sea string de 5 dígitos
-        df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
-
-        print("Estructura final del DataFrame antes de la inserción:")
-        print(df.head())
-        print(df.dtypes)
-
-        data_to_insert = df.to_dict(orient="records")
-
+        print("POST_CODES_ROUTES| Insertando datos en la base de datos...")
         with engine.connect() as conn:
             conn.execute(pc.insert().values(data_to_insert))
             conn.commit()
@@ -53,7 +36,7 @@ async def upload_csv(file: UploadFile = File(...)):
     except pd.errors.ParserError:
         raise HTTPException(status_code=400, detail="Error al analizar el CSV, verifica el formato del archivo")
     except Exception as e:
-        error_detail = f"Error procesando el archivo CSV: {str(e)}"
+        error_detail = f"POST_CODES_ROUTES| Error procesando el archivo CSV: {str(e)}"
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
         raise HTTPException(status_code=400, detail=error_detail)

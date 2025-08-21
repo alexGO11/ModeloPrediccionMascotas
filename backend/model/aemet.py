@@ -4,11 +4,12 @@ from config.db_connection import engine, meta_data
 aemet = Table(
     "aemet",
     meta_data,
-    Column("lon", Float),
-    Column("lat", Float),
-    Column("date", String(10)),
-    Column("temp", Float),
-    Column("location", String(50))
+    Column("id", String(10), primary_key=True),
+    Column("lon", Float, nullable=False),
+    Column("lat", Float, nullable=False),
+    Column("date", String(10), nullable=False),
+    Column("temp", Float, nullable=False),
+    Column("location", String(50), nullable=False)
     )
 
 meta_data.create_all(engine)
