@@ -1,10 +1,10 @@
-from sqlalchemy import Table, Column, Float, String
+from sqlalchemy import Table, Column, Float, String, Integer
 from config.db_connection import engine, meta_data
 
 aemet = Table(
     "aemet",
     meta_data,
-    Column("id", String(10), primary_key=True),
+    Column("id", Integer, primary_key=True, autoincrement=True),
     Column("lon", Float, nullable=False),
     Column("lat", Float, nullable=False),
     Column("date", String(10), nullable=False),

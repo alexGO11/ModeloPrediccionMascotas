@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/auth/token",
+        "http://localhost:8000/api/auth/token",
         new URLSearchParams({
           username,
           password,
