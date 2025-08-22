@@ -2,7 +2,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import React, { useEffect, useRef } from "react";
 
-const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
+const Heatmap = ({ diseaseData, aemetData, humanData, selectedLayers }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const popupRef = useRef(new maplibregl.Popup({ closeButton: false, closeOnClick: false }));
@@ -18,7 +18,7 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
       });
 
       map.current.on("load", () => {
-        // Cargar datos de enfermedades
+        // Cargar datos de mascotas
         map.current.addSource("disease-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
@@ -28,6 +28,29 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
         map.current.addSource("aemet-source", {
           type: "geojson",
           data: { type: "FeatureCollection", features: [] },
+        });
+
+        // Cargar datos de Humanos
+        map.current.addSource("human-source", {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [] },
+        });
+
+        map.current.addLayer({
+          id: "human-layer",
+          type: "circle",
+          source: "human-source",
+          paint: {
+            'circle-radius': 8,
+            "circle-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "cases"],   // propiedad con el número de casos
+              1, "rgba(255, 255, 0, 0.6)",   // 1 caso: amarillo semi-transparente
+              2, "rgba(255, 165, 0, 0.7)",   // 3 casos: naranja
+              3, "rgba(255, 0, 0, 0.8)"      // más de 5 casos: rojo
+            ],
+          }
         });
 
         // Capa de mapa de temperatura
@@ -121,6 +144,27 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
             "circle-color": "transparent"
           }
         });
+
+        const popup = new maplibregl.Popup({
+          closeButton: false,
+          closeOnClick: false
+        });
+
+        map.current.on("mousemove", "human-layer", (e) => {
+          const feature = e.features[0];
+          const { post_code, cases } = feature.properties;
+
+          popup
+            .setLngLat(e.lngLat)
+            .setHTML(
+              `<strong>Código postal:</strong> ${post_code}<br/><strong>Casos:</strong> ${cases}`
+            )
+            .addTo(map.current);
+        });
+
+        map.current.on("mouseleave", "human-layer", () => {
+          popup.remove();
+        });
         
         map.current.on("mousemove", "aemet-hover-layer", (e) => {
           const feature = e.features[0];
@@ -169,6 +213,13 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
       map.current.getSource("aemet-source").setData(aemetData);
     }
   }, [aemetData]);
+
+
+  useEffect(() => {
+    if (map.current && map.current.getSource("human-source") && humanData) {
+      map.current.getSource("human-source").setData(humanData);
+    }
+  }, [humanData]);
   
 
 
@@ -181,6 +232,9 @@ const Heatmap = ({ diseaseData, aemetData, selectedLayers }) => {
   
     if (map.current.getLayer("aemet-heatmap")) {
       map.current.setLayoutProperty("aemet-heatmap", "visibility", showTemp ? "visible" : "none");
+    }
+    if (map.current.getLayer("human-layer")) {
+      map.current.setLayoutProperty("human-layer", "visibility", showHuman ? "visible" : "none");
     }
   }, [selectedLayers]);
 

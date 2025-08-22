@@ -117,16 +117,17 @@ async def create_precalculated_data():
     try:
         # Limpiar la tabla antes de insertar nuevos datos y obtiener el censo
         with engine.connect() as conn:
+            trans = conn.begin()
             conn.execute(precalculated.delete())  
             query = select(pc)
             census_db = conn.execute(query)
+            trans.commit()
             census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
             conn.commit()
 
         start_date = datetime.utcnow()
         end_date = datetime.strptime("2022-01-01", "%Y-%m-%d")
-        
-        print("TEST_ROUTES| Datos recibidos")
+        print("End date:", end_date)
 
         current_date = start_date
 
@@ -135,10 +136,16 @@ async def create_precalculated_data():
             current_date = start_date
             while current_date >= end_date:
                 for disease in diseases:
-                    print(f"TEST_ROUTES| Procesando enfermedad: {disease} con intervalo: {interval} días")
+                    print(f"Procesando enfermedad: {disease} con intervalo: {interval} días")
                     with engine.connect() as conn:
+                        trans = conn.begin()
+                        print("Conectado a la base de datos")
                         
+                        print("Current date:", current_date)
                         next_date = current_date - timedelta(days=interval)
+                        print("Start date:", start_date)
+                        print("Next date:", next_date)
+                        print("Interval:", interval)
 
                         # Consulta filtrando por el intervalo de tiempo actual
                         query = select(tests).where(
@@ -148,7 +155,9 @@ async def create_precalculated_data():
                                     tests.c.disease == disease
                                 )
                             )
+                        print("Query:", query)
                         result = conn.execute(query)
+                        trans.commit()
                         df = pd.DataFrame(result.fetchall(), columns=result.keys())
                         df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
                             
@@ -156,7 +165,7 @@ async def create_precalculated_data():
                             df_resultado = aply_getisord(df, census)
                             # Si el resultado es vacío se rellena con JSON vacio
                             if not df_resultado or not df_resultado.get("features"):  # Vacío o sin features
-                                print("TEST_ROUTES| GeoJSON vacío, insertando estructura mínima")
+                                print("GeoJSON vacío, insertando estructura mínima")
                                 df_resultado = {"type": "FeatureCollection", "features": []}
 
                             # Eliminar geometria para facilitar el almacenado en la base de datos
@@ -171,17 +180,19 @@ async def create_precalculated_data():
                                     result_data=json.dumps(df_resultado)
                                 )
                             )
+                            trans.commit()
                         except Exception as e:
-                            print("TEST_ROUTES| Fallo al insertar:", e)
+                            print("Fallo al insertar:", e)
                         conn.commit()
                         
                         current_date = next_date
                 
         return {"message": "Datos precalculados insertados correctamente"}
     except Exception as e:
-        print("TEST_ROUTES| Error al insertar datos precalculados:", e)
+        trans.rollback()
+        print("Error al insertar datos precalculados:", e)
         return JSONResponse(
-            content={"error": f"TEST_ROUTES| Error al procesar la solicitud: {str(e)}"},
+            content={"error": f"Error al procesar la solicitud: {str(e)}"},
             status_code=500,
         )
 

@@ -24,13 +24,13 @@ export default function MapPage() {
   const fetchData = () => {
     setCurrInterval(Number(interval));
     // Configuración de las solicitudes
-    const filteredRequest = fetch("http://localhost:8000/test/api/test/filtered", {
+    const filteredRequest = fetch("http://localhost:8000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         start_date: "2022-01-01",
         interval: interval,
-        disease: selectedDisease, // Using selectedDisease for the API call
+        disease: selectedDisease,
       }),
     }).then((res) => res.json());
 
@@ -39,7 +39,7 @@ export default function MapPage() {
     startDateObj.setDate(startDateObj.getDate() + offsetTemperature);
     const offsetStartDate = startDateObj.toISOString().slice(0, 10);
 
-    const aemetRequest = fetch("http://localhost:8000/aemet/api/aemet/get_data", {
+    const aemetRequest = fetch("http://localhost:8000/api/aemet/get_data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -48,8 +48,17 @@ export default function MapPage() {
       }),
     }).then((res) => res.json());
 
+    const humanRequest = fetch("http://localhost:8000/api/human/get_human_data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      interval: interval,
+      disease: selectedDisease,
+      }),
+    }).then((res) => res.json());
+
     // Ejecutar ambas solicitudes en paralelo
-    Promise.all([filteredRequest, aemetRequest]).then(([filteredData, aemetData]) => {
+    Promise.all([filteredRequest, aemetRequest, humanRequest]).then(([filteredData, aemetData, humanData]) => {
       const processedFiltered = filteredData.map((item) => ({
         ...item,
         source: "filtered",
@@ -60,7 +69,12 @@ export default function MapPage() {
         source: "aemet",
       }));
 
-      setGeojsonList([...processedFiltered, ...processedAemet]);
+      const processedHuman = humanData.map((item) => ({
+        ...item,
+        source: "human",
+      }));
+
+      setGeojsonList([...processedFiltered, ...processedAemet, ...processedHuman]);
     });
   };
 
@@ -70,6 +84,7 @@ export default function MapPage() {
           <Heatmap
             diseaseData={geojsonList.find((item) => item.date === selectedDate && item.source === "filtered")?.geojson}
             aemetData={geojsonList.find((item) => item.date === selectedDate && item.source === "aemet")?.geojson}
+            humanData={geojsonList.find((item) => item.date === selectedDate && item.source === "human")?.geojson}
             selectedLayers={selectedLayers}
           />
 

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import LoadingScreen from "../pages/loading";
+
 
 const ExecutionButton = ({ fetchData, currInterval, interval }) => {
   const [loading, setLoading] = useState(false);
+  
 
   const handleClick = async () => {
     console.log(`Current Interval: ${currInterval}, Selected Interval: ${interval}`);
@@ -11,6 +14,8 @@ const ExecutionButton = ({ fetchData, currInterval, interval }) => {
       setLoading(false);
     }
   };
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <button
