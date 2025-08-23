@@ -11,12 +11,9 @@ from sqlalchemy import select, and_
 from shapely.geometry import mapping
 from datetime import datetime, timedelta, timezone
 
-
 from config.db_connection import engine
 from model.human import human
 from scripts.process_human_data import prepare_human_data
-
-
 
 human_routes = APIRouter()
 

@@ -8,11 +8,11 @@ DB_PASSWORD = settings.db_pass
 DB_HOST = settings.db_host
 DB_NAME = settings.db_name
 
-URL_CONECTION = '{}://{}:{}@{}/{}'.format(DB_DIALECT, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
+URL_CONNECTION = '{}://{}:{}@{}/{}'.format(DB_DIALECT, DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
 
-print("URL de conexión:", URL_CONECTION)
+print("DB_CONNECTION| URL de conexión:", URL_CONNECTION)
 
-engine = create_engine(URL_CONECTION)
+engine = create_engine(URL_CONNECTION)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
