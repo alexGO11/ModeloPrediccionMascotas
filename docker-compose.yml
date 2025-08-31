@@ -38,30 +38,16 @@ services:
     networks:
       - frontnet
       - backnet
-  app:
-    container_name: app
+  nginx:
+    container_name: nginx
     build:
-      context: ./frontend
-    volumes:
-      - react_build:/app/build
+      context: ./frontend 
+    ports:
+      - "443:443"
     depends_on:
       - backend
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-  nginx:
-      container_name: nginx
-      build: 
-        context: ./nginx
-      ports:
-        - "443:443"
-      depends_on:
-        - app
-        - backend
-      networks:
-        - frontnet
-      volumes:
-        - ./certbot/conf:/etc/ssl/certs 
-        - react_build:/usr/share/nginx/html
+    networks:
+      - frontnet
 
 networks:
   frontnet:
@@ -70,4 +56,3 @@ networks:
 
 volumes:
   mysql-data:
-  react_build:
