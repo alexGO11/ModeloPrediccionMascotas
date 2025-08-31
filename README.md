@@ -19,14 +19,19 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
    git clone https://github.com/usuario/ModeloPrediccionMascotas.git
    cd ModeloPrediccionMascotas
 
-2. Crea un archivo [.env] en la raíz del proyecto y configura las variables de entorno necesarias (puedes usar .env.example como referencia).
+2. Crea un archivo [.env] en la raíz del proyecto y configura las variables de entorno necesarias.
 
 3. Construye y levanta los contenedores con Docker Compose:
     ```sh
     docker compose up --build
 
-4. La aplicación estará disponible en:
+4. Para subir los archivos entre en el siguiente enlace:
+    - http://localhost:8000/docs
+    - Una vez dentro inserte los archivos correspondientes en los endpoints de upload_csv y add_human_data
+
+5. La aplicación estará disponible en:
     - https://localhost
+
 
 ## Variables de entorno
 - MYSQL_ROOT_PASSWORD : La contraseña del usuario root de MySQL
@@ -36,3 +41,5 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
 - DB_PASSWORD : La contraseña del usuario de la base de datos
 - DB_NAME : El nombre de la base de datos a la que conectarse
 - DB_DIALECT : El dialecto/driver de SQLAlchemy a usar para la conexión (por ejemplo, mysql+pymysql)
+
+El archivo __.env.example__ se puede usar como modelo, copielo y complete los campos faltantes. 
