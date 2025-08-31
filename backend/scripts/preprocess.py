@@ -1,16 +1,7 @@
 import pandas as pd
-import json
-import os
 
-# Definir el diccionario de mapeo
-value_test_mapping = {
-    'Negativo': 0,
-    'Positivo': 1,
-    'Positivo Fuerte': 1
-}
-
-# Limpia el CSV de datos y añade el número de mascotas por código postal
-def clean_csv(data):
+# Function to clean pet data
+def prepare_test_data(data):
     column_mapping = {
         "Country": "country",
         "Pet sex": "sex",
@@ -20,58 +11,101 @@ def clean_csv(data):
         "Value test": "result",
         "Pet age": "age",
         "Date": "date_done",
-        "Name test": "desease"
+        "Name test": "disease"
     }
     
-    # Renombrar las columnas
+    # Define the mapping dictionary
+    value_test_mapping = {
+        'Negativo': 0,
+        'Positivo': 1,
+        'Positivo Fuerte': 1
+    }
+
+    # Rename the columns
     data = data.rename(columns=column_mapping)
 
-    # Eliminar columnas innecesarias
-    data = data.drop(columns=["country", "location", "age"], errors="ignore")
+    # Eliminate unnecessary columns
+    data = data.drop(columns=["location", "country"], errors="ignore")
 
-    # Convertir la columna 'date_done' a formato de fecha
+    # Convert the 'date_done column to date format
     data["date_done"] = pd.to_datetime(
         data["date_done"]
             .astype(str) 
-            .str.replace('\ufeff', '', regex=True)  # Eliminar el BOM
-            .str.replace('"', '', regex=True)       # Eliminar comillas extra
-            .str.strip(),                           # Eliminar espacios en blanco
-        errors='coerce'  # Si no se puede convertir, poner NaT
+            .str.replace('\ufeff', '', regex=True)  # Eliminate bom
+
+            .str.replace('"', '', regex=True)       # Remove extra quotes
+
+            .str.strip(),                           # Eliminate blank spaces
+
+        errors='coerce'  # If it can't be converted, put nat
+
     )
 
-    # Eliminar filas donde 'date_done' no pudo convertirse correctamente
+    # Eliminate rows where 'date_done' could not become properly
     data = data.dropna(subset=["date_done"])
 
-    # Filtrar solo valores válidos en 'result'
+    # Filter only valid values ​​in 'results'
     valores_validos = list(value_test_mapping.keys())
     data = data[data["result"].isin(valores_validos)]
 
-    # Mapear valores en 'result' (de 'Negativo' a 0 y 'Positivo' a 1)
+    # Map values ​​in 'results' (from 'negative' to 0 and 'positive' to 1)
     data["result"] = data["result"].map(value_test_mapping)
 
-    # Asegurar que los valores en 'result' sean enteros
+    # Ensure that the values ​​in 'results' are whole
     data["result"] = data["result"].astype(int)
 
-    # Asegurar que 'id_test' no tenga valores NaN y sea string
+    # Ensure that 'id_test' does not have nan values ​​and is string
     if "id_test" in data.columns:
         data["id_test"] = data["id_test"].astype(str).fillna("")
         
-    # Asegurar que 'post_code' sea string de 5 dígitos
+    # Ensure that 'post_code' is 5 digit string
     data["post_code"] = data["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
-    # Asegurar que 'post_code' y 'age' sean enteros (si hay valores NaN, poner 0)
+    # Ensure that 'post_code' and 'age' are whole (if there are nan values, put 0)
     data["post_code"] = data["post_code"].fillna(0).astype(int)
 
-    # Eliminar filas donde 'post_code', 'date_done' o 'desease' sean NaN
-    required_columns = ["post_code", "date_done", "desease", "result"]
+    # Clean the 'AGE' column to eliminate the pattern 'year/s' and handle missing or invalid values
+    data["age"] = data["age"].str.extract(r"(\d+)")
+    data["age"] = pd.to_numeric(data["age"], errors="coerce")
+    data["age"] = data["age"].fillna(0).astype(int)
+
+    # Replace null values ​​in the 'city' column with 'unknown'
+    data["city"] = data["city"].fillna("desconocido")
+
+    # Replace null values ​​in the 'sex' column with 'unknown'
+    data["sex"] = data["sex"].fillna("desconocido")
+
+
+    # Eliminate rows where 'post_code', 'date_done' or 'disassembly' are nan
+    required_columns = ["post_code", "date_done", "disease", "result"]
     data = data.dropna(subset=required_columns)
 
-    
-    data = data.fillna({
-        "post_code": 0,       # Si falta, poner 0
-        "city": "Desconocido", # Si falta, poner un texto por defecto
-        "sex": "Desconocido",  # Si falta, poner un texto por defecto
-        "desease": "Desconocido", # Si falta, poner un texto por defecto
-    })
+    print("Datos preparados:")
+    print(data.head())
+
+    return data
+
+# Function to prepare census data by postal code
+def prepare_post_code_data(data):
+
+    # Filter and rename columns
+    column_mapping = {
+        "COD_POSTAL": "post_code",
+        "Censo_mascota_CP": "census"
+    }
+
+    data = data[list(column_mapping.keys())].rename(columns=column_mapping)
+
+    # Verify NAN values ​​before conversion
+    print("Valores NaN en 'census':", data["census"].isna().sum())
+
+    # Fill Nan with 0.0 and make sure that Census is float
+    data["census"] = data["census"].fillna(0.0).astype(float)
+
+    # Filter for census that are greater than or equal to 1
+    data["census"] = data["census"].replace(0, 1)
+
+    # Ensure that 'post_code' is 5 digit string
+    data["post_code"] = data["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
     return data

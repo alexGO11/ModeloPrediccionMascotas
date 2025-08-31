@@ -1,17 +1,18 @@
-import React from "react";
-
 const TimeSlider = ({ dates, selectedDate, setSelectedDate }) => {
   return (
-    <div>
-      <label>Tiempo:</label>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <label style={{ marginBottom: "5px" }}>Selected date:</label>
       <input
         type="range"
         min={0}
         max={dates.length - 1}
         value={dates.indexOf(selectedDate)}
         onChange={(e) => setSelectedDate(dates[e.target.value])}
+        style={{ width: "100%" }}
       />
-      <span>{selectedDate}</span>
+      <div style={{ textAlign: "center", marginTop: "5px", fontWeight: "bold" }}>
+        {selectedDate}
+      </div>
     </div>
   );
 };
