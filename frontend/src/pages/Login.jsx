@@ -8,7 +8,7 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  
   const handleSubmit = async e => {
     e.preventDefault();
     try {
@@ -16,9 +16,9 @@ export default function Login() {
       navigate("/MapPage");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.detail) {
-        setMessage(err.response.data.detail);
+        setError(err.response.data.detail);
       } else {
-        setMessage('Error al registrar el usuario');
+        setError('Error al registrar el usuario');
       }
     }
   };

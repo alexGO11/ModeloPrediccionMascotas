@@ -9,7 +9,7 @@ const RegisterForm = () => {
     password: ''
   });
 
-  const [message, setMessage] = useState('');
+  const [notification, setNotification] = useState({ message: "", type: "" });
 
   const handleChange = (e) => {
     setFormData({
@@ -21,16 +21,15 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8000/api/auth/register', formData);
-      setMessage('Usuario registrado correctamente');
+     await axios.post('http://localhost:8000/api/auth/register', formData);
+      setNotification({ message: "Usuario registrado correctamente", type: "success" }); 
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.detail) {
-        setMessage(err.response.data.detail);
-      } else {
-        setMessage('Error al registrar el usuario');
-      }
+      const errorMsg = err.response?.data?.detail || "Error al registrar el usuario";
+      setNotification({ message: errorMsg, type: "error" });
     }
   };
+
+  const alertClass = notification.type === "success" ? "alert alert-success" : notification.type === "error" ? "alert alert-danger" : "";
 
   return (
     <div className="register-background">
@@ -38,7 +37,11 @@ const RegisterForm = () => {
         <div className="card p-4 shadow-lg" style={{ maxWidth: "500px", width: "100%" }}>
           <h2 className="text-center mb-4">Registro</h2>
 
-          {message && <div className="alert alert-info">{message}</div>}
+          {notification.message && (
+            <div className={alertClass}>
+              {notification.message}
+            </div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
