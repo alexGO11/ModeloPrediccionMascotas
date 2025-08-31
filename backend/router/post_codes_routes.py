@@ -36,6 +36,9 @@ async def upload_csv(file: UploadFile = File(...)):
     except pd.errors.ParserError:
         raise HTTPException(status_code=400, detail="Error al analizar el CSV, verifica el formato del archivo")
     except Exception as e:
+        if "Duplicate entry" in str(e):
+            raise HTTPException(status_code=400, detail="POST_CODES_ROUTES| La base de datos ya está llena con los datos.")
+        
         error_detail = f"POST_CODES_ROUTES| Error procesando el archivo CSV: {str(e)}"
         if df is not None:
             error_detail += f" (Número de filas: {len(df)})"
