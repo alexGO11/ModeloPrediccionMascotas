@@ -1,0 +1,104 @@
+import geopandas as gpd
+import numpy as np
+from libpysal.weights import Queen
+from esda.getisord import G_Local
+from shapely.geometry import mapping
+from sklearn.preprocessing import MinMaxScaler
+
+# Function applied by the statistic of Getis-Aord G*
+def apply_getisord(df, census):
+    print("Tests encontrados en el intervalo de tiempo: ", len(df))
+    print(df.head())
+    
+    shapefile_path = "data/codigos_postales.shp"
+    gdf = gpd.read_file(shapefile_path)
+
+    # Rename columns
+    gdf = gdf.rename(columns={"COD_POSTAL": "post_code"})
+    
+    print("Shapes cargados: ", len(gdf))
+    print(gdf.head())
+
+    # Group positive test data
+    resultado = df.groupby("post_code").agg(
+        Tests_Positivos=("result", "sum"),
+        Total_Tests=("result", "count")
+    ).reset_index()
+
+    # Unite spatial data with tests
+    gdf = gdf.merge(resultado, on="post_code", how="inner")
+    
+    print("Datos mergeados: ", len(gdf))
+    if gdf.empty:
+        print("No hay datos después del merge con resultados, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
+
+    gdf = gdf.merge(census, on="post_code", how="left")
+    
+    # If you still have no data after the Merge with census, return emptiness
+    if gdf.empty:
+        print("No hay datos después del merge con census, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
+
+    # Fill in possible Nan values ​​in census
+    gdf["census"] = gdf["census"].fillna(1)
+
+    # Calculate the positivity rate
+    gdf["tasa_positividad"] = gdf["Tests_Positivos"] / gdf["census"]
+    
+    # Filter valid geometries
+    gdf = gdf[gdf.geometry.is_valid]  
+    gdf = gdf[gdf.geometry.area > 0]  
+    gdf = gdf[gdf.geometry.is_empty == False]  
+
+    # Verify if enough data are left
+    if len(gdf) < 4:
+        print("Demasiados pocos datos para análisis espacial, devolviendo GeoJSON vacío.")
+        return {"type": "FeatureCollection", "features": []}
+
+    # Build the space weights matrix
+    try:
+        w = Queen.from_dataframe(gdf)
+    except StopIteration:
+        print("No hay suficientes polígonos válidos para construir la matriz de pesos espaciales.")
+        return {"type": "FeatureCollection", "features": []}
+
+    print("Tasas de positividad:")
+    print(gdf["tasa_positividad"].shape)
+
+    # Apply the statistic of Getis-Aord G*
+    g = G_Local(gdf["tasa_positividad"], w)
+
+    # Save results in the DataFrame
+    gdf["z_value"] = g.Zs
+    gdf["p_value"] = g.p_sim
+
+    # Replace nan in Z Score values
+    gdf["z_value"] = gdf["z_value"].fillna(0)
+
+    scaler = MinMaxScaler()
+
+    z_values_reshaped = gdf["z_value"].values.reshape(-1, 1)
+
+    gdf["z_value_normalized"] = scaler.fit_transform(z_values_reshaped)
+    
+    geojson = {
+        "type": "FeatureCollection",
+        "features": []
+    }
+
+    for _, row in gdf.iterrows():
+        feature = {
+            "type": "Feature",
+            "geometry": mapping(row["geometry"]),
+            "properties": {
+                "post_code": row["post_code"],
+                "z_value": row["z_value"],
+                "z_value_normalized": row["z_value_normalized"], # Add the standardized value
+                "p_value": row["p_value"],                       # Add the P_Value
+                "n_positives": row["Tests_Positivos"]
+            }
+        }
+        geojson["features"].append(feature)
+
+    return geojson
