@@ -20,22 +20,23 @@ import time
 aemet_routes = APIRouter()
 url = "/api/valores/climatologicos/diarios/datos/fechaini/{fechaIniStr}/fechafin/{fechaFinStr}/todasestaciones"
 
+# Function to analyze coordinates in DMS format
 def parse_coords(coord):
     try:
-        # Verificar si la coordenada tiene formato N/S o E/W
-        direction = coord[-1]  # Último carácter (N/S/E/W)
-        coord = coord[:-1]  # Eliminar la dirección para procesar el número
+        # Verify if the coordinate has N/S or E/W format
+        direction = coord[-1]  # Last character (n/s/and/w)
+        coord = coord[:-1]  # Eliminate address to process the number
 
-        # Extraer grados, minutos y segundos
-        deg = int(coord[:2])  # Los primeros dos caracteres corresponden a los grados
-        min_ = int(coord[2:4])  # Los siguientes dos caracteres corresponden a los minutos
-        sec = int(coord[4:6]) if len(coord) >= 6 else 0  # Si hay segundos, extraemos
+        # Extract degrees, minutes and seconds
+        deg = int(coord[:2])  # The first two characters correspond to grades
+        min_ = int(coord[2:4])  # The following two characters correspond to the minutes
+        sec = int(coord[4:6]) if len(coord) >= 6 else 0  # If there are seconds, we extract
 
-        # Convertir a decimal
+        # Turn to decimal
         decimal = deg + min_ / 60 + sec / 3600
 
-        # Asignar signo según la dirección
-        if direction in ['S', 'W']:  # Si la dirección es Sur o Oeste, los valores son negativos
+        # Assign sign according to the address
+        if direction in ['S', 'W']:  # If the address is south or west, the values ​​are negative
             decimal = -decimal
 
         return decimal
@@ -43,12 +44,13 @@ def parse_coords(coord):
         print(f"Error en la conversión de coordenadas: {e}")
         return None
 
+# Endpoint to fill the database with AEMET data connecting directly with the official API
 @aemet_routes.post("/fill_db")
 async def fill_db_aemet():
     try:
-        print("Iniciando proceso para llenar la base de datos con datos de AEMET")
+        print("AEMET_ROUTES| Iniciando proceso para llenar la base de datos con datos de AEMET")
 
-        # Obtener la última fecha añadida en la tabla aemet
+        # Obtain the last date added in Table Aemet
         with engine.connect() as conn:
             last_date = conn.execute(select(func.max(aemet.c.date))).scalar()
             conn.commit()
@@ -71,12 +73,12 @@ async def fill_db_aemet():
             "LONGITUD": "lon"
         }, inplace=True)
 
-        print("Coordenadas originales:")
-        print(df_coords[["lat", "lon"]].head())
+        print("AEMET_ROUTES| Coordenadas originales:")
         df_coords["lat"] = df_coords["lat"].apply(parse_coords)
         df_coords["lon"] = df_coords["lon"].apply(parse_coords)
-        print("Coordenadas convertidas:")
-        print(df_coords[["lat", "lon"]].head())
+
+        print("AEMET_ROUTES| Coordenadas convertidas")
+        print(df_coords.head())
         while current_date <= end_date:
             time.sleep(1)
             
@@ -84,28 +86,28 @@ async def fill_db_aemet():
             fechaIniStr = current_date.strftime("%Y-%m-%dT%H:%M:%SUTC")
             fechaFinStr = next_date.strftime("%Y-%m-%dT%H:%M:%SUTC")
 
-            print(f"Solicitando metadatos: {fechaIniStr} - {fechaFinStr}")
+            print(f"AEMET_ROUTES| Solicitando metadatos: {fechaIniStr} - {fechaFinStr}")
 
             meta_url = f"https://opendata.aemet.es/opendata/api/valores/climatologicos/diarios/datos/fechaini/{fechaIniStr}/fechafin/{fechaFinStr}/todasestaciones"
             meta_response = safe_get(meta_url, params={"api_key": API_KEY})
-            print("Respuesta de metadatos:", meta_response.json())
+            print("AEMET_ROUTES| Respuesta de metadatos:", meta_response.json())
             if meta_response.status_code != 200:
-                print(f"Error en la solicitud a AEMET: {meta_response.status_code}")
+                print(f"AEMET_ROUTES| Error en la solicitud a AEMET: {meta_response.status_code}")
                 break
 
             datos_url = meta_response.json().get("datos")
             if not datos_url:
-                print("No se encontró la URL de datos en la respuesta.")
+                print("AEMET_ROUTES| No se encontró la URL de datos en la respuesta.")
                 break
 
-            print("Descargando datos de:", datos_url)
+            print("AEMET_ROUTES| Descargando datos de:", datos_url)
             datos_response = requests.get(datos_url)
             if datos_response.status_code != 200:
-                print(f"Error al descargar los datos: {datos_response.json()}")
+                print(f"AEMET_ROUTES| Error al descargar los datos: {datos_response.json()}")
                 break
 
             registros = datos_response.json()
-            print(f"Descargados {len(registros)} registros")
+            print(f"AEMET_ROUTES| Descargados {len(registros)} registros")
             clean_data = []
 
             for r in registros:
@@ -121,7 +123,7 @@ async def fill_db_aemet():
 
             df_aemet = pd.DataFrame(clean_data)
             if df_aemet.empty:
-                print("No hay datos limpios para este intervalo")
+                print("AEMET_ROUTES| No hay datos limpios para este intervalo")
                 current_date = next_date
                 continue
 
@@ -139,10 +141,8 @@ async def fill_db_aemet():
                     conn.commit()
                     total_insertados += len(df_merged)
 
-            print(f"Intervalo {fechaIniStr} - {fechaFinStr} insertado con {len(df_merged)} registros")
+            print(f"AEMET_ROUTES| Intervalo {fechaIniStr} - {fechaFinStr} insertado con {len(df_merged)} registros")
             current_date = next_date
-        
-        
 
         return {"message": "Datos cargados correctamente", "total_insertados": total_insertados}
 
@@ -154,13 +154,14 @@ async def fill_db_aemet():
             content={"error": f"Error al procesar la solicitud: {str(e)}"},
             status_code=500,
     )
-        
+
+# Function for get requests safely
 def safe_get(url, params=None, retries=5, delay=5):
     for attempt in range(retries):
         try:
             response = requests.get(url, params=params, timeout=10)
             if response.status_code == 429:
-                print("Límite de peticiones alcanzado. Esperando...")
+                print("AEMET_ROUTES| Límite de peticiones alcanzado. Esperando...")
                 time.sleep(60)
                 continue
             response.raise_for_status()
@@ -170,6 +171,7 @@ def safe_get(url, params=None, retries=5, delay=5):
             time.sleep(delay)
     raise Exception(f"No se pudo obtener respuesta tras {retries} intentos.")
 
+# Endpoint to obtain AEMET data from the database
 @aemet_routes.post("/get_data")
 async def get_aemet_data(request: Request):
     raw_body = await request.body()
@@ -190,29 +192,30 @@ async def get_aemet_data(request: Request):
         current_date = datetime.strptime("2024-08-18", "%Y-%m-%d").date()
         interval = params["interval"]
 
-        # Cargar shape de España (MultiPolygon)
+        # Load Shape from Spain (Multipolygon)
         with open("data/shpESP.geojson", "r") as f:
             shape_geojson = json.load(f)
             shape_union = shape(shape_geojson)
 
-        shape_prepared = prep(shape_union)  # Acelera los contains()
-        minx, miny, maxx, maxy = shape_union.bounds  # Bounding box para filtro rápido
+        shape_prepared = prep(shape_union)  # Calves the counts()
+        minx, miny, maxx, maxy = shape_union.bounds  # Bounding Box for Fast Filter
 
-        print("Shape de España cargado y preparado")
+        print("AEMET_ROUTES| Shape de España cargado y preparado")
 
         with engine.connect() as conn:
 
             stmt = stmt = select(func.max(aemet.c.temp))
             max_temp = conn.execute(stmt).scalar()
-            print("Max temp:", max_temp)
+            print("AEMET_ROUTES| Max temp:", max_temp)
+
             stmt = stmt = select(func.min(aemet.c.temp))
             min_temp = conn.execute(stmt).scalar()
-            print("Min temp:", min_temp)
+            print("AEMET_ROUTES| Min temp:", min_temp)
 
             while current_date >= end_date:
                 next_date = current_date - timedelta(days=interval)
-                print(f"Intervalo: {next_date} → {current_date}")
-                
+                print(f"AEMET_ROUTES| Intervalo: {next_date} → {current_date}")
+
                 stmt = (
                     select(
                         func.avg(aemet.c.temp).label("avg_temp"),
@@ -230,14 +233,14 @@ async def get_aemet_data(request: Request):
 
                 result = conn.execute(stmt).mappings().fetchall()
 
-                print(f"Registros encontrados: {len(result)}")
+                print(f"AEMET_ROUTES| Registros encontrados: {len(result)}")
 
                 if not result:
-                    print(f"Sin datos en el intervalo {next_date} → {current_date}")
+                    print(f"AEMET_ROUTES| Sin datos en el intervalo {next_date} → {current_date}")
                     current_date = next_date
                     continue
 
-                # Interpolación de temperaturas
+                # Temperature interpolation
                 points = np.array([(row["lon"], row["lat"]) for row in result])
                 values = np.array([row["avg_temp"] for row in result])
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const RegisterForm = () => {
+  // State to manage form data
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -9,8 +10,10 @@ const RegisterForm = () => {
     password: ''
   });
 
+  // State to manage notifications for success or error messages
   const [notification, setNotification] = useState({ message: "", type: "" });
 
+  // Handle input changes and update form data state
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -18,17 +21,21 @@ const RegisterForm = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-     await axios.post('http://localhost:8000/api/auth/register', formData);
+      // Send registration data to the backend
+      await axios.post('http://localhost:8000/api/auth/register', formData);
       setNotification({ message: "Usuario registrado correctamente", type: "success" }); 
     } catch (err) {
+      // Handle errors and set appropriate notification messages
       const errorMsg = err.response?.data?.detail || "Error al registrar el usuario";
       setNotification({ message: errorMsg, type: "error" });
     }
   };
 
+  // Determine the CSS class for the notification based on its type
   const alertClass = notification.type === "success" ? "alert alert-success" : notification.type === "error" ? "alert alert-danger" : "";
 
   return (
@@ -37,6 +44,7 @@ const RegisterForm = () => {
         <div className="card p-4 shadow-lg" style={{ maxWidth: "500px", width: "100%" }}>
           <h2 className="text-center mb-4">Registro</h2>
 
+          {/* Display notification message if available */}
           {notification.message && (
             <div className={alertClass}>
               {notification.message}

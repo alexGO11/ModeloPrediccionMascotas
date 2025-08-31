@@ -3,6 +3,7 @@ from sqlalchemy.sql.sqltypes import String, Date
 
 from config.db_connection import engine, meta_data
 
+# Definition of the Human table used in the database
 human = Table(
     "human",
     meta_data,

@@ -5,7 +5,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MapPage from "./pages/MapPage";
 
-// Componente para proteger rutas privadas
 function PrivateRoute({ children }) {
   const { token } = useAuth();
   return token ? children : <Navigate to="/" />;
@@ -13,15 +12,15 @@ function PrivateRoute({ children }) {
 
 export default function App() {
   return (
-    <AuthProvider>  {/*Provee autenticación*/}
-      <BrowserRouter> {/*Rutas que tiene la página*/}
+    <AuthProvider>  {/*Provides authentication*/}
+      <BrowserRouter> {/*Routes that have the page*/}
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
             path="/MapPage"
-            element={ 
-              <PrivateRoute> {/*Protege la ruta de MapPage si no estas autenticado*/}
+            element={
+              <PrivateRoute> {/*Protect the MapPage route if you are not authenticated*/}
                 <MapPage />
               </PrivateRoute>
             }

@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Boolean, String
 from config.db_connection import engine, meta_data
 
+# Definition of the Users table used in the database
 users = Table(
     "users", meta_data,
     Column("username", String(50), primary_key=True, nullable=False),

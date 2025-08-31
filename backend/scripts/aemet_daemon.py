@@ -4,6 +4,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 from router.aemet_routes import fill_db_aemet
 from main import scheduler
 
+# Schedule the fill_db_aemet job
 scheduler.add_job(
     fill_db_aemet,
     IntervalTrigger(days=15),

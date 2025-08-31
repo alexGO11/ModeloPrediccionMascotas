@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import LayerSelector from "../components/LayerSelector";
 import TimeIntervalSelector from "../components/TimeIntervalSelector";
@@ -7,8 +6,8 @@ import Heatmap from "../components/map";
 import DiseaseSelector from "../components/selectDisease";
 import ExecutionButton from "../components/executionButton";
 
-
 export default function MapPage() {
+  // State variables for managing user selections and data
   const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
   const [interval, setInterval] = useState(365);
   const [offsetHuman, setOffsetHuman] = useState(0);
@@ -22,7 +21,7 @@ export default function MapPage() {
 
   const fetchData = () => {
     setCurrInterval(Number(interval));
-    // Configuración de las solicitudes
+    // Fetch filtered data based on user selections
     const filteredRequest = fetch("http://localhost:8000/api/test/filtered", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -33,11 +32,12 @@ export default function MapPage() {
       }),
     }).then((res) => res.json());
 
-    // Suma el offsetTemperature (en días) a la fecha de inicio
+    // Adjust start date based on temperature offset
     const startDateObj = new Date("2022-01-01");
     startDateObj.setDate(startDateObj.getDate() + offsetTemperature);
     const offsetStartDate = startDateObj.toISOString().slice(0, 10);
 
+    // Fetch AEMET data
     const aemetRequest = fetch("http://localhost:8000/api/aemet/get_data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,6 +47,7 @@ export default function MapPage() {
       }),
     }).then((res) => res.json());
 
+    // Fetch human data
     const humanRequest = fetch("http://localhost:8000/api/human/get_human_data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -56,7 +57,7 @@ export default function MapPage() {
       }),
     }).then((res) => res.json());
 
-    // Ejecutar ambas solicitudes en paralelo
+    // Combine all fetched data
     Promise.all([filteredRequest, aemetRequest, humanRequest]).then(([filteredData, aemetData, humanData]) => {
       const processedFiltered = filteredData.map((item) => ({
         ...item,
@@ -73,13 +74,14 @@ export default function MapPage() {
         source: "human",
       }));
 
+      // Update state with combined data
       setGeojsonList([...processedFiltered, ...processedAemet, ...processedHuman]);
     });
   };
 
   return (
       <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
-          {/* renderiza el mapa */}
+          {/* Render the heatmap with the fetched data */}
           <Heatmap
             diseaseData={geojsonList.find((item) => item.date === selectedDate && item.source === "filtered")?.geojson}
             aemetData={geojsonList.find((item) => item.date === selectedDate && item.source === "aemet")?.geojson}
@@ -87,7 +89,7 @@ export default function MapPage() {
             selectedLayers={selectedLayers}
           />
 
-        {/* contenedor para el timeSlider, timeIntervalSelector y layerSelector */}
+        {/* Container for controls like sliders and selectors */}
         <div
           style={{
             position: "absolute",
@@ -104,7 +106,7 @@ export default function MapPage() {
             gap: "15px",
           }}
         >
-          {/* renderiza el resto de componentes */}
+          {/* Render the rest of the components */}
         <TimeIntervalSelector interval={interval} setInterval={setInterval} />
         <TimeSlider
           dates={[...new Set(geojsonList.map((item) => item.date))].sort()}
@@ -117,5 +119,4 @@ export default function MapPage() {
       </div>
     </div>
   );
-
 }

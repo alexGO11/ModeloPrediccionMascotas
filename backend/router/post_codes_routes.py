@@ -7,7 +7,7 @@ from scripts.preprocess import prepare_post_code_data
 
 post_codes_routes = APIRouter()
 
-#añade tests a la base de datos subiendo un csv
+# Add the pet census to the database from a CSV
 @post_codes_routes.post("/upload_csv", status_code=201)
 async def upload_csv(file: UploadFile = File(...)):
     df = None

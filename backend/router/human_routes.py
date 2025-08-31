@@ -15,39 +15,40 @@ from config.db_connection import engine
 from model.human import human
 from scripts.process_human_data import prepare_human_data
 
-human_routes = APIRouter()
-
 from shapely.geometry import mapping, Point
 import geopandas as gpd
 
+human_routes = APIRouter()
+
+# Function to build from DataFrame el Geojson
 def build_geojson(df):
     shapefile_path = "data/codigos_postales.shp"
     gdf = gpd.read_file(shapefile_path)
 
-    # Renombrar columna para hacer merge
+    # Rename column to make Merge
     gdf = gdf.rename(columns={"COD_POSTAL": "post_code"})
     gdf["post_code"] = gdf["post_code"].astype(str)
     df["post_code"] = df["post_code"].astype(str)
 
-    # Agrupar por código postal y contar casos
+    # Group by postal code and count cases
     cases_per_cp = df.groupby("post_code").size().reset_index(name="cases")
 
-    # Merge de geometría con los casos por código postal
+    # Geometry merge with cases by postal code
     merged = gdf.merge(cases_per_cp, on="post_code", how="inner")
 
-    # Estructura del geojson
+    # Geojson Structure
     geojson = {
         "type": "FeatureCollection",
         "features": []
     }
 
     for _, row in merged.iterrows():
-        # Calcular centroide
+        # Calculate centroid
         centroid = row["geometry"].centroid
 
         feature = {
             "type": "Feature",
-            "geometry": mapping(Point(centroid.x, centroid.y)),  # Usamos centroide
+            "geometry": mapping(Point(centroid.x, centroid.y)),  # We use centroid
             "properties": {
                 "post_code": row["post_code"],
                 "cases": row["cases"]
@@ -57,8 +58,7 @@ def build_geojson(df):
 
     return geojson
 
-
-
+# Endpoint to add human data to the database
 @human_routes.post("/add_human_data")
 async def add_human_data(file: UploadFile = File(...)):
     try:
@@ -81,7 +81,8 @@ async def add_human_data(file: UploadFile = File(...)):
     except Exception as e:
         traceback.print_exc()
         return JSONResponse(content={"error": str(e)}, status_code=500)
-    
+
+# Endpoint to get human data from the database
 @human_routes.post("/get_human_data")
 async def get_human_data(request: Request):
     try:
@@ -102,7 +103,7 @@ async def get_human_data(request: Request):
         with engine.connect() as conn:
             current_date = start_date
 
-            # Recorre todas las fechas con saltos temporales = al intervalo
+            # Tour all dates with temporary jumps = to the interval
             while current_date >= end_date:
                 next_date = current_date - timedelta(days=interval)
 
@@ -118,13 +119,13 @@ async def get_human_data(request: Request):
                 df = pd.DataFrame(result.fetchall(), columns=result.keys())
                 df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
                 print(f"HUMAN_ROUTES| Datos obtenidos para el intervalo {next_date} - {current_date}: {len(df)} registros")
-                # Si hay datos, aplicar el algoritmo de Getis-Ord y los resultados se añaden a la lista
+                # If there is data, apply the Getis-Uord algorithm and the results are added to the list
                 if not df.empty:
                     
                     geojson = build_geojson(df)
                     print("HUMAN_ROUTES| GeoJSON generado")
                     print(f"HUMAN_ROUTES| GeoJSON contiene {len(geojson['features'])} features")
-                    # Se añaden los resultados a la lista de geojsons
+                    # The results are added to the geojsons list
                     results.append({
                         "date": current_date.strftime("%Y-%m-%d"),
                         "geojson": geojson

@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Float, String, Integer
 from config.db_connection import engine, meta_data
 
+# Definition of the Aemet table used in the database
 aemet = Table(
     "aemet",
     meta_data,

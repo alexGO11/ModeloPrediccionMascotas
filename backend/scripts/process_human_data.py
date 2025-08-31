@@ -1,7 +1,7 @@
 import pandas as pd
 
+# Function to clean humans cases
 def prepare_human_data(data):
-    
     columns = ["Post Code", "Disease", "Date"]
     df_filtered = data[columns]
 
@@ -18,6 +18,5 @@ def prepare_human_data(data):
     df_filtered['date'] = pd.to_datetime(df_filtered['date'], errors='coerce')
 
     df_filtered['date'] = df_filtered['date'].dt.strftime('%Y-%m-%d %H:%M:%S')
-    
     
     return df_filtered

@@ -12,6 +12,7 @@ from auth.dependencies import get_current_user
 
 auth_routes = APIRouter()
 
+# Dependency to get DB session
 def get_db():
     db = SessionLocal()
     try:

@@ -4,6 +4,7 @@ from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
 from config.db_connection import engine, meta_data
 
+# Definition of the Precalculated table used in the database
 precalculated = Table(
     "precalculated", meta_data,
     Column("id", String(10), primary_key=True),

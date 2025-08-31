@@ -8,13 +8,15 @@ export default function Login() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+      // Attempt to log in the user
       await login(user, password);
       navigate("/MapPage");
     } catch (err) {
+      // Handle errors and set appropriate error messages
       if (err.response && err.response.data && err.response.data.detail) {
         setError(err.response.data.detail);
       } else {
@@ -37,6 +39,7 @@ export default function Login() {
 
         <h3 className="text-center mb-3">Iniciar sesión</h3>
 
+        {/* Display error message if there is an error */}
         {error && <div className="alert alert-danger">{error}</div>}
 
         <form onSubmit={handleSubmit}>

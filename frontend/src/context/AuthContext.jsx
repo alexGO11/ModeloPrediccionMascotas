@@ -4,9 +4,10 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  // State to store the authentication token
   const [token, setToken] = useState(null);
 
-  // Leer el token de localStorage al cargar
+  // Load the token from localStorage when the component mounts
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) {
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  // Function to handle user login
   const login = async (username, password) => {
     try {
       const response = await axios.post(
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }) => {
           },
         }
       );
+      // Save the token in state and localStorage
       setToken(response.data.access_token);
       localStorage.setItem("token", response.data.access_token);
     } catch (err) {
@@ -36,16 +39,19 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Function to handle user logout
   const logout = () => {
     setToken(null);
     localStorage.removeItem("token");
   };
 
   return (
+    // Provide the authentication context to child components
     <AuthContext.Provider value={{ token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// Custom hook to use the authentication context
 export const useAuth = () => useContext(AuthContext);

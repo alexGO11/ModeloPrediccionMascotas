@@ -10,15 +10,15 @@ from model.precalculated import precalculated
 from config.db_connection import engine
 from model.tests import tests
 from scripts.preprocess import prepare_test_data
-from scripts.getisord import aply_getisord
+from scripts.getisord import apply_getisord
 from model.post_code import pc
 
 from scripts.serialize_geojson import serialize_geojson_rows
 
 test_routes = APIRouter()
 
-# Lista de intervalos de tiempo precalculados y enfermedades
-# Estos son los intervalos de tiempo que se pueden solicitar directamente sin necesidad de calcularlos
+# List of prelimated time intervals and diseases
+# These are the time intervals that can be requested directly without calculating them
 intervals = [15, 30, 60, 90, 120]
 diseases = ["Leishmania", "Giardia"]
 
@@ -26,7 +26,7 @@ diseases = ["Leishmania", "Giardia"]
 async def root_redirect():
     return RedirectResponse(url="/docs")
 
-# Recibe un intervalo de tiempo introducido por el usuario y devuelve los datos de todos los tests realizados separados por intervalos de tiempo
+# Receive a time interval introduced by the user and returns the data of all the tests separated by time intervals
 @test_routes.post("/filtered")
 async def get_tests_filtered(request: Request):
     
@@ -42,13 +42,13 @@ async def get_tests_filtered(request: Request):
     if "start_date" not in params:
         return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
 
-    # Inicializa variables
+    # Initialize variables
     start_date = datetime.now(timezone.utc)
     end_date = datetime.strptime("2022-01-01", "%Y-%m-%d").replace(tzinfo=timezone.utc)
     interval = params["interval"]
     disease = params["disease"]
 
-    # Si el intervalo coincide con los precalculados, devolverlos
+    # If the interval coincides with the precalculated ones, return them
     if interval in intervals:
 
         print("TEST_ROUTES| Intervalo de tiempo precalculado encontrado:", interval)
@@ -72,7 +72,7 @@ async def get_tests_filtered(request: Request):
 
             return JSONResponse(content=geojson)
 
-    # Si no hay datos precalculados, calcularlos manualmente
+    # If there are no prealculated data, calculate them manually
     results = []
 
     with engine.connect() as conn:
@@ -82,7 +82,7 @@ async def get_tests_filtered(request: Request):
         census_db = conn.execute(select(pc))
         census = pd.DataFrame(census_db.fetchall(), columns=census_db.keys())
 
-        # Recorre todas las fechas con saltos temporales = al intervalo
+        # Tour all dates with temporary jumps = to the interval
         while current_date >= end_date:
             next_date = current_date - timedelta(days=interval)
 
@@ -98,9 +98,9 @@ async def get_tests_filtered(request: Request):
             df = pd.DataFrame(result.fetchall(), columns=result.keys())
             df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
 
-            # Si hay datos, aplicar el algoritmo de Getis-Ord y los resultados se añaden a la lista
+            # If there is data, apply the Getis-Uord algorithm and the results are added to the list
             if not df.empty:
-                df_resultado = aply_getisord(df, census)
+                df_resultado = apply_getisord(df, census)
 
                 results.append({
                     "date": current_date.strftime("%Y-%m-%d"),
@@ -111,11 +111,11 @@ async def get_tests_filtered(request: Request):
 
     return JSONResponse(content=results)
 
-# Genera datos precalculados para todos los intervalos de tiempo y enfermedades
+# Generates preliminary data for all time and disease intervals
 @test_routes.post("/precalculated", status_code=status.HTTP_201_CREATED)
 async def create_precalculated_data():
     try:
-        # Limpiar la tabla antes de insertar nuevos datos y obtiener el censo
+        # Clean the table before inserting new data and obtaining the census
         with engine.connect() as conn:
             trans = conn.begin()
             conn.execute(precalculated.delete())  
@@ -131,7 +131,7 @@ async def create_precalculated_data():
 
         current_date = start_date
 
-        # Para cada intervalo de tiempo y enfermedad, se obtiene los datos y aplicamos getis-ord para luego almacenar los resultados en la base de datos
+        # For each time and disease interval, the data is obtained and we apply Getis-Pord and then store the results in the database
         for interval in intervals:
             current_date = start_date
             while current_date >= end_date:
@@ -147,7 +147,7 @@ async def create_precalculated_data():
                         print("Next date:", next_date)
                         print("Interval:", interval)
 
-                        # Consulta filtrando por el intervalo de tiempo actual
+                        # Query filtering for the current time interval
                         query = select(tests).where(
                                 and_(
                                     tests.c.date_done <= current_date,
@@ -162,13 +162,13 @@ async def create_precalculated_data():
                         df["post_code"] = df["post_code"].fillna(0).astype(int).astype(str).str.zfill(5)
                             
                         try:
-                            df_resultado = aply_getisord(df, census)
-                            # Si el resultado es vacío se rellena con JSON vacio
-                            if not df_resultado or not df_resultado.get("features"):  # Vacío o sin features
+                            df_resultado = apply_getisord(df, census)
+                            # If the result is empty it is filled with empty json
+                            if not df_resultado or not df_resultado.get("features"):  # Void or without features
                                 print("GeoJSON vacío, insertando estructura mínima")
                                 df_resultado = {"type": "FeatureCollection", "features": []}
 
-                            # Eliminar geometria para facilitar el almacenado en la base de datos
+                            # Eliminate geometry to facilitate stored in the database
                             for feature in df_resultado["features"]:
                                 feature.pop("geometry", None)
 
@@ -196,7 +196,7 @@ async def create_precalculated_data():
             status_code=500,
         )
 
-#añade tests a la base de datos subiendo un csv
+#Add tests to the database uploading a CSV
 @test_routes.post("/upload_csv", status_code=201)
 async def upload_csv(file: UploadFile = File(...)):
     df = None
@@ -219,7 +219,7 @@ async def upload_csv(file: UploadFile = File(...)):
             conn.execute(tests.insert().values(data_to_insert))
             conn.commit()
             
-        # Generamos nuevos datos precalculados
+        # We generate new prealculated data
         create_precalculated_data()
 
         return {"message": "Datos insertados correctamente", "total": len(data_to_insert)}

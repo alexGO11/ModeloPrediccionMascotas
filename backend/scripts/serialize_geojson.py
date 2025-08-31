@@ -2,14 +2,16 @@ import json
 import geopandas as gpd
 from shapely.geometry import mapping
 
+# Function to serialize rows of results in Geojson
+
 def serialize_geojson_rows(rows):
-    # Cargar shapefile con geometrías por código postal
+    # Shapefile load with geometries by postal code
     shapefile_path = "data/codigos_postales.shp"
     gdf = gpd.read_file(shapefile_path)
     gdf = gdf.rename(columns={"COD_POSTAL": "post_code"})
     gdf["post_code"] = gdf["post_code"].astype(str).str.zfill(5)
 
-    # Diccionario para buscar geometría por código postal
+    # Dictionary to search geometry by postal code
     geometry_lookup = {row["post_code"]: row["geometry"] for _, row in gdf.iterrows()}
 
     results = []

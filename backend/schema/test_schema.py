@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 import datetime
 
+# Scheme for test data performed on pets
 class TestSchema(BaseModel):
     id_test: Optional[int] = None  
     post_code: str

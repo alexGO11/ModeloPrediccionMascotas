@@ -11,15 +11,9 @@ from router.human_routes import human_routes
 app = FastAPI()
 scheduler = AsyncIOScheduler()
 
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    #allow_origins=[
-    #    "http://localhost:3000",  # Para frontend local
-    #    "http://localhost:80",    # Si accedes desde el navegador con Nginx
-    #    "http://app:80",          # Para frontend dentro de Docker
-    #    "http://app:3000"         # Para frontend dentro de Docker
-    #],
-    
     allow_origins=["http://localhost",
                    "https://localhost"],
     allow_credentials=True,
@@ -27,6 +21,7 @@ app.add_middleware(
     allow_headers=['*']
 )
 
+# Incorporation of the routes
 app.include_router(test_routes, prefix="/api/test", tags=["test"])
 app.include_router(post_codes_routes, prefix="/api/post_codes", tags=["post_codes"])
 app.include_router(auth_routes, prefix="/api/auth", tags=["auth"])

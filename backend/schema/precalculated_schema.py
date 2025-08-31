@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Dict, Any
 import datetime
 
+# Scheme for pre-calculated data from Getisord
 class PrecalculatedSchema(BaseModel):
     id: int
     disease: str
