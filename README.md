@@ -1,7 +1,7 @@
 # Mapa web para visualizar datos de contagio de mascotas
 
 ## Descripción
-Este proyecto es una aplicación que permite visualizar en un mapa de la península la incidencia de determinadas enfermedades de mascotas. Se ejecuta con un frontend en React y un backend basado en FastAPI (Python). Ambos servicios se ejecutan en contenedores mediante Docker Compose.
+Este proyecto de final de carrera es una aplicación que permite visualizar en un mapa de España la incidencia de determinadas enfermedades de mascotas. Se ejecuta con un frontend en React y un backend basado en FastAPI (Python) ejecutandose en contenedores mediante Docker Compose.
 
 ## Tecnologías utilizadas
 - **Frontend**: React
@@ -26,24 +26,13 @@ Antes de comenzar, asegúrate de tener instalado en tu sistema Docker:
     docker compose up --build
 
 4. La aplicación estará disponible en:
-    - http://localhost
+    - https://localhost
 
-## Estructura del proyecto
-```sh
-ModeloPrediccionMascotas/
-│── backend/           
-│   ├── src/
-│   ├── main.py
-│   ├── requirements.txt
-│   ├── Dockerfile
-│── frontend/          
-│   ├── app/
-│   ├── package.json
-│   ├── Dockerfile
-│── nginx/          # Nginx configuration
-│   ├── default.connf
-│   ├── Dockerfile
-│── docker-compose.yml 
-│── .env.example
-│── README.md
-
+## Variables de entorno
+- MYSQL_ROOT_PASSWORD : La contraseña del usuario root de MySQL
+- MYSQL_DATABASE : La base de datos por defecto a crear
+- DB_HOST : El host del servidor de la base de datos
+- DB_USER : El usuario de la base de datos
+- DB_PASSWORD : La contraseña del usuario de la base de datos
+- DB_NAME : El nombre de la base de datos a la que conectarse
+- DB_DIALECT : El dialecto/driver de SQLAlchemy a usar para la conexión (por ejemplo, mysql+pymysql)
