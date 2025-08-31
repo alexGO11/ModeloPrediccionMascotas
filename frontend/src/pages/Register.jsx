@@ -24,8 +24,11 @@ const RegisterForm = () => {
       const res = await axios.post('http://localhost:8000/api/auth/register', formData);
       setMessage('Usuario registrado correctamente');
     } catch (err) {
-      console.error(err);
-      setMessage('Error al registrar el usuario');
+      if (err.response && err.response.data && err.response.data.detail) {
+        setMessage(err.response.data.detail);
+      } else {
+        setMessage('Error al registrar el usuario');
+      }
     }
   };
 

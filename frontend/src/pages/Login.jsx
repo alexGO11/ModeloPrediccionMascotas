@@ -15,7 +15,11 @@ export default function Login() {
       await login(user, password);
       navigate("/MapPage");
     } catch (err) {
-      setError("Credenciales incorrectas");
+      if (err.response && err.response.data && err.response.data.detail) {
+        setMessage(err.response.data.detail);
+      } else {
+        setMessage('Error al registrar el usuario');
+      }
     }
   };
 

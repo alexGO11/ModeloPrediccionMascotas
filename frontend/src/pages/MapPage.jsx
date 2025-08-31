@@ -19,7 +19,6 @@ export default function MapPage() {
   const [selectedDate, setSelectedDate] = useState(startDate);
   const [selectedDisease, setSelectedDisease] = useState("Leishmania");
   const [currInterval, setCurrInterval] = useState(0);
-  //const [selectedLayer, setSelectedLayer] = useState("z_value");
 
   const fetchData = () => {
     setCurrInterval(Number(interval));
