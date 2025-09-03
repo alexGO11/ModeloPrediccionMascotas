@@ -191,6 +191,8 @@ async def get_aemet_data(request: Request):
         end_date = datetime.strptime("2022-01-01", "%Y-%m-%d").date()
         current_date = datetime.strptime("2024-08-18", "%Y-%m-%d").date()
         interval = params["interval"]
+        offset = params["offset"]
+        current_date = current_date + timedelta(days=offset)
 
         # Load Shape from Spain (Multipolygon)
         with open("data/shpESP.geojson", "r") as f:
