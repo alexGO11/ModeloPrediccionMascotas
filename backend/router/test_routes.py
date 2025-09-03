@@ -39,9 +39,6 @@ async def get_tests_filtered(request: Request):
 
     print("TEST_ROUTES| Datos recibidos:", params)
 
-    if "start_date" not in params:
-        return JSONResponse(content={"error": "Falta start_date"}, status_code=400)
-
     # Initialize variables
     start_date = datetime.now(timezone.utc)
     end_date = datetime.strptime("2022-01-01", "%Y-%m-%d").replace(tzinfo=timezone.utc)

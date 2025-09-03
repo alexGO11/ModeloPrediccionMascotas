@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import LoadingScreen from "../pages/loading";
+import LoadingScreen from "../pages/Loading";
 
 
 const ExecutionButton = ({ fetchData, currInterval, interval }) => {
   const [loading, setLoading] = useState(false);
   
-
+  // function to manage execution button
   const handleClick = async () => {
     console.log(`Current Interval: ${currInterval}, Selected Interval: ${interval}`);
     if(currInterval !== interval) {
@@ -15,6 +15,7 @@ const ExecutionButton = ({ fetchData, currInterval, interval }) => {
     }
   };
 
+  // Show loading screen if loading
   if (loading) return <LoadingScreen />;
 
   return (
@@ -40,7 +41,7 @@ const ExecutionButton = ({ fetchData, currInterval, interval }) => {
         if (!loading) e.currentTarget.style.backgroundColor = "#007bff";
       }}
     >
-      {loading ? "Cargando..." : "Cargar Datos"}
+      {loading ? "Loading..." : "Load data"}
     </button>
   );
 }
