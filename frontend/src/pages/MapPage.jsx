@@ -1,8 +1,8 @@
 
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useState } from "react";
 import Heatmap from "../components/Map";
 import SidePanel from "../components/SidePanel";
-import axios from "axios";
 
 
 export default function MapPage() {
@@ -22,23 +22,22 @@ export default function MapPage() {
       setCurrInterval(Number(interval));
 
       const api = axios.create({
-        baseURL: "https://localhost",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        baseURL: process.env.REACT_APP_API_URL || "/api", 
+        headers: { "Content-Type": "application/json" },
         withCredentials: false,
       });
 
+
       const [filteredRes, aemetRes, humanRes] = await Promise.all([
-        api.post("api/test/filtered", {
+        api.post("/test/filtered", {
           interval,
           disease: selectedDisease,
         }),
-        api.post("api/aemet/get_data", {
+        api.post("/aemet/get_data", {
           interval,
           offset: offsetTemperature,
         }),
-        api.post("api/human/get_human_data", {
+        api.post("/human/get_human_data", {
           interval,
           disease: selectedDisease,
           offset: offsetHuman,

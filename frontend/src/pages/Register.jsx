@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -20,18 +20,18 @@ const RegisterForm = () => {
     });
   };
 
+  const api = axios.create({
+    baseURL: process.env.REACT_APP_API_URL || "/api",
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8000/api/auth/register", formData);
-      setNotification({
-        message: "Usuario registrado correctamente",
-        type: "success",
-      });
+      await api.post("/auth/register", formData);
+      setNotification({ message: "Usuario registrado correctamente", type: "success" });
       navigate("/");
     } catch (err) {
-      const errorMsg =
-        err.response?.data?.detail || "Error al registrar el usuario";
+      const errorMsg = err.response?.data?.detail || "Error al registrar el usuario";
       setNotification({ message: errorMsg, type: "error" });
     }
   };

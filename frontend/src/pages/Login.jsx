@@ -89,7 +89,7 @@ export default function Login() {
           </div>
 
           <button type="submit" className="btn btn-primary w-100 py-2 fw-semibold">
-            Entrar
+            Enter
           </button>
         </form>
 
