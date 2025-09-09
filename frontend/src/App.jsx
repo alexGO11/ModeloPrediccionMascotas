@@ -16,7 +16,7 @@ export default function App() {
       <BrowserRouter> {/*Routes that have the page*/}
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/Register" element={<Register />} />
           <Route
             path="/MapPage"
             element={

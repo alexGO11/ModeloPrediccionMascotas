@@ -8,7 +8,13 @@ from router.auth_routes import auth_routes
 from router.aemet_routes import aemet_routes
 from router.human_routes import human_routes
 
-app = FastAPI()
+
+app = FastAPI(
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+    redoc_url="/api/redoc",
+)
+
 scheduler = AsyncIOScheduler()
 
 # CORS configuration

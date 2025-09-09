@@ -7,7 +7,7 @@ from config.db_connection import engine, meta_data
 # Definition of the Precalculated table used in the database
 precalculated = Table(
     "precalculated", meta_data,
-    Column("id", String(10), primary_key=True),
+    Column("id", Integer, primary_key=True, autoincrement=True),
     Column("disease", String(15), nullable=False),
     Column("days_interval", Integer, nullable=False),
     Column("end_date", DateTime, nullable=False),

@@ -1,57 +1,56 @@
-import { createContext, useContext, useState, useEffect } from "react";
+// src/context/AuthContext.jsx
 import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
+const api = axios.create({
+  baseURL: process.env.REACT_APP_API_URL || "/api",
+});
+
 export const AuthProvider = ({ children }) => {
-  // State to store the authentication token
   const [token, setToken] = useState(null);
 
-  // Load the token from localStorage when the component mounts
+  
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
-    if (savedToken) {
-      setToken(savedToken);
-    }
+    if (savedToken) setToken(savedToken);
   }, []);
 
-  // Function to handle user login
+
+  useEffect(() => {
+    if (token) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+      localStorage.setItem("token", token);
+    } else {
+      delete api.defaults.headers.common.Authorization;
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+
+
   const login = async (username, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/auth/token",
-        new URLSearchParams({
-          username,
-          password,
-        }),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
+      const response = await api.post(
+        "/auth/token",
+        new URLSearchParams({ username, password }),
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
       );
-      // Save the token in state and localStorage
       setToken(response.data.access_token);
-      localStorage.setItem("token", response.data.access_token);
     } catch (err) {
       console.error("Error al iniciar sesión:", err);
       throw err;
     }
   };
 
-  // Function to handle user logout
-  const logout = () => {
-    setToken(null);
-    localStorage.removeItem("token");
-  };
+  // Logout
+  const logout = () => setToken(null);
 
   return (
-    // Provide the authentication context to child components
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ token, login, logout, api }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to use the authentication context
 export const useAuth = () => useContext(AuthContext);

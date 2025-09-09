@@ -1,87 +1,75 @@
-import React, { useEffect, useState } from "react";
-import LayerSelector from "../components/LayerSelector";
-import TimeIntervalSelector from "../components/TimeIntervalSelector";
-import TimeSlider from "../components/TimeSlider";
-import Heatmap from "../components/map";
-import DiseaseSelector from "../components/selectDisease";
-import ExecutionButton from "../components/executionButton";
+
+import axios from "axios";
+import { useState } from "react";
+import Heatmap from "../components/Map";
+import SidePanel from "../components/SidePanel";
+
 
 export default function MapPage() {
-  // State variables for managing user selections and data
   const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
   const [interval, setInterval] = useState(365);
   const [offsetHuman, setOffsetHuman] = useState(0);
   const [offsetTemperature, setOffsetTemperature] = useState(0);
-  const [disease, setdisease] = useState("Leishmania");
   const [geojsonList, setGeojsonList] = useState([]);
-  const [selectedLayers, setSelectedLayers] = useState([]);
+  const [selectedLayers, setSelectedLayers] = useState(["human", "temperature"]);
   const [selectedDate, setSelectedDate] = useState(startDate);
   const [selectedDisease, setSelectedDisease] = useState("Leishmania");
   const [currInterval, setCurrInterval] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const fetchData = () => {
-    setCurrInterval(Number(interval));
-    // Fetch filtered data based on user selections
-    const filteredRequest = fetch("http://localhost:8000/api/test/filtered", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        start_date: "2022-01-01",
-        interval: interval,
-        disease: selectedDisease,
-      }),
-    }).then((res) => res.json());
+  const fetchData = async () => {
+    try {
+      setCurrInterval(Number(interval));
 
-    // Adjust start date based on temperature offset
-    const startDateObj = new Date("2022-01-01");
-    startDateObj.setDate(startDateObj.getDate() + offsetTemperature);
-    const offsetStartDate = startDateObj.toISOString().slice(0, 10);
+      const api = axios.create({
+        baseURL: process.env.REACT_APP_API_URL || "/api", 
+        headers: { "Content-Type": "application/json" },
+        withCredentials: false,
+      });
 
-    // Fetch AEMET data
-    const aemetRequest = fetch("http://localhost:8000/api/aemet/get_data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-      start_date: offsetStartDate,
-      interval: interval,
-      }),
-    }).then((res) => res.json());
 
-    // Fetch human data
-    const humanRequest = fetch("http://localhost:8000/api/human/get_human_data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-      interval: interval,
-      disease: selectedDisease,
-      }),
-    }).then((res) => res.json());
+      const [filteredRes, aemetRes, humanRes] = await Promise.all([
+        api.post("/test/filtered", {
+          interval,
+          disease: selectedDisease,
+        }),
+        api.post("/aemet/get_data", {
+          interval,
+          offset: offsetTemperature,
+        }),
+        api.post("/human/get_human_data", {
+          interval,
+          disease: selectedDisease,
+          offset: offsetHuman,
+        }),
+      ]);
 
-    // Combine all fetched data
-    Promise.all([filteredRequest, aemetRequest, humanRequest]).then(([filteredData, aemetData, humanData]) => {
-      const processedFiltered = filteredData.map((item) => ({
+      // Procesar los datos añadiendo la fuente correspondiente
+      const processedFiltered = filteredRes.data.map((item) => ({
         ...item,
         source: "filtered",
       }));
 
-      const processedAemet = aemetData.map((item) => ({
+      const processedAemet = aemetRes.data.map((item) => ({
         ...item,
         source: "aemet",
       }));
 
-      const processedHuman = humanData.map((item) => ({
+      const processedHuman = humanRes.data.map((item) => ({
         ...item,
         source: "human",
       }));
 
-      // Update state with combined data
+      // Guardar todo en el estado
       setGeojsonList([...processedFiltered, ...processedAemet, ...processedHuman]);
-    });
+    } catch (err) {
+      console.error("Error al cargar datos:", err);
+    }
   };
 
   return (
       <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
-          {/* Render the heatmap with the fetched data */}
+          {/* renderiza el mapa */}
           <Heatmap
             diseaseData={geojsonList.find((item) => item.date === selectedDate && item.source === "filtered")?.geojson}
             aemetData={geojsonList.find((item) => item.date === selectedDate && item.source === "aemet")?.geojson}
@@ -89,34 +77,54 @@ export default function MapPage() {
             selectedLayers={selectedLayers}
           />
 
-        {/* Container for controls like sliders and selectors */}
-        <div
-          style={{
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            zIndex: 10,
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-            width: "260px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-          }}
-        >
-          {/* Render the rest of the components */}
-        <TimeIntervalSelector interval={interval} setInterval={setInterval} />
-        <TimeSlider
-          dates={[...new Set(geojsonList.map((item) => item.date))].sort()}
+        <SidePanel
+          interval={interval}
+          setInterval={setInterval}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
+          geojsonList={geojsonList}
+          selectedLayers={selectedLayers}
+          setSelectedLayers={setSelectedLayers}
+          offsetHuman={offsetHuman}
+          setOffsetHuman={setOffsetHuman}
+          offsetTemperature={offsetTemperature}
+          setOffsetTemperature={setOffsetTemperature}
+          selectedDisease={selectedDisease}
+          setSelectedDisease={setSelectedDisease}
+          fetchData={fetchData}
+          currInterval={currInterval}
         />
-        <LayerSelector selectedLayers={selectedLayers} setSelectedLayers={setSelectedLayers} offsetHuman={offsetHuman} setOffsetHuman={offsetHuman} offsetTemperature={offsetHuman} setOffsetTemperature={setOffsetTemperature} />
-        <DiseaseSelector selectedDisease={selectedDisease} setSelectedDisease={setSelectedDisease} />
-        <ExecutionButton fetchData={fetchData} currInterval={currInterval} interval={interval} />
-      </div>
+        
+        {loading && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              backdropFilter: "blur(6px)",
+              WebkitBackdropFilter: "blur(6px)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 9999,
+            }}
+          >
+            <div
+              style={{
+                width: "60px",
+                height: "60px",
+                border: "6px solid rgba(0, 0, 0, 0.2)",
+                borderTop: "6px solid #007bff",
+                borderRadius: "50%",
+                animation: "spin 1s linear infinite",
+              }}
+            />
+          </div>
+        )}
     </div>
   );
+
 }

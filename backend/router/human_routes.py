@@ -95,13 +95,14 @@ async def get_human_data(request: Request):
         
         start_date = datetime.now(timezone.utc)
         end_date = datetime.strptime("2022-01-01", "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        offset = params["offset"]
         interval = params["interval"]
         disease = params["disease"]
         
         results = []
         
         with engine.connect() as conn:
-            current_date = start_date
+            current_date = start_date + timedelta(days=offset)
 
             # Tour all dates with temporary jumps = to the interval
             while current_date >= end_date:
