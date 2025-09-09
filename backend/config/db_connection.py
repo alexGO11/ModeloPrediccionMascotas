@@ -4,8 +4,8 @@ from .settings_env import settings
 
 # Load database configuration from environment settings
 DB_DIALECT = settings.db_dialect
-DB_USER = settings.db_user
-DB_PASSWORD = settings.db_pass
+DB_USER = settings.mysql_user
+DB_PASSWORD = settings.mysql_pass
 DB_HOST = settings.db_host
 DB_NAME = settings.db_name
 

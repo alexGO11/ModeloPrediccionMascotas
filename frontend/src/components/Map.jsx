@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Heatmap = ({ diseaseData, aemetData, humanData, selectedLayers }) => {
   const mapContainer = useRef(null);
@@ -53,6 +53,7 @@ const Heatmap = ({ diseaseData, aemetData, humanData, selectedLayers }) => {
               2, "rgba(255, 165, 0, 0.7)",   
               3, "rgba(255, 0, 0, 0.8)"      
             ],
+            'circle-opacity': 1.0
           }
         });
 
@@ -227,17 +228,25 @@ const Heatmap = ({ diseaseData, aemetData, humanData, selectedLayers }) => {
   useEffect(() => {
     if (!map.current) return;
 
-    // Show or hide layers based on selectedLayers
-    
+    // Mostrar u ocultar capas en función de las seleccionadas
     const showTemp = selectedLayers.includes("temperature");
     const showHuman = selectedLayers.includes("human");
-  
+
+    // Capa de AEMET principal
     if (map.current.getLayer("aemet-heatmap")) {
       map.current.setLayoutProperty("aemet-heatmap", "visibility", showTemp ? "visible" : "none");
     }
+
+    // Capa de hover AEMET
+    if (map.current.getLayer("aemet-hover-layer")) {
+      map.current.setLayoutProperty("aemet-hover-layer", "visibility", showTemp ? "visible" : "none");
+    }
+
+    // Capa de humanos principal
     if (map.current.getLayer("human-layer")) {
       map.current.setLayoutProperty("human-layer", "visibility", showHuman ? "visible" : "none");
     }
+
   }, [selectedLayers]);
 
   return <div ref={mapContainer} style={{ width: "100%", height: "100vh" }} />;
