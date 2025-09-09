@@ -9,7 +9,7 @@ precalculated = Table(
     "precalculated", meta_data,
     Column("id", Integer, primary_key=True, autoincrement=True),
     Column("disease", String(15), nullable=False),
-    Column("days_interval", Integer, nullable=False),
+    Column("days_interval", String(10), nullable=False),
     Column("end_date", DateTime, nullable=False),
     Column("result_data", MEDIUMTEXT, nullable=False)  # Use MEDIUMTEXT for larger JSON data
 )
